@@ -1,0 +1,379 @@
+# PAX7 target mis-regulation in FSHD biopsy RNA-seq samples {#pax7}
+
+Zammit et al. (Banerji and Zammit 2019; Christopher R.S. Banerji 2017) derived PAX7-induced and suppressed genes and demonstrated the repression of PAX7 target genes as a biomarker of FSHD. Following their fashion of defining PAX7 score as the t-statistics comparing the set of PAX7-induced to suppressed genes in a given sample (Christopher R.S. Banerji 2017), the PAX7 score decreased progressively throughout the Mild, Moderate, IG-High, High and Muscle-low FSHD samples. This trend was explained as a global repression of PAX7 target genes in FSHD by Banerji's studies. The landscape of the PAX7-target gene expression, however, suggested a more complex mis-regulation in FSHD samples: majority of  PAX7-induced (68%) and suppressed (74%) genes showed mild-to-moderate up-regulation in more affected FSHD biopsies (IG-High and High), whereas a smaller portion of PAX7-induced (32%) and suppressed (26%) showed mild down-regulation.
+
+Note: the code in this chapter are long and tidious and therefore was hidden. Ther original .Rmd contails all the code for analysis and can be found in our master github branch [here](http://github.com/frehutch/RWellstone_FSHD_muscle_biopsy/gitbook).
+
+```{r load-data-chap6, include=FALSE}
+#' load libraries
+suppressPackageStartupMessages(library(tidyverse))
+suppressPackageStartupMessages(library(DESeq2))
+suppressPackageStartupMessages(library(xlsx))
+#' loading datasets
+pkg_dir <- "/fh/fast/tapscott_s/CompBio/RNA-Seq/hg38.FSHD.biopsy.all"
+source(file.path(pkg_dir, "scripts", "manuscript_tools.R"))
+load(file.path(pkg_dir, "public_data", "cluster_df.rda"))
+load(file.path(pkg_dir, "public_data", "sanitized.dds.rda"))
+load(file.path(pkg_dir, "public_data", "mri_pathology.rda"))
+sanitized.dds$RNA_cluster_5 <- cluster_df$RNA_cluster
+sanitized.dds$new_cluster_name <- ifelse(cluster_df$RNA_cluster == "A_Cntr", "Control",
+                                         as.character(cluster_df$new_cluster_name))
+sanitized.dds$new_cluster_name <- factor(sanitized.dds$new_cluster_name, 
+                                         levels=c("Control", "Mild", "Moderate", 
+                                                  "IG-High", "High", "Muscle-Low"))
+```
+
+```{r make-pax7-dataset, echo=FALSE, include=FALSE, eval=FALSE}
+## This is how pax7_targets dataset is made:
+library(xlsx)
+sheet_file <- file.path(pkg_dir, "extdata", "PAX7", "41467_2017_1200_MOESM6_ESM.xlsx")
+up <- read.xlsx(sheet_file, sheetIndex=1, startRow=3, 
+                colIndex=c(1:3), stringsAsFactors=FALSE) %>%
+  add_column(attribute="induced") 
+
+down <- read.xlsx(sheet_file, sheetIndex=1, startRow=3, colIndex=c(4:6), stringsAsFactors=FALSE) %>%
+  add_column(attribute="suppressed")
+
+pax7_targets <- bind_rows(up, down) %>%
+  dplyr::filter(!is.na(Human.Gene.Symbol)) %>%
+  dplyr::filter(Human.Gene.Symbol %in% rowData(sanitized.dds)$gene_name) %>%
+  dplyr::filter(!duplicated(Human.Gene.Symbol)) %>% 
+  dplyr::mutate(gencode_id = get_ensembl(Human.Gene.Symbol, sanitized.dds))
+gencode_id <- as.character(pax7_targets$gencode_id)
+pax7_targets <- pax7_targets %>%
+   left_join(as.data.frame(.get_local_rlg(gencode_id, sanitized.dds)) %>% 
+               rownames_to_column(var="gencode_id"),
+             by="gencode_id")
+save(pax7_targets, file=file.path(pkg_dir, "public_data", "pax7_targets.rda"))
+```
+
+
+## PA7 scores and disease activity
+A single sample of PAX7 socre is constructed as t-statistics comparing the log expression of PAX7-induced and suppressed genes within a sample ( Christopher R.S. Banerji 2017). The code chunk below loaded the existing PAX7 targeted genes, calculated the PAX7-score (per sample) and tidied the related data for further analysis.
+
+```{r pax7-score, warning=FALSE, message=FALSE}
+load(file.path(pkg_dir, "public_data", "pax7_targets.rda"))
+#' tidy the PAX7-targeted genes info
+pax7_score <- sapply(colnames(sanitized.dds), function(sample_name) {
+  data <- dplyr::select(pax7_targets, attribute, sample_name)
+  tt <- t.test(x = data[data$attribute=="induced", sample_name],
+               y = data[data$attribute=="suppressed", sample_name])
+  c(t_stats=unname(tt$statistic), induced_mean=unname(tt$estimate[1]),
+    suppressed_mean=unname(tt$estimate[2]))             
+})
+# pax 7 rlog
+pax7_score <- as.data.frame(t(pax7_score)) %>%
+  rownames_to_column(var="sample_name") %>%
+  mutate(pheno_type = sanitized.dds[, sample_name]$pheno_type) %>%
+  left_join(cluster_df %>% dplyr::select(sample_name, new_cluster_name, RNA_cluster),
+            by="sample_name") %>%
+  mutate(cluster_name = ifelse(RNA_cluster == "A_Cntr", "Control", 
+                               as.character(new_cluster_name))) %>%
+  mutate(cluster_name = factor(cluster_name, levels=c("Control", "Mild", "Moderate", "IG-High",
+                               "High", "Muscle-Low")))
+```
+
+
+Shown below is boxplots of PAX7-score (t-statisitcs) by classes of FSHDs. The score decreased progressively from the Mild, Moderate, IG-High, High to Muscle-Low groups. This suggests that PAX7 targeted genes are associated with the disease activity. The question now is that what does the trend of decreasing PAX7-score reflect? Is it a global repression on PAX7-regualted genes w.r.t. the controls or else?
+
+```{r boxplot-pax7-socre, echo=FALSE, fig.height=5, fig.width=5, fig.cap="Boxplot of PAX7 scores by different FSHD classes."}
+ggplot(pax7_score, aes(x=cluster_name, y=t_stats, group=cluster_name)) +
+    geom_boxplot(width=0.7, outlier.shape = NA) +
+    geom_jitter(width=0.2, size=0.7) +
+    theme_bw() +
+    labs(y="PAX7 target t-statistics") +
+    theme(axis.text.x=element_text(angle=90, vjust=0.5, hjust=1),
+          axis.title.x = element_blank(),
+          axis.title.y = element_text(size=10),
+          legend.justification=c(0,1), legend.position=c(0, 1)) 
+```
+
+
+## Mis-regulation of PAX7-targeted gene 
+The heatmap below presents the row z-score of PAX7-induced and suppressed gene expression, columns gapped by FSHD categories and rows gapped by induced and suppressed genes.  It suggests a complicated mis-regulation of PAX7-targeted genes in FSHDs relative to the controls.  Majority of the PAX7 targeted (induced 68% and supressed 74%) gene expression were elevated in STIR+, DUX4+ samples (High class). A smaller portion of PAX7-induced (32%) and PAX7-supressed (24%) exhibited mild down-regulation in STIR+/DUX4+ FSHDs relative to controls (32% and 26% in -induced and -supressed, respectively). The progressive up-reguation in the PAX7-suppressed genes in Mild to High groups could be the driving force of the decreasing PAX7-score. Moreover, the violin plot below displays the expression distribution and shows the mean estimiates of the PAX7-suppressed expression are increasing from Mild, Moderate, IG-High, High to Muscle-Low groups whereas that of PAX7-induced expression remain almost invariable.
+
+
+```{r identify_up_down_gene, echo=FALSE}
+# frequency of up/down-regulation of PAX7-induced and suppressed in High samples
+load(file.path(pkg_dir, "public_data", "deseq2_design_cluster.rda"))
+high_res <- results(deseq2_design_cluster, name="RNA_cluster_5_D_vs_A_Cntr")
+high_res <- as(high_res[pax7_targets$gencode_id,], "data.frame") %>%
+  rownames_to_column(var="gencode_id") %>%
+  dplyr::mutate(status=ifelse(log2FoldChange > 0, "up", "down"))
+
+pax7_targets_anno <- pax7_targets %>% dplyr::select(gencode_id, attribute) %>%
+  left_join(dplyr::select(high_res, gencode_id, status), by="gencode_id") %>%
+  dplyr::mutate(condition=paste0(attribute, "_", status)) %>%
+  dplyr::mutate(condition=factor(condition, levels=c("induced_up", "induced_down",
+                                                    "suppressed_up", "suppressed_down"))) %>%
+  column_to_rownames(var="gencode_id") 
+#' compute the frequency
+pax7_targets_anno %>% group_by(attribute) %>% 
+  summarise(up_regulated=sum(status=="up")/n(),
+            down_reguated=sum(status=="down")/n())
+
+```
+
+
+### Heatmap showing mis-regulation
+```{r heatmap_pax7_genes, echo=FALSE, inclue=FALSE, warning=FALSE}
+library(pheatmap)
+load(file.path(pkg_dir, "public_data", "pax7_targets.rda"))
+rlg <- as.matrix(pax7_targets[, -c(1:5)])
+rownames(rlg) <- pax7_targets$gencode_id
+
+data_lst <- lapply(levels(sanitized.dds$RNA_cluster_5), function(x, dds) {
+  s <- colnames(dds)[dds$RNA_cluster_5 == x]
+  data <- rlg[, s]
+  # re-arrange by the colmeans (look heatmap)
+  Colv <- colMeans(data, na.rm = TRUE)
+  data <- data[, order(Colv)]
+}, dds=sanitized.dds)
+data <- do.call(cbind, data_lst)
+
+# arrange each attribute of the rows
+gaps_row <- cumsum(table(pax7_targets_anno$attribute))
+
+#data_lst <- lapply(c("induced", "suppressed"), function(x) {
+#  tmp <- data[pax7_targets$attribute == x, ]
+#  Rowv <- rowMeans(tmp, na.rm=TRUE)
+#  tmp <- tmp[order(Rowv), ]
+#})
+data_lst <- lapply(levels(pax7_targets_anno$condition),
+                   function(x) {
+  tmp <- data[pax7_targets_anno$condition == x, ]
+  Rowv <- rowMeans(tmp, na.rm=TRUE)
+  tmp <- tmp[order(Rowv), ]
+})
+data <- do.call(rbind, data_lst)
+
+zscore_data <- (data - rowMeans(data)) / matrixStats::rowSds(data)
+
+#' column annotation
+classes <- as.character(sanitized.dds[, colnames(data)]$RNA_cluster_5)
+pheno_type <- sanitized.dds[, colnames(data)]$pheno_type                         
+annotation_col <- 
+  data.frame(sample_name = colnames(data),
+             classes     = sanitized.dds[, colnames(data)]$new_cluster_name,
+             #classes     = factor(classes, levels=c("A_Cntr", "A", "B", "C", "D", "Es")),
+             #k_means     = sanitized.dds[, colnames(data)]$RNA_cluster_5,
+             FSHD = sanitized.dds[, colnames(data)]$pheno_type) 
+
+new_time <- bind_rows(mri_pathology$time_1, mri_pathology$time_2) %>% 
+  dplyr::filter(sample_name!="32-0008b") %>%
+  mutate(sample_name=as.character(sample_name))
+
+new_time$sample_name[new_time$sample_name=="32-0002b"] <- "32-0002b1"
+gaps_col <- cumsum(dplyr::count(annotation_col, classes)[, "n"])$n
+
+annotation_col <- annotation_col %>%
+  left_join(new_time, by="sample_name") %>%
+  dplyr::rename(Pathology=Pathology.Score, T1=fat_fraction) %>%
+  dplyr::select(sample_name, classes, FSHD, T1, STIR_rating, Inflammation, Pathology) %>%
+  column_to_rownames(var="sample_name") 
+
+col <- c("#f7f7f7", "#238b45")
+cluster_color <- c(`Control`="#ff7f00", `Mild`="#a65628", `Moderate`="#f781bf", `IG-High`="#984ea3",
+                   `High`="#e41a1c", `Muscle-Low`="#377eb8")
+attribute_color <- c(incuded="#E69F00", suppressed="#56B4E9")
+ann_cor <- list(
+  STIR_rating= col,  T1 = col, FSHD=c(Control="white", FSHD="seagreen"),
+  Inflammation = col, Fibrosis = col,
+  Var.in.Fiber.Size = col, Nec.Reg.Inflamm = col,
+  Nucleation = col, Pathology = col,
+  classes = cluster_color,
+  status=c(up="red", down="blue"),
+  attribute=c(induced="#E69F00", suppressed="#56B4E9"))
+
+#anno_row <- pax7_targets %>% dplyr::select(gencode_id, attribute) %>%
+#  left_join(dplyr::select(high_res, gencode_id, status), by="gencode_id") %>%
+#  column_to_rownames(var="gencode_id")
+#anno_row <- pax7_targets_anno %>% dplyr::select(status, attribute) %>%
+#  column_to_rownames(var="gencode_id")
+anno_row <- pax7_targets_anno[rownames(zscore_data), c("status", "attribute")]
+
+```
+
+```{r pax7-heatmap, fig.height=10, fig.width=10, echo=FALSE, fig.cap="Heatmap of PAX7 targeted gene expression."}
+pheatmap(zscore_data, annotation_col=annotation_col,
+         annotation_row = anno_row,
+         #fontsize_row=7, 
+         fontsize_col=6,
+         scale="none", 
+         gaps_col=gaps_col,
+         gaps_row=gaps_row,
+         annotation_colors=ann_cor,
+         show_rownames=FALSE,
+         cluster_rows=FALSE, cluster_cols=FALSE)
+         #file=file.path(pkg_dir, "manuscript", "figures", "pax7_cluster_heatmap.pdf"),
+         #width=10, height=10)
+```
+
+
+### Violin plot of PAX7 targets expression
+The violin plot below shows the distributions of PAX7-induced and suppressed genes by FSHD classes, illustrating the increasing means of PAX7-suppressed gene expression in more affected FSHD biopsies. The orange and blue dashed lines represent the mean values of PAX7-induced and suppressed genes in the controls, respectively. The orange and blue dots are the mean values of the PAX7-induced and suppression expression in different FSHD classes. The 95% confident intervals of means of PAX7-induced and suppressed gene expression display that the means difference of PAX7-induced gene expression between the controls and different FSHD groups are not significantly different.
+
+```{r ave_log_scatter, message=FALSE, echo=FALSE}
+load(file.path(pkg_dir, "public_data", "sanitized.rlg.rda"))
+sanitized.rlg$new_cluster_name <- sanitized.dds$new_cluster_name 
+df_rlog <- lapply(levels(sanitized.rlg$new_cluster_name), function(class) {
+  sub <- sanitized.rlg[pax7_targets$gencode_id, sanitized.rlg$new_cluster_name == class]
+  rowMeans(assay(sub))
+})
+names(df_rlog) <- levels(sanitized.rlg$new_cluster_name)
+df_rlog <- as.data.frame(do.call(cbind, df_rlog)) %>% 
+  add_column(attribute=pax7_targets$attribute)
+```
+
+```{r pax7-violin, echo=FALSE, fig.height=6, fig.width=6, fig.cap="Density of average PAX7 target gene expression by categories. Dashed lines represent the mean values of the controls."}
+tmp <- df_rlog %>% gather(key=class, value=rlog, -attribute) %>%
+  mutate(class=factor(class, levels=c("Control", "Mild", "Moderate",
+                                      "IG-High", "High", "Muscle-Low")))
+mu <- tmp %>% group_by(class, attribute) %>%
+  summarise(mean=mean(rlog)) %>%
+  mutate(attribute=factor(attribute))
+
+ci <- tmp %>%
+  group_by(class, attribute) %>% summarise(mean=mean(rlog), sd=sd(rlog), n=n()) %>%
+  dplyr::mutate(err = sd/sqrt(n), ci_lower=mean-1.96*err, ci_upper=mean+1.96*err) %>%
+  dplyr::mutate(attribute=factor(attribute))
+
+#' violin plot
+gg <- ggplot(tmp, aes(x=attribute, y=rlog, fill=attribute, color=attribute)) +
+  geom_violin(alpha=0.3, trim=TRUE) +
+  geom_boxplot(width=0.1) +
+  facet_wrap(~ class, nrow=1) +
+  stat_summary(fun.y=mean, geom="point", size=2, color="#D55E00", show.legend=FALSE) +
+  scale_color_manual(values=c("#E69F00", "#56B4E9")) +
+  scale_fill_manual(values=c("#E69F00", "#56B4E9")) +
+  labs(y="rlog expression") +
+  theme_minimal() +
+  theme(legend.position="bottom", 
+        axis.title.x=element_blank(),
+        axis.text.x=element_blank())
+  
+
+#' add horizantal line 
+contr_mean_induced <- mu %>% 
+  dplyr::filter(class=="Control", attribute=="induced") %>% pull(mean)
+contr_mean_suppr <- mu %>% 
+  dplyr::filter(class=="Control", attribute=="suppressed") %>% pull(mean)
+gg <- gg + geom_hline(yintercept=contr_mean_induced, color="#E69F00") +
+  geom_hline(yintercept=contr_mean_suppr, color="#56B4E9") +
+  coord_cartesian(ylim=c(3, 15))
+gg
+```
+
+```{r save-pax7-violin, include=FALSE, echo=FALSE, message=FALSE}
+pdf(file.path(pkg_dir, "manuscript", "figures", "pax7_violin.pdf"), 
+    width=5, height=4)
+plot(gg)
+dev.off()
+```
+
+### Observation of the 95% CI of the mean estimates
+The mean estimates and their 95% confidence intervals (showing below) of PAX7-induced and suppressed gene expression illustrate that the mean differences of PAX7-induced gene expression between the controls and the FSHD groups are not significantly different. In contrast, the mean differences of PAX7-suppressed gene expression between the controls and more affected FSHD groups (IG-High, High and Muscle-Low) are more statisitcally significant. Thus the trend of decreasing PAX7 t-statistics score in FSHD groups does not reflect a globel repression but a mis-regulation of the PAX7 network genes.
+
+```{r pax7-95CI, echo=FALSE, fig.cap="95% confidence interval of means of PAX7-induced and suppressed gene expression. Dots represent mean estimates and lines 95% confidence interval"}
+ggplot(ci, aes(x=attribute, y=mean, color=attribute)) +
+  geom_point(aes(color=attribute, size=1)) +
+  geom_segment(aes(y=ci_lower, yend=ci_upper, x=attribute, xend=attribute),
+               show.legend=FALSE) +
+  facet_wrap(~class, nrow=1) +
+  theme_minimal() +
+  scale_color_manual(values=c("#E69F00", "#56B4E9"))+
+  theme(legend.position="bottom", 
+        axis.title.x=element_blank(),
+        axis.text.x=element_blank()) +
+  guides(size = FALSE) +
+  labs(y="rlog mean estimates (dots) and 95% confidence interval (lines)")
+```
+
+## Compare to DUX4-targeted biomarkers
+
+Next we use scatter plot (\@ref{fig:pax7-scatter_control-vs-FSHD}) alon with linear regression to exam the association of the PAX7 targeted genes with the disease. The x-axis represents the average expression of PAX7 targeted genes in each FSHD category and y-axis the controls. The $p$-value was computed by two-sample Wilcox-test. The grey line represents a 1-to-1 relationship (x=y), and the blue line the linear regression of X and Y-axis. The linear regression lines do not deviate from $x=y$. On the other hand, in the next scatter plot, a stronger, robust association between the DUX4 targeted genes (53 genes from Yao et al. 2014) and the disease activity is suggested by the linear regression and corresponding $p$-values.
+
+```{r dux4_rlog, echo=FALSE, warning=FALSE}
+mk <- get(load(file.path(pkg_dir, "data", "FSHD_markers.rda")))
+mk_rlog <- lapply(levels(sanitized.rlg$new_cluster_name), function(class) {
+  sub <- sanitized.rlg[mk$gene_id, sanitized.rlg$new_cluster_name == class]
+  rowMeans(assay(sub))
+})
+names(mk_rlog) <- levels(sanitized.rlg$new_cluster_name)
+mk_rlog <- as.data.frame(do.call(cbind, mk_rlog)) 
+```
+
+
+```{r pax7-scatter-control-vs-FSHD, echo=FALSE, warning=FALSE, fig.width=8, fig.height=4, fig.cap="Scatter plot of average PAX7 targeted gene expression in the controls and each FSHD category."}
+classes <- levels(sanitized.rlg$new_cluster_name)
+pval <- sapply(classes[2:6], function(class) {
+  wilcox.test(df_rlog[, class], df_rlog$Control)$p.value
+})
+names(pval) <- classes[2:6]
+
+wilcox_pval <- data.frame(label=paste0("pval = ", format(pval, digits=2)),
+                          class=names(pval), x=0, y=15)
+library(RColorBrewer)
+lm_color <- brewer.pal(3, "Set1")[1:2]
+melt_pax7 <- df_rlog %>%
+  rownames_to_column(var="gene_name") %>%
+  gather(key=class, value=rlog, -attribute, -gene_name, -Control) %>%
+  mutate(class = factor(class, levels=classes[2:6]))
+  
+gg <- ggplot(melt_pax7, aes(x=Control, y=rlog)) +
+  geom_point(size=0.2, aes(color=attribute)) +
+  geom_smooth(method="lm", color=lm_color[2], size=0.5, se=FALSE) +
+  geom_abline(intercept=0, slope=1, color="grey70") +
+  theme_minimal() +
+  labs(x="Control", y="FSHD", title="PAX7 target expression: FSHD classs vs. control") +
+  facet_wrap( ~ class, nrow=1) +
+  theme(legend.position = c(0.06, 0.85)) +
+  geom_text(data = wilcox_pval, 
+            mapping = aes(x = Inf, y = -Inf, label = label),  
+            hjust   = 1, vjust   = -1, inherit.aes = FALSE ) +
+  scale_color_manual(values=c("#E69F00", "#56B4E9")) +
+  scale_fill_manual(values=c("#E69F00", "#56B4E9")) 
+gg
+```
+
+```{r edited_scatter_plot, eval=FALSE, echo=FALSE, include=FALSE}
+pdf(file.path(sub_dir, "pax7_scatter_per_class.pdf"), width=7, height=2)
+gg <- gg + geom_point(alpha=0.3)
+plot(gg)
+dev.off()
+```
+
+
+
+```{r dux4-scatter-control-vs-others, echo=FALSE, fig.width=8, fig.height=4, fig.cap="Scatter plot of average DUX4 targeted gene expression in the controls and each FSHD category."}
+
+pval <- sapply(classes[2:6], function(class) {
+  wilcox.test(mk_rlog[, class], mk_rlog$Control)$p.value
+})
+names(pval) <- classes[2:6]
+wilcox_pval <- data.frame(label=paste0("pval = ", format(pval, digits=2)),
+                          class=names(pval), x=0, y=7.5)
+
+lm_color <- brewer.pal(3, "Set1")[1:2]
+melt_mk <- mk_rlog %>%
+  rownames_to_column(var="gene_name") %>%
+  gather(key=class, value=rlog, -gene_name, -Control) %>%
+  mutate(class=factor(class, levels=classes[2:6]))
+  
+gg <- ggplot(melt_mk, aes(x=Control, y=rlog)) +
+  geom_point(size=0.3) +
+  geom_smooth(method="lm", color=lm_color[2], size=0.5, se=FALSE) +
+  geom_abline(intercept=0, slope=1, color="grey70") +
+  theme_minimal() +
+  labs(x="Control", y="FSHD", title="DUX4 target expression: FSHD classes vs. control") +
+  facet_wrap( ~ class, nrow=1) +
+  geom_text(data = wilcox_pval,
+            mapping = aes(x = Inf, y = -Inf, label = label),  
+            hjust   = 1, vjust   = -1, inherit.aes = FALSE )
+  #scale_color_brewer(palette="Paired")
+plot(gg)
+#pdf(file.path(sub_dir, "dux4_mk_scatter_per_class.pdf"), width=7, height=2)
+#plot(gg)
+#dev.off()
+```
+

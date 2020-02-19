@@ -1,0 +1,41 @@
+--- 
+title: "Longitudinal measures of RNA-seq expression and disease activity in FSHD muscle biopsies"
+author: "Chao-Jen Wong"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+documentclass: book
+bibliography: [book.bib, packages.bib]
+biblio-style: apalike
+link-citations: yes
+description: "Bioinformatics and statistics analysis for the logitudinal study of RNA-seq expression and disear acitivity in FSHD muscle bipsies"
+---
+
+# Introduction 
+This Gitbook includes details of data analysis supporting the manuscript "Logitidinal measures of RNA-seq expression and disease activity in FSHD muscle", a follow-up study of "MRI-informed muscle biopsies correlated MRI with pathology and DUX4 target gene expression in FSHD".
+
+This book is divided into five parts and embedded with shell scripts and R codes:  
+
+1. Introduction  
+2. pre-processing and gene counts  
+3. Analysis part 1: the one-year follow-up visit  
+4. Analysis part 2: changes over two visits
+5. Analysis part 3: sub-group characteristics  
+6. Analysis part 4: Potential biomarkers for mildly affected muscles  
+7. Analysis part 5: PAX7 score and disease avtivity  
+
+## Package structure
+
+### Datasets
+
+- `sanitity.dds`:
+- `histo_mri`:
+
+
+## GEO 
+GEO RNA-seq data series  
+- initial visit:  
+- one-year follow-up visit:  
+
+## System requirment
+- R 3.5.1 or above
+- Bioconductor (v3.7 or above) packages

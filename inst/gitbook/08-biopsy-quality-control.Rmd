@@ -1,0 +1,208 @@
+# Biopsy Quality Control {#biopsy_qc}
+Blood, fat, muscle markers and scored by $\log_{10}(TPM + 1)$. 
+
+```{r load-data-chap9, include=FALSE}
+library(tidyverse)
+library(DESeq2)
+library(xlsx)
+library(pheatmap)
+pkg_dir <- "/fh/fast/tapscott_s/CompBio/RNA-Seq/hg38.FSHD.biopsy.all"
+source(file.path(pkg_dir, "scripts", "manuscript_tools.R"))
+load(file.path(pkg_dir, "public_data", "cluster_df.rda"))
+load(file.path(pkg_dir, "public_data", "sanitized.dds.rda"))
+sanitized.dds$cluster_color <- cluster_df$color
+sanitized.dds$new_cluster_name <- ifelse(cluster_df$RNA_cluster == "A_Cntr", "Control",
+                                         as.character(cluster_df$new_cluster_name))
+sanitized.dds$new_cluster_name <- factor(sanitized.dds$new_cluster_name, 
+                                         levels=c("Control", "Mild", "Moderate", 
+                                                  "IG-High", "High", "Muscle-Low"))
+```
+
+## Blood, fat and muscle cell markers
+```{r define_markers}
+markers <- tibble(cell_type=c(rep("blood", 3), rep("fat", 3), rep("muscle", 3)),
+                  gene_name=c("HBA1", "HBA2", "HBB",
+                              "FASN", "LEP", "SCD",
+                              "ACTA1", "TNNT3", "MYH1"))  %>%
+  dplyr::mutate(gencode_id = get_ensembl(gene_name, rse=sanitized.dds)) %>%
+  dplyr::mutate(cell_type = factor(cell_type))
+knitr::kable(markers)
+```
+
+
+## Define score
+For each cell type, the marker score for each sample is $\frac{1}{n}\Sigma_{i=1}^{n}\log_{10}(TPM_i + 1)$, where $i$ denotes genes and $n$ is the number of genes of the cell type.
+
+```{r define_score}
+# average cell type log10(TPM+1)
+lv <- levels(markers$cell_type)
+celltype_tpm <- sapply(lv, function(type) {
+   id <- markers %>% dplyr::filter(cell_type == type) %>%
+      pull(gencode_id)
+   sub <- sanitized.dds[id]
+   tpm_score <- colMeans(log10(assays(sub)[["TPM"]]+1))
+})
+
+celltype_tpm <- as.data.frame(celltype_tpm) %>%
+  rownames_to_column(var="sample_name") %>%
+  add_column(pheno_type = sanitized.dds$pheno_type,
+             classes = sanitized.dds$new_cluster_name,
+             classes_color = sanitized.dds$cluster_color) 
+```
+```{r fat_tpm, echo=FALSE, eval=FALSE}
+# this chunk is to generate an excel sheet 
+sample_tpm <- lapply(lv, function(type){
+  sub_marker <- markers %>% dplyr::filter(cell_type == type) 
+  id <- sub_marker %>% pull(gencode_id)
+  names(id) <- pull(sub_marker, "gene_name")
+  sub <- sanitized.dds[id]
+  
+  df <- as.data.frame(t(assays(sub)[["TPM"]]+1)) %>%
+     dplyr::rename(!!id) %>%
+      rownames_to_column(var="sample_name") %>%
+     add_column(pheno_type=sanitized.dds$pheno_type,
+                new_cluster_name=sanitized.dds$new_cluster_name)
+}) 
+names(sample_tpm) <- lv
+#' write an excel sheet
+#muscle_logTPM <- sample_tpm[["muscle"]] %>% dplyr::filter(new_cluster_name == "Muscle-Low")
+muscle_TPM <- sample_tpm[["muscle"]] %>% 
+  arrange(new_cluster_name) %>%
+  dplyr::mutate(ACTA1.pass = ifelse(ACTA1 > 200, "Yes", "NO"),
+                TNNT3.pass = ifelse(TNNT3 > 50, "Yes", "NO"),
+                MYH1.pass = ifelse(MYH1 > 10, "Yes", "NO"))
+library(xlsx)
+write.xlsx(muscle_TPM, file=file.path(pkg_dir, "extdata",
+                                      "Wellstone_RNAseq_muscle_content.xlsx"),
+           sheetName="Muscle content (TPM)",
+           row.names=FALSE)
+```
+
+## Visualization
+The blood, fat and muscle content scores are given to each sample. Boxplot below illustrates that the FSHD biopsies categorized in the Muscle-Low class are fatter and "blooder" and have less muscle content than the rest of the biopsies.
+
+```{r boxplot_for_qc}
+tmp <- celltype_tpm %>% gather(key=cell_type, value=score, -sample_name,
+                               -pheno_type, -classes, -classes_color) %>%
+  dplyr::mutate(cell_type = factor(cell_type))
+
+color_manual <- celltype_tpm %>% group_by(classes) %>% 
+  summarise(color=unique(classes_color)) 
+
+ggplot(tmp, aes(x=classes, y=score, color=classes)) +
+  geom_boxplot() +
+  facet_wrap(~ cell_type, scale="free",  nrow=2) +
+  theme_minimal() +
+  theme(axis.text.x=element_blank(), legend.justification=c(1,0), legend.position=c(1,0)) +
+  scale_color_manual(values=color_manual$color) +
+  labs(y="Avg. log10(TPM +1)", x="FSHD classes", 
+       title="Blood, fat, muscle content score by TPM")
+```
+
+
+
+## Determine "outliers"
+```{r build_distribution}
+#' use TPM or use log10(TPM+10)?
+markers_dds <- sanitized.dds[markers$gencode_id]
+tpm <- t(assays(markers_dds)[["TPM"]])
+tpm_log <- log10(tpm+1)
+
+#' get distribution of test statistics by bootstrapping
+library(modelr)
+get_test_stats <- function(expr, n=500) {
+  set.seed(123)
+  boot <- bootstrap(as.data.frame(expr), n)
+  models <- map(boot$strap, function(x) {
+    colMeans(as.data.frame(x))
+  })
+  #' row bind
+  do.call(rbind, models)
+}
+
+#' 1) get distribution
+set.seed(123)
+test_stats <- get_test_stats(tpm, n=1000)
+tmp <- as.data.frame(test_stats) %>% gather(key=markers, value=statistics)
+gg <- ggplot(tmp, aes(statistics)) +
+  geom_density() +
+  facet_wrap(~ markers, scale="free") +
+  theme_minimal()
+gg
+```
+```{r get_ci}
+#' 2) get confidence interval
+ci <- as.data.frame(test_stats) %>%
+  gather(key=marker, value=statistics) %>%
+  group_by(marker) %>%
+  summarise(ci = list(mean_cl_normal(statistics, conf.int=0.99, na.rm=TRUE))) %>% 
+                        #rename(mean=y, lwr=ymin, upr=ymax))) %>% 
+  unnest
+
+ stats <- as.data.frame(test_stats) %>%
+  gather(key=gencode_id, value= statistics) %>% 
+  group_by(gencode_id) %>%
+  summarise(mu = mean(statistics, na.rm = TRUE),
+            ssd = sd(statistics, na.rm = TRUE),
+            bootstrap_n=n()) %>%
+   left_join(markers, by="gencode_id") %>%
+   arrange(cell_type) %>%
+   dplyr::mutate(min= mu - 5*ssd, max=mu + 5*ssd)
+ ggplot(stats, aes(x=mu, y=gene_name)) +
+   geom_errorbarh(aes(xmin=mu-3*ssd, xmax=mu+3*ssd), height=0.2) +
+   facet_wrap( ~cell_type, scale="free", ncol=1) +
+   theme_bw() +
+   labs(x="mu +/- 3 sigma")
+```
+Outliers: outside of $\mu \pm 3\sigma$?
+```{r determine_outliers}
+stats %>% dplyr::filter(cell_type=="muscle")
+
+a <- as.data.frame(tpm ) %>%
+  rownames_to_column(var="sample_name") %>%
+  add_column(cluster=sanitized.dds$new_cluster_name) %>%
+  dplyr::filter(cluster == "Muscle-Low") %>%
+  dplyr::select(sample_name, ENSG00000109061.9, ENSG00000130595.16, ENSG00000143632.14)
+
+flag <- lapply(colnames(tpm), function(gene_id) {
+  lower <- stats %>% dplyr::filter(gencode_id == gene_id) %>% pull(min)
+  upper <- stats %>% dplyr::filter(gencode_id == gene_id) %>% pull(max)
+  
+  x <- tpm_log[, gene_id]
+  flag <- rep(0, length(x))
+  flag[x < lower] <- -1
+  flag[x > upper] <- 1
+  flag
+})
+names(flag) <- colnames(tpm_log)
+flag <- do.call(cbind, flag)
+rownames(flag) <- rownames(tpm_log)
+
+flag <- as.data.frame(flag) %>%
+  rownames_to_column(var="sample_name") %>%
+  add_column(cluster=sanitized.dds$new_cluster_name)
+
+flag %>% dplyr::filter(cluster=="Muscle-Low")
+```
+
+use permutation test? calculate the p-value by constructing mean distribution?
+
+
+## Determine "bad" biopsies?
+
+## Sample 01-0037
+``
+
+## Tables
+```{r kable_celltype_tpm}
+tb <- dplyr::select(celltype_tpm, -classes_color) %>%
+  arrange(classes)
+knitr::kable(tb, caption="Blood, fat and muscle content index.")
+#' blood, fat and muscle mean score for each class
+tb2 <- tb %>%
+  group_by(classes) %>%
+  summarise(blood_mean = mean(blood),
+            fat_mean = mean(fat),
+            muscle_mean = mean(muscle))
+knitr::kable(tb2)
+```

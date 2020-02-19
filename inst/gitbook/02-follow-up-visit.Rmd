@@ -1,0 +1,231 @@
+# Follow-up visit {#follow-up-visit}
+
+This chapter is dedicated to the one-year follow-up visit RNA-seq analysis and correlation to MRI characterisitcs and histopathology scores.
+
+## Loading datasets
+First of all, we load the libraries and `sanitized.dds`, `year2.dds`, and `mri_pathology` datasets. 
+```{r load-lib-part1, message=FALSE, results="hide", echo=TRUE}
+library(DESeq2)
+library(xlsx)
+library(ggplot2)
+library(tidyverse)
+library(BiocParallel)
+multi_param <- MulticoreParam(worker=2)
+register(multi_param, default=TRUE)
+
+pkg_dir <- "/fh/fast/tapscott_s/CompBio/RNA-Seq/hg38.FSHD.biopsy.all"
+
+source(file.path(pkg_dir, "scripts", "manuscript_tools.R"))
+load(file.path(pkg_dir, "public_data", "sanitized.dds.rda"))
+load(file.path(pkg_dir, "public_data", "mri_pathology.rda"))
+load(file.path(pkg_dir, "public_data", "year2.dds.rda"))
+```
+
+## The follow-up visit RNA-seq dataset
+The follow-up visit RNA-seq dataset, `year2.dds`, consists with 8 controls and 27 FSHD follow-up visit samples. It is a subet of `sanitized.dds` and the normalization excludes the initial visit. Chuck below shows the process of subsetting `sanitized.dds` and getting the normalization factor of the `year2.dds` instance. 
+
+```{r make-year2, eval=FALSE}
+keep_column_2 <- (sanitized.dds$visit == "II" | sanitized.dds$pheno_type == "Control") 
+year2.dds <- sanitized.dds[, keep_column_2]
+year2.dds$batch <- factor(year2.dds$batch)
+
+#' re-normalized again, get the size factors and dispersion estimations
+year2.dds <- estimateSizeFactors(year2.dds)
+year2.dds <- estimateDispersions(year2.dds)
+design(year2.dds) <- ~ pheno_type 
+#year2.rlg <- rlog(year2.dds, blind = TRUE) #normalized with respect to year2 library size
+```
+
+## DUX4 and other marker scores
+The DUX4 score of RNA-seq biopsy sampeles is based on four FSHD/DUX4-positive biomarkers that were previouly found in **Yao 2014**[@yao2014]. Additional marker scores (extracellular matrix, immune/inflamm, cell cycle and immunoglobulin) are based on selected discriminative genes that shape the cluster pattern of the samples captured by Principal Components Analysis (top PC1/PC2 loading variables). The marker score is calculated as the sum of the these for biomarkers' local regularized log **Love 2014**[@love2014] scaling difference from the control average. 
+
+```{r define-score, results="hide", message=FALSE, echo=TRUE}
+#' define the determinative genes and calculate the marker scores
+markers_list <- 
+  list(dux4 = c("LEUTX", "KHDC1L", "PRAMEF2", "TRIM43"),
+       extracellular_matrix = c("PLA2G2A", "COL19A1", "COMP", "COL1A1"), 
+       inflamm = c("CCL18", "CCL13" ,"C6", "C7"), 
+       cell_cycle = c("CCNA1", "CDKN1A", "CDKN2A"), 
+       immunoglobulin = c("IGHA1", "IGHG4", "IGHGP")) 
+#' get local rlog                            
+markers_id_list <- lapply(markers_list, get_ensembl, rse=year2.dds)
+relative_rlg <- lapply(markers_id_list, .get_sum_relative_local_rlg,
+                       dds = year2.dds)  
+```
+
+```{r display-markers, echo=FALSE}
+tmp <- as.data.frame(sapply(markers_list, paste, collapse=", "))
+knitr::kable(tmp, col.names="biomarkers/genes",
+             caption="Selected Genes used to calculate the marker scores.")
+```
+
+Append the marker scores to `year2.dds`.
+```{r append-to-year2}
+#' (1a) Append markers score to colData of year2.dds and year2.rlg
+df <- as.data.frame(do.call(cbind, relative_rlg)) %>%
+  dplyr::rename(dux4.rlogsum=dux4, ecm.rlogsum=extracellular_matrix, 
+                inflamm.rlogsum=inflamm, cellcycle.rlogsum=cell_cycle,
+                img.rlogsum=immunoglobulin)       
+
+if (!any(names(colData(year2.dds)) %in% "dux4.rlogsum")) {
+  colData(year2.dds) <- append(colData(year2.dds), 
+                               as(df[colnames(year2.dds), ], "DataFrame"))
+}   
+```
+### Group samples by DUX4 score
+We divide the controls and the one-year follow-up FSHD samples into four sub-groups (G1-G4) based on their DUX4 scores and hierarchical clustering. 
+
+```{r group-by-dux4, message=FALSE}
+dux4_local_rlog <- .get_local_rlg(markers_id_list$dux4, year2.dds)
+dux4_tree <- .get_DUX4_clust_tree(dux4_rlog=dux4_local_rlog)
+year2.dds$dux4.group <- dux4_tree[colnames(year2.dds)] 
+```
+
+### Heatmap of the discriminative genes
+Heatmap below presents the z-score (by rows) of local rlog expression of the selected, discriminative genes from different function categories. The DUX4 target genes displayed in the heatmap are not the main biomarkers for DUX4 score calculation, but intstead are the genes (ZSCAN4, MBD3L2 and PRAMEF25) that also shows equivalent discriminative power in cluster pattern recognition. 
+
+```{r heatmap-discriminative-genes, message=FALSE}
+library(pheatmap)
+library(reshape2)
+tmp <- markers_id_list
+alt_dux4 <- get_ensembl(c("ZSCAN4", "MBD3L2", "PRAMEF25"), year2.dds)
+tmp$dux4 <- alt_dux4
+selected <- melt(tmp)
+data <- as.matrix(.get_local_rlg(as.character(selected$value), year2.dds))
+data <- data[as.character(selected$value), ]
+rownames(data) <- rowData(year2.dds[rownames(data)])$gene_name
+zscore_data <- (data - rowMeans(data)) / rowSds(data)
+
+annotation_col <- data.frame(pheno_type=year2.dds$pheno_type,
+                             dux4_group=factor(year2.dds$dux4.group))
+rownames(annotation_col) <- colnames(year2.dds)
+annotation_row <- data.frame(marker_type=selected$L1)
+rownames(annotation_row) <- rownames(data)
+row_gaps <- cumsum(sapply(tmp, length))
+
+pheatmap(zscore_data, annotation_col=annotation_col, cellheight=8,
+         fontsize_row = 7, fontsize = 7,
+         cluster_rows = FALSE, gaps_row = row_gaps,
+         annotation_row=annotation_row, scale="none")
+```
+
+## DUX4 candidate biomarkers are eleveated in FSHD
+
+```{r scatter-dux4-score-year2, message=FALSE, echo=TRUE}
+library(gridExtra)
+file_name <- file.path(pkg_dir, "figures", "Year2_Scatter_FourBiomarkers.pdf")
+source(file.path(pkg_dir, "scripts", "manuscript_tools.R"))
+gobj <- 
+  .makeFourBiomarkerScatterPlot(dds=year2.dds, 
+                                group=year2.dds$dux4.group,
+                                markers_id=markers_id_list$dux4,
+                                call_threshold=2,
+                                file_name=file_name)
+```
+
+The scatter plot blow is Fig. 1 in the manuscript showing the relative expression of four candidate biomarkers in muscle biopsies from control and follow-up visit FSHD muscles. The sum of the relative expression of four DUX4-regulated genes (LEUTX, KHDC1L, TRIM43 and PRAMEF2) was plotted for each RNA-seq sample. The FSHD biopsies from follow-up visit are indicated by an asterisk (*), whereas control muscle biopsies do not have an asterisk.  The size of the spot reflects the number of candidate biomarkers above a threshold level for considering elevated expression from the controls (log fold > 2). 
+
+```{r plot-scatter-dux4-score, fig.width=8, fig.height=8}
+grid.arrange(gobj$tilePlot, gobj$scatterPlot, nrow=2, ncol=1, heights=c(1,3))
+```
+
+## Correlation of DUX4 score to MRI and histopathology
+DUX4 score is represented as the sum of relative rlog expression of four DUX4 biomarkers. Code chunk prepares a `data.frame` appending DUX4 scores to the histopathology scores and MRI signals. 
+
+```{r df-dux4-mri-pathology}
+dux4_score <- colData(year2.dds)[, c("sample_name", "dux4.rlogsum", "dux4.group")]
+time_2 <- mri_pathology[["time_2"]] %>% 
+  left_join(as.data.frame(dux4_score), by="sample_name") %>% 
+  dplyr::filter(!is.na(Pathology.Score)) %>%
+  rename(DUX4.Score = dux4.rlogsum)
+```    
+
+### DUX4 and pathology score
+Similar to the first year, DUX4 score shows moderate correlation to pathology socre (0.507).
+```{r dux4-pathology}
+cor <- cor(time_2$Pathology.Score, time_2$DUX4.Score,
+           method="spearman")
+ggplot(time_2, aes(x=Pathology.Score, y=DUX4.Score))+
+  geom_point(size=1) +
+  geom_smooth(method = lm, se=FALSE) + 
+  annotate("text", x=7.5, y=15, vjust=0.5, 
+           label=paste0("correlation=", format(cor, digits=3))) +
+  theme_bw() +
+  labs(y="DUX4 score \n (relative biomarker expression)",
+       x="Pathology score") 
+
+```
+
+### DUX4 and STIR signal
+DUX4 score and qualitative T2-STIR rating of the follow-up biopsied FSHD muscles show mederate correlation (0.53).
+
+```{r dux4-stir-scatter}
+cor <- cor(as.numeric(time_2$STIR_rating), time_2$DUX4.Score,
+           method="spearman")
+ggplot(time_2, aes(x=as.numeric(STIR_rating), y=DUX4.Score))+
+  geom_point(size=1) +
+  geom_smooth(method = lm, se=FALSE) + 
+  annotate("text", x=2.5, y=14.5, vjust=0.5, 
+           label=paste0("correlation=", format(cor, digits=3))) +
+  theme_bw() +
+  labs(y="DUX4 score \n (relative biomarker expression)",
+       x="STIR rating") 
+```
+
+72% of STIR-positive muscle biopsies show elevated DUX4 target expression (DUX4 score > 2.5). 
+```{r dux4-stir-boxplot}
+DUX4_threshold <- 2.5 # an arbitrary threshold
+#' adding new columns indicating DUX4 (+/-) 
+#' if STIR = 0 but T1_rating > 0, than STIR_status should be NA, not MRI normal
+new_time_2 <- time_2 %>%
+  mutate(STIR_status = ifelse(STIR_rating > 0, "STIR+", "MRI normal")) %>%
+  mutate(DUX4_status = ifelse(DUX4.Score > DUX4_threshold, "DUX4+", "DUX4-")) %>%
+  mutate(STIR_status = ifelse((STIR_rating == 0 & T1_rating > 0), NA, STIR_status)) %>%
+  dplyr::filter(!is.na(STIR_status))
+
+gg_stir <- ggplot(new_time_2, aes(x=STIR_status, y=DUX4.Score,
+                       group=STIR_status)) +
+  geom_boxplot(outlier.shape = NA, width=0.5 ) +
+  geom_jitter(width=0.2, size=1) +
+  geom_hline(yintercept = DUX4_threshold, color="grey", 
+             linetype="dashed") +
+  theme_bw() + 
+  labs(title="MRI normal vs. STIR+",
+       y="DUX4 score", x="STIR status")  +
+  theme(plot.title = element_text(size=9, hjust = 0.5))
+gg_stir
+```
+
+```{r freq-dux4-stir-positive}
+#new_time_2 %>% dplyr::filter(STIR_status == "MRI Normal")
+message("DUX4 score mean/sd by STIR status")
+new_time_2 %>% group_by(STIR_status) %>% summarize(avg=mean(DUX4.Score), sd=sd(DUX4.Score))
+message("Frequency of STIR+ with DUX4+ (DUX4 score > 2.5)")
+new_time_2 %>% dplyr::filter(STIR_status == "STIR+") %>%
+  summarize(freq = sum(DUX4_status == "DUX4+") / dplyr::n()) #18 
+```
+
+## DUX4 score and T1 fat fraction
+DUX4 score and T1 fat fraction seem poorly correlated in terms of linear regression, however, the mid-range of T1 fat fraction (0.2 ~ 0.4) displays a more posite relationship with the DUX4 score.
+```{r dux4-ff-linear}
+cor <- cor(time_2$fat_fraction, time_2$DUX4.Score, method="spearman")
+ggplot(time_2, aes(x=fat_fraction, y=DUX4.Score))+
+  geom_point(size=1) +
+  geom_smooth(method = lm, se=FALSE) + 
+  annotate("text", x=0.5, y=10, vjust=0.5, 
+           label=paste0("correlation=", format(cor, digits=3))) +
+  theme_bw() +
+  labs(y="DUX4 score \n (relative biomarker expression)",
+       x="T1 fat fraction")  
+```
+
+```{r dux4-ff-nonliner}
+ggplot(time_2, aes(x=fat_fraction, y=DUX4.Score))+
+  geom_point(size=1) +
+  geom_smooth(method = loess, se=FALSE) + 
+  geom_vline(xintercept = 0.2, linetype="dashed", color="gray") +
+  geom_vline(xintercept = 0.4, linetype="dashed", color="gray") +
+  theme_bw() +
+  labs(y="DUX4 score \n (relative biomarker expression)",
+       x="T1 fat fraction")     
+```
