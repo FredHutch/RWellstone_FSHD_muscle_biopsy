@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 4 Longitudinal changes over two visits | Longitudinal measures of RNA-seq expression and disease activity in FSHD muscle biopsies</title>
+  <meta name="description" content="Bioinformatics and statistics analysis for the logitudinal study of RNA-seq expression and disear acitivity in FSHD muscle bipsies" />
+  <meta name="generator" content="bookdown 0.14 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 4 Longitudinal changes over two visits | Longitudinal measures of RNA-seq expression and disease activity in FSHD muscle biopsies" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Bioinformatics and statistics analysis for the logitudinal study of RNA-seq expression and disear acitivity in FSHD muscle bipsies" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 4 Longitudinal changes over two visits | Longitudinal measures of RNA-seq expression and disease activity in FSHD muscle biopsies" />
+  
+  <meta name="twitter:description" content="Bioinformatics and statistics analysis for the logitudinal study of RNA-seq expression and disear acitivity in FSHD muscle bipsies" />
+  
+
+<meta name="author" content="Chao-Jen Wong, Tapscott Lab, Fred Hutch" />
+
+
+<meta name="date" content="2020-02-19" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="follow-up-visit.html"/>
+<link rel="next" href="rnaseq-classes.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">RNA-seq data analysis</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#package-structure-on-the-master-branch"><i class="fa fa-check"></i><b>1.1</b> Package structure on the master branch</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#gene-expression-omnibus-series"><i class="fa fa-check"></i><b>1.2</b> Gene Expression Omnibus series</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#system-requirment"><i class="fa fa-check"></i><b>1.3</b> System requirment</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="preprocessing.html"><a href="preprocessing.html"><i class="fa fa-check"></i><b>2</b> Preprocessing and gene counts</a><ul>
+<li class="chapter" data-level="2.1" data-path="preprocessing.html"><a href="preprocessing.html#shell-script-for-pre-processing"><i class="fa fa-check"></i><b>2.1</b> Shell script for pre-processing</a></li>
+<li class="chapter" data-level="2.2" data-path="preprocessing.html"><a href="preprocessing.html#annotation-txdb-package"><i class="fa fa-check"></i><b>2.2</b> Annotation TxDb package</a></li>
+<li class="chapter" data-level="2.3" data-path="preprocessing.html"><a href="preprocessing.html#r-script-for-gene-counts"><i class="fa fa-check"></i><b>2.3</b> R Script for gene counts</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="follow-up-visit.html"><a href="follow-up-visit.html"><i class="fa fa-check"></i><b>3</b> Follow-up visit</a><ul>
+<li class="chapter" data-level="3.1" data-path="follow-up-visit.html"><a href="follow-up-visit.html#loading-datasets"><i class="fa fa-check"></i><b>3.1</b> Loading datasets</a></li>
+<li class="chapter" data-level="3.2" data-path="follow-up-visit.html"><a href="follow-up-visit.html#the-follow-up-visit-rna-seq-dataset"><i class="fa fa-check"></i><b>3.2</b> The follow-up visit RNA-seq dataset</a></li>
+<li class="chapter" data-level="3.3" data-path="follow-up-visit.html"><a href="follow-up-visit.html#dux4-and-other-marker-scores"><i class="fa fa-check"></i><b>3.3</b> DUX4 and other marker scores</a><ul>
+<li class="chapter" data-level="3.3.1" data-path="follow-up-visit.html"><a href="follow-up-visit.html#group-samples-by-dux4-score"><i class="fa fa-check"></i><b>3.3.1</b> Group samples by DUX4 score</a></li>
+<li class="chapter" data-level="3.3.2" data-path="follow-up-visit.html"><a href="follow-up-visit.html#heatmap-of-the-discriminative-genes"><i class="fa fa-check"></i><b>3.3.2</b> Heatmap of the discriminative genes</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="follow-up-visit.html"><a href="follow-up-visit.html#dux4-candidate-biomarkers-are-eleveated-in-fshd"><i class="fa fa-check"></i><b>3.4</b> DUX4 candidate biomarkers are eleveated in FSHD</a></li>
+<li class="chapter" data-level="3.5" data-path="follow-up-visit.html"><a href="follow-up-visit.html#correlation-of-dux4-score-to-mri-and-histopathology"><i class="fa fa-check"></i><b>3.5</b> Correlation of DUX4 score to MRI and histopathology</a><ul>
+<li class="chapter" data-level="3.5.1" data-path="follow-up-visit.html"><a href="follow-up-visit.html#dux4-and-pathology-score"><i class="fa fa-check"></i><b>3.5.1</b> DUX4 and pathology score</a></li>
+<li class="chapter" data-level="3.5.2" data-path="follow-up-visit.html"><a href="follow-up-visit.html#dux4-and-stir-signal"><i class="fa fa-check"></i><b>3.5.2</b> DUX4 and STIR signal</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="follow-up-visit.html"><a href="follow-up-visit.html#dux4-score-and-t1-fat-fraction"><i class="fa fa-check"></i><b>3.6</b> DUX4 score and T1 fat fraction</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="longitudinal-changes.html"><a href="longitudinal-changes.html"><i class="fa fa-check"></i><b>4</b> Longitudinal changes over two visits</a><ul>
+<li class="chapter" data-level="4.1" data-path="longitudinal-changes.html"><a href="longitudinal-changes.html#loading-datasets-1"><i class="fa fa-check"></i><b>4.1</b> Loading datasets</a></li>
+<li class="chapter" data-level="4.2" data-path="longitudinal-changes.html"><a href="longitudinal-changes.html#pathology-scores"><i class="fa fa-check"></i><b>4.2</b> Pathology scores</a></li>
+<li class="chapter" data-level="4.3" data-path="longitudinal-changes.html"><a href="longitudinal-changes.html#change-of-marker-scores-over-two-visits"><i class="fa fa-check"></i><b>4.3</b> Change of marker scores over two visits</a><ul>
+<li class="chapter" data-level="4.3.1" data-path="longitudinal-changes.html"><a href="longitudinal-changes.html#dux4-marker-scores"><i class="fa fa-check"></i><b>4.3.1</b> DUX4 marker scores</a></li>
+<li class="chapter" data-level="4.3.2" data-path="longitudinal-changes.html"><a href="longitudinal-changes.html#extracellular-matrix-structure-scores"><i class="fa fa-check"></i><b>4.3.2</b> Extracellular matrix structure scores</a></li>
+<li class="chapter" data-level="4.3.3" data-path="longitudinal-changes.html"><a href="longitudinal-changes.html#immuse-responseinflammatory-score"><i class="fa fa-check"></i><b>4.3.3</b> Immuse response/Inflammatory score</a></li>
+<li class="chapter" data-level="4.3.4" data-path="longitudinal-changes.html"><a href="longitudinal-changes.html#immunoglobulin-score"><i class="fa fa-check"></i><b>4.3.4</b> Immunoglobulin score</a></li>
+<li class="chapter" data-level="4.3.5" data-path="longitudinal-changes.html"><a href="longitudinal-changes.html#cell-cycle-score"><i class="fa fa-check"></i><b>4.3.5</b> Cell cycle score</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="longitudinal-changes.html"><a href="longitudinal-changes.html#pathology-and-dux4-scores-changes"><i class="fa fa-check"></i><b>4.4</b> Pathology and DUX4 scores changes</a></li>
+<li class="chapter" data-level="4.5" data-path="longitudinal-changes.html"><a href="longitudinal-changes.html#markers-by-visits-and-stir-ratings"><i class="fa fa-check"></i><b>4.5</b> Markers by visits and STIR ratings</a><ul>
+<li class="chapter" data-level="4.5.1" data-path="longitudinal-changes.html"><a href="longitudinal-changes.html#dux4-scores-and-stir-ratings"><i class="fa fa-check"></i><b>4.5.1</b> DUX4 scores and STIR ratings</a></li>
+<li class="chapter" data-level="4.5.2" data-path="longitudinal-changes.html"><a href="longitudinal-changes.html#other-markers"><i class="fa fa-check"></i><b>4.5.2</b> Other markers</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="rnaseq-classes.html"><a href="rnaseq-classes.html"><i class="fa fa-check"></i><b>5</b> Classes of RNA-seq biopsy sampels</a><ul>
+<li class="chapter" data-level="5.1" data-path="rnaseq-classes.html"><a href="rnaseq-classes.html#fshd-classes"><i class="fa fa-check"></i><b>5.1</b> FSHD classes</a><ul>
+<li class="chapter" data-level="5.1.1" data-path="rnaseq-classes.html"><a href="rnaseq-classes.html#load-datasets-and-libraries"><i class="fa fa-check"></i><b>5.1.1</b> Load datasets and libraries</a></li>
+<li class="chapter" data-level="5.1.2" data-path="rnaseq-classes.html"><a href="rnaseq-classes.html#feature-selection"><i class="fa fa-check"></i><b>5.1.2</b> Feature selection</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="rnaseq-classes.html"><a href="rnaseq-classes.html#sample-space-and-k-means-clustering"><i class="fa fa-check"></i><b>5.2</b> Sample space and k-means clustering</a></li>
+<li class="chapter" data-level="5.3" data-path="rnaseq-classes.html"><a href="rnaseq-classes.html#visualize-the-fshd-classes"><i class="fa fa-check"></i><b>5.3</b> Visualize the FSHD classes</a></li>
+<li class="chapter" data-level="5.4" data-path="rnaseq-classes.html"><a href="rnaseq-classes.html#view-by-selected-marker-genes"><i class="fa fa-check"></i><b>5.4</b> View by selected marker genes</a></li>
+<li class="chapter" data-level="5.5" data-path="rnaseq-classes.html"><a href="rnaseq-classes.html#mri-characterisitcs-and-pathology-scores-by-fshd-classes"><i class="fa fa-check"></i><b>5.5</b> MRI characterisitcs and pathology scores by FSHD classes</a></li>
+<li class="chapter" data-level="5.6" data-path="rnaseq-classes.html"><a href="rnaseq-classes.html#average-expression-of-five-biological-process-by-fshd-classes"><i class="fa fa-check"></i><b>5.6</b> Average expression of five biological process by FSHD classes</a></li>
+<li class="chapter" data-level="5.7" data-path="rnaseq-classes.html"><a href="rnaseq-classes.html#enriched-go-terms"><i class="fa fa-check"></i><b>5.7</b> Enriched GO terms</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="mild-fshd.html"><a href="mild-fshd.html"><i class="fa fa-check"></i><b>6</b> Markers discriminate Mild FSHD from control samples</a><ul>
+<li class="chapter" data-level="6.0.1" data-path="mild-fshd.html"><a href="mild-fshd.html#load-libaray-and-datasets"><i class="fa fa-check"></i><b>6.0.1</b> Load libaray and datasets</a></li>
+<li class="chapter" data-level="6.1" data-path="mild-fshd.html"><a href="mild-fshd.html#differentially-up-regulated-genes-in-mild-fshd-samples"><i class="fa fa-check"></i><b>6.1</b> Differentially up-regulated genes in Mild FSHD samples</a></li>
+<li class="chapter" data-level="6.2" data-path="mild-fshd.html"><a href="mild-fshd.html#select-fshd-relavent-candidates"><i class="fa fa-check"></i><b>6.2</b> Select FSHD relavent candidates</a></li>
+<li class="chapter" data-level="6.3" data-path="mild-fshd.html"><a href="mild-fshd.html#go-analysis"><i class="fa fa-check"></i><b>6.3</b> GO analysis</a></li>
+<li class="chapter" data-level="6.4" data-path="mild-fshd.html"><a href="mild-fshd.html#cross-validation-by-random-forests"><i class="fa fa-check"></i><b>6.4</b> Cross validation by random forests</a></li>
+<li class="chapter" data-level="6.5" data-path="mild-fshd.html"><a href="mild-fshd.html#discriminative-power-per-candidates"><i class="fa fa-check"></i><b>6.5</b> Discriminative power per candidates</a></li>
+<li class="chapter" data-level="6.6" data-path="mild-fshd.html"><a href="mild-fshd.html#heatmap-of-some-best-candidates"><i class="fa fa-check"></i><b>6.6</b> Heatmap of some best candidates</a></li>
+<li class="chapter" data-level="6.7" data-path="mild-fshd.html"><a href="mild-fshd.html#some-strong-candidates"><i class="fa fa-check"></i><b>6.7</b> Some strong candidates</a><ul>
+<li class="chapter" data-level="6.7.1" data-path="mild-fshd.html"><a href="mild-fshd.html#ckdn1a"><i class="fa fa-check"></i><b>6.7.1</b> CKDN1A</a></li>
+<li class="chapter" data-level="6.7.2" data-path="mild-fshd.html"><a href="mild-fshd.html#ccna1"><i class="fa fa-check"></i><b>6.7.2</b> CCNA1</a></li>
+<li class="chapter" data-level="6.7.3" data-path="mild-fshd.html"><a href="mild-fshd.html#and-few-more-examples"><i class="fa fa-check"></i><b>6.7.3</b> And few more examples</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="pax7.html"><a href="pax7.html"><i class="fa fa-check"></i><b>7</b> PAX7 target mis-regulation in FSHD biopsy RNA-seq samples</a><ul>
+<li class="chapter" data-level="7.1" data-path="pax7.html"><a href="pax7.html#pa7-scores-and-disease-activity"><i class="fa fa-check"></i><b>7.1</b> PA7 scores and disease activity</a></li>
+<li class="chapter" data-level="7.2" data-path="pax7.html"><a href="pax7.html#mis-regulation-of-pax7-targeted-gene"><i class="fa fa-check"></i><b>7.2</b> Mis-regulation of PAX7-targeted gene</a><ul>
+<li class="chapter" data-level="7.2.1" data-path="pax7.html"><a href="pax7.html#heatmap-showing-mis-regulation"><i class="fa fa-check"></i><b>7.2.1</b> Heatmap showing mis-regulation</a></li>
+<li class="chapter" data-level="7.2.2" data-path="pax7.html"><a href="pax7.html#violin-plot-of-pax7-targets-expression"><i class="fa fa-check"></i><b>7.2.2</b> Violin plot of PAX7 targets expression</a></li>
+<li class="chapter" data-level="7.2.3" data-path="pax7.html"><a href="pax7.html#observation-of-the-95-ci-of-the-mean-estimates"><i class="fa fa-check"></i><b>7.2.3</b> Observation of the 95% CI of the mean estimates</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="pax7.html"><a href="pax7.html#compare-to-dux4-targeted-biomarkers"><i class="fa fa-check"></i><b>7.3</b> Compare to DUX4-targeted biomarkers</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="immune-infiltrate.html"><a href="immune-infiltrate.html"><i class="fa fa-check"></i><b>8</b> Immune Cell Infiltration</a><ul>
+<li class="chapter" data-level="8.1" data-path="immune-infiltrate.html"><a href="immune-infiltrate.html#immune-cell-markers"><i class="fa fa-check"></i><b>8.1</b> Immune cell markers</a></li>
+<li class="chapter" data-level="8.2" data-path="immune-infiltrate.html"><a href="immune-infiltrate.html#immune-cell-type-scores-by-tpm-per-samples"><i class="fa fa-check"></i><b>8.2</b> Immune cell type scores by TPM per Samples</a></li>
+<li class="chapter" data-level="8.3" data-path="immune-infiltrate.html"><a href="immune-infiltrate.html#immune-cell-marker-scores-by-logfc-per-fshd-classes"><i class="fa fa-check"></i><b>8.3</b> Immune cell marker scores by logFC per FSHD classes</a></li>
+<li class="chapter" data-level="8.4" data-path="immune-infiltrate.html"><a href="immune-infiltrate.html#frequency-of-significance"><i class="fa fa-check"></i><b>8.4</b> Frequency of significance</a></li>
+<li class="chapter" data-level="8.5" data-path="immune-infiltrate.html"><a href="immune-infiltrate.html#average-rlog-per-sample"><i class="fa fa-check"></i><b>8.5</b> Average rlog per sample</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="biopsy-qc.html"><a href="biopsy-qc.html"><i class="fa fa-check"></i><b>9</b> Biopsy Quality Control</a><ul>
+<li class="chapter" data-level="9.1" data-path="biopsy-qc.html"><a href="biopsy-qc.html#blood-fat-and-muscle-cell-markers"><i class="fa fa-check"></i><b>9.1</b> Blood, fat and muscle cell markers</a></li>
+<li class="chapter" data-level="9.2" data-path="biopsy-qc.html"><a href="biopsy-qc.html#define-score"><i class="fa fa-check"></i><b>9.2</b> Define score</a></li>
+<li class="chapter" data-level="9.3" data-path="biopsy-qc.html"><a href="biopsy-qc.html#visualization"><i class="fa fa-check"></i><b>9.3</b> Visualization</a></li>
+<li class="chapter" data-level="9.4" data-path="biopsy-qc.html"><a href="biopsy-qc.html#determine-outliers"><i class="fa fa-check"></i><b>9.4</b> Determine “outliers”</a></li>
+<li class="chapter" data-level="9.5" data-path="biopsy-qc.html"><a href="biopsy-qc.html#determine-bad-biopsies"><i class="fa fa-check"></i><b>9.5</b> Determine “bad” biopsies?</a></li>
+<li class="chapter" data-level="9.6" data-path="biopsy-qc.html"><a href="biopsy-qc.html#sample-01-0037"><i class="fa fa-check"></i><b>9.6</b> Sample 01-0037</a></li>
+<li class="chapter" data-level="9.7" data-path="biopsy-qc.html"><a href="biopsy-qc.html#tables"><i class="fa fa-check"></i><b>9.7</b> Tables</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Longitudinal measures of RNA-seq expression and disease activity in FSHD muscle biopsies</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="longitudinal-changes" class="section level1">
+<h1><span class="header-section-number">Chapter 4</span> Longitudinal changes over two visits</h1>
+<p>In this chapter, we look into the temporal changes in pathology scores, DUX4 target expression and MRI signals over the intial and one-year follow-up visits.</p>
+<div id="loading-datasets-1" class="section level2">
+<h2><span class="header-section-number">4.1</span> Loading datasets</h2>
+<p>Load libraries and the main dataset, <code>sanitized.dds</code> and histopathology scores and MRI characteristics <code>mri_pathology</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">suppressPackageStartupMessages</span>(<span class="kw">library</span>(DESeq2))
+<span class="kw">suppressPackageStartupMessages</span>(<span class="kw">library</span>(tidyverse))
+<span class="kw">suppressPackageStartupMessages</span>(<span class="kw">library</span>(ggplot2))
+<span class="kw">suppressPackageStartupMessages</span>(<span class="kw">library</span>(dplyr))
+
+pkg_dir &lt;-<span class="st"> &quot;/fh/fast/tapscott_s/CompBio/RNA-Seq/hg38.FSHD.biopsy.all&quot;</span>
+<span class="kw">source</span>(<span class="kw">file.path</span>(pkg_dir, <span class="st">&quot;scripts&quot;</span>, <span class="st">&quot;manuscript_tools.R&quot;</span>))
+
+<span class="kw">load</span>(<span class="kw">file.path</span>(pkg_dir, <span class="st">&quot;public_data&quot;</span>, <span class="st">&quot;sanitized.dds.rda&quot;</span>))
+<span class="kw">load</span>(<span class="kw">file.path</span>(pkg_dir, <span class="st">&quot;public_data&quot;</span>, <span class="st">&quot;mri_pathology.rda&quot;</span>))</code></pre></div>
+</div>
+<div id="pathology-scores" class="section level2">
+<h2><span class="header-section-number">4.2</span> Pathology scores</h2>
+<p>The following chunk cleans the <code>mri_pathology</code> object: removing un-paired samples or samples without data.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">path_score &lt;-<span class="st"> </span><span class="kw">bind_rows</span>(mri_pathology<span class="op">$</span>time_<span class="dv">1</span>, mri_pathology<span class="op">$</span>time_<span class="dv">2</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">visit =</span> <span class="kw">ifelse</span>(visit<span class="op">==</span><span class="st">&quot;I&quot;</span>, <span class="st">&quot;initial&quot;</span>, <span class="st">&quot;follow-up&quot;</span>)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">visit =</span> <span class="kw">factor</span>(visit, <span class="dt">levels=</span><span class="kw">c</span>(<span class="st">&quot;initial&quot;</span>, <span class="st">&quot;follow-up&quot;</span>))) <span class="op">%&gt;%</span>
+<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(paired)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(Pathology.Score)) <span class="op">%&gt;%</span>
+<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(<span class="op">!</span>patient_id <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;32-0008&quot;</span>, <span class="st">&quot;32-0010&quot;</span>, <span class="st">&quot;32-0016&quot;</span>)) </code></pre></div>
+<p>The medians of pathology score for intial and follow-up visits are summarized below.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">path_sum &lt;-<span class="st"> </span>path_score <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(visit) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">summarize</span>(<span class="dt">median=</span><span class="kw">median</span>(Pathology.Score),
+            <span class="dt">mean=</span><span class="kw">mean</span>(Pathology.Score),
+            <span class="dt">sd=</span><span class="kw">sd</span>(Pathology.Score)) 
+knitr<span class="op">::</span><span class="kw">kable</span>(path_sum, <span class="dt">caption=</span><span class="st">&quot;Summary of pathology score by visits.&quot;</span>)</code></pre></div>
+<table>
+<caption><span id="tab:path-median">Table 4.1: </span>Summary of pathology score by visits.</caption>
+<thead>
+<tr class="header">
+<th align="left">visit</th>
+<th align="right">median</th>
+<th align="right">mean</th>
+<th align="right">sd</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">initial</td>
+<td align="right">5</td>
+<td align="right">5.333333</td>
+<td align="right">2.425708</td>
+</tr>
+<tr class="even">
+<td align="left">follow-up</td>
+<td align="right">3</td>
+<td align="right">4.416667</td>
+<td align="right">3.202128</td>
+</tr>
+</tbody>
+</table>
+<p>The population-level median of the follow-up visits is lower than that of the initial visits.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gg &lt;-<span class="st"> </span><span class="kw">ggplot</span>(path_score, <span class="kw">aes</span>(<span class="dt">x=</span>Pathology.Score, <span class="dt">color=</span>visit, <span class="dt">fill=</span>visit)) <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_density</span>(<span class="dt">alpha=</span><span class="fl">0.5</span>) <span class="op">+</span>
+<span class="st">    </span><span class="kw">scale_fill_manual</span>(<span class="dt">values=</span><span class="kw">c</span>(<span class="st">&quot;#E69F00&quot;</span>, <span class="st">&quot;#999999&quot;</span>)) <span class="op">+</span>
+<span class="st">    </span><span class="kw">scale_color_manual</span>(<span class="dt">values=</span><span class="kw">c</span>(<span class="st">&quot;#E69F00&quot;</span>, <span class="st">&quot;#999999&quot;</span>)) <span class="op">+</span>
+<span class="st">    </span><span class="kw">theme_bw</span>() <span class="op">+</span>
+<span class="st">    </span><span class="kw">theme</span>(<span class="dt">legend.justification=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</span>), <span class="dt">legend.position=</span><span class="kw">c</span>(<span class="fl">0.99</span>, <span class="fl">0.99</span>), 
+          <span class="dt">legend.key.size =</span> <span class="kw">unit</span>(<span class="fl">0.8</span>, <span class="st">&quot;line&quot;</span>),
+          <span class="dt">legend.title=</span><span class="kw">element_blank</span>(),
+          <span class="dt">plot.title =</span> <span class="kw">element_text</span>(<span class="dt">hjust=</span><span class="fl">0.5</span>, <span class="dt">size=</span><span class="dv">10</span>),
+          <span class="dt">axis.title =</span> <span class="kw">element_text</span>(<span class="dt">size=</span><span class="dv">9</span>),
+          <span class="dt">axis.text=</span><span class="kw">element_text</span>(<span class="dt">size=</span><span class="dv">7</span>)) <span class="op">+</span>
+<span class="st">    </span><span class="kw">labs</span>(<span class="dt">title=</span><span class="st">&quot;Density of pathology score&quot;</span>, <span class="dt">x=</span><span class="st">&quot;Pathloby score&quot;</span>)      
+gg &lt;-<span class="st"> </span>gg <span class="op">+</span><span class="st"> </span><span class="kw">geom_vline</span>(<span class="dt">data=</span>path_sum, <span class="kw">aes</span>(<span class="dt">xintercept=</span>median, <span class="dt">color=</span>visit),
+             <span class="dt">linetype=</span><span class="st">&quot;dashed&quot;</span>, <span class="dt">show.legend=</span><span class="ot">FALSE</span>) 
+gg</code></pre></div>
+<pre><code>## Warning in grid.Call.graphics(C_polygon, x$x, x$y, index): semi-
+## transparency is not supported on this device: reported only once per page</code></pre>
+<div class="figure" style="text-align: center"><span id="fig:path-density"></span>
+<img src="gitbook_files/figure-html/path-density-1.png" alt="Distribution of the initial and follow-up visits." width="672" />
+<p class="caption">
+Figure 4.1: Distribution of the initial and follow-up visits.
+</p>
+</div>
+</div>
+<div id="change-of-marker-scores-over-two-visits" class="section level2">
+<h2><span class="header-section-number">4.3</span> Change of marker scores over two visits</h2>
+<p>The marker scores of RNA-seq biopsy samples are the summation of relative local rlog expression of discriminative genes based on the sample PCA loading variables on the follow-up visit. The DUX4 score of RNA-seq biopsy samples was based on four FSHD/DUX4-positive biomarkers that were previously found in <strong>Yao 2014</strong><span class="citation">(Yao and al. <a href="#ref-yao2014">2014</a>)</span>: LEUTX, KHDG1L, PRAMEF2 and TRIM43. The score is the sum of these four biomarker local regularized log scaling difference from the control average. The DUX4 scores are similar or show progression from the first visit to the follow-up visit. A few individuals, on the other hand, are showing otherwise. Additional markers include the extracellular matrix score, based on PLA2GA, COL19A1, COMP, and COL1A1; immune/inflammation score based on CCL18, CCL13, C6 and C7; immunoglobulin score based on IGHA1, IGHG4 and IGHGP. The cell cycle score was based on CCNA1, CDKN1A and CDKN2A.</p>
+<p>The following barplots present the changes of marker scores over two visits. Samples are arranged by the ascending values of the initial visits.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">markers_list &lt;-<span class="st"> </span>
+<span class="st">  </span><span class="kw">list</span>(<span class="dt">dux4 =</span> <span class="kw">c</span>(<span class="st">&quot;LEUTX&quot;</span>, <span class="st">&quot;KHDC1L&quot;</span>, <span class="st">&quot;PRAMEF2&quot;</span>, <span class="st">&quot;TRIM43&quot;</span>),
+       <span class="dt">extracellular_matrix =</span> <span class="kw">c</span>(<span class="st">&quot;PLA2G2A&quot;</span>, <span class="st">&quot;COL19A1&quot;</span>, <span class="st">&quot;COMP&quot;</span>, <span class="st">&quot;COL1A1&quot;</span>), <span class="co"># remove SFPR2</span>
+       <span class="dt">inflamm =</span> <span class="kw">c</span>(<span class="st">&quot;CCL18&quot;</span>, <span class="st">&quot;CCL13&quot;</span> ,<span class="st">&quot;C6&quot;</span>, <span class="st">&quot;C7&quot;</span>), <span class="co"># remove CCL19</span>
+       <span class="dt">cell_cycle =</span> <span class="kw">c</span>(<span class="st">&quot;CCNA1&quot;</span>, <span class="st">&quot;CDKN1A&quot;</span>, <span class="st">&quot;CDKN2A&quot;</span>), <span class="co"># newly added</span>
+       <span class="dt">immunoglobulin =</span> <span class="kw">c</span>(<span class="st">&quot;IGHA1&quot;</span>, <span class="st">&quot;IGHG4&quot;</span>, <span class="st">&quot;IGHGP&quot;</span>)) <span class="co">#delete IGKV3-11                    </span>
+markers_id_list &lt;-<span class="st"> </span><span class="kw">lapply</span>(markers_list, get_ensembl, <span class="dt">rse=</span>sanitized.dds)
+relative_rlg &lt;-<span class="st"> </span><span class="kw">lapply</span>(markers_id_list, .get_sum_relative_local_rlg,
+                       <span class="dt">dds =</span> sanitized.dds) 
+<span class="co"># calculate the score</span>
+scores &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">do.call</span>(cbind, relative_rlg)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">rename</span>(<span class="dt">dux4.rlogsum=</span>dux4, <span class="dt">ecm.rlogsum=</span>extracellular_matrix, <span class="dt">inflamm.rlogsum=</span>inflamm,
+         <span class="dt">cellcycle.rlogsum=</span>cell_cycle,
+         <span class="dt">img.rlogsum=</span>immunoglobulin) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">rownames_to_column</span>(<span class="dt">var=</span><span class="st">&quot;sample_name&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">pheno_type =</span> sanitized.dds[, sample_name]<span class="op">$</span>pheno_type,
+         <span class="dt">paired =</span> sanitized.dds[, sample_name]<span class="op">$</span>paired,
+         <span class="dt">patient_id =</span> sanitized.dds[, sample_name]<span class="op">$</span>patient_id,
+         <span class="dt">visit =</span> sanitized.dds[, sample_name]<span class="op">$</span>visit) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">visit =</span> <span class="kw">factor</span>(<span class="kw">ifelse</span>(visit<span class="op">==</span><span class="st">&quot;I&quot;</span>, <span class="st">&quot;initial&quot;</span>, <span class="st">&quot;follow-up&quot;</span>), 
+                        <span class="dt">levels=</span><span class="kw">c</span>(<span class="st">&quot;initial&quot;</span>, <span class="st">&quot;follow-up&quot;</span>))) <span class="op">%&gt;%</span>
+<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(pheno_type <span class="op">==</span><span class="st"> &quot;FSHD&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(paired)) <span class="op">%&gt;%</span>
+<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(patient_id <span class="op">!=</span><span class="st"> &quot;32-0008&quot;</span>) </code></pre></div>
+<div id="dux4-marker-scores" class="section level3">
+<h3><span class="header-section-number">4.3.1</span> DUX4 marker scores</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tmp &lt;-<span class="st"> </span>scores <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">filter</span>(visit<span class="op">==</span><span class="st">&quot;initial&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">arrange</span>(dux4.rlogsum)
+patient_id &lt;-<span class="st"> </span><span class="kw">as.character</span>(tmp<span class="op">$</span>patient_id)
+scores<span class="op">$</span>patient_id &lt;-<span class="st"> </span><span class="kw">factor</span>(scores<span class="op">$</span>patient_id, <span class="dt">levels=</span>patient_id)
+gg_dux4 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(scores, <span class="kw">aes</span>(<span class="dt">y=</span>dux4.rlogsum, <span class="dt">x=</span>patient_id, <span class="dt">fill=</span>visit)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">&quot;identity&quot;</span>, <span class="dt">position=</span><span class="kw">position_dodge</span>(<span class="fl">0.7</span>)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">theme_minimal</span>() <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">y=</span><span class="st">&quot;DUX4 score&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_fill_manual</span>(<span class="dt">values=</span><span class="kw">c</span>(<span class="st">&quot;#E69F00&quot;</span>, <span class="st">&quot;#999999&quot;</span>)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme</span>(<span class="dt">axis.title.x=</span><span class="kw">element_blank</span>(),
+        <span class="dt">axis.title.y=</span><span class="kw">element_text</span>(<span class="dt">size=</span><span class="dv">9</span>),
+        <span class="dt">axis.text.x=</span><span class="kw">element_text</span>(<span class="dt">angle=</span><span class="dv">90</span>, <span class="dt">vjust=</span><span class="fl">0.5</span>, <span class="dt">hjust=</span><span class="dv">1</span>, <span class="dt">size=</span><span class="dv">8</span>),
+        <span class="dt">legend.justification=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="dt">legend.position=</span><span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>),
+        <span class="dt">legend.key.size =</span> <span class="kw">unit</span>(<span class="fl">0.8</span>, <span class="st">&quot;line&quot;</span>))
+gg_dux4</code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:dux4-barplot"></span>
+<img src="gitbook_files/figure-html/dux4-barplot-1.png" alt="DUX4 marker scores by visits." width="672" />
+<p class="caption">
+Figure 4.2: DUX4 marker scores by visits.
+</p>
+</div>
+</div>
+<div id="extracellular-matrix-structure-scores" class="section level3">
+<h3><span class="header-section-number">4.3.2</span> Extracellular matrix structure scores</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tmp &lt;-<span class="st"> </span>scores <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">filter</span>(visit<span class="op">==</span><span class="st">&quot;initial&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">arrange</span>(ecm.rlogsum)
+patient_id &lt;-<span class="st"> </span><span class="kw">as.character</span>(tmp<span class="op">$</span>patient_id)
+scores<span class="op">$</span>patient_id &lt;-<span class="st"> </span><span class="kw">factor</span>(scores<span class="op">$</span>patient_id, <span class="dt">levels=</span>patient_id)
+gg_ecm &lt;-<span class="st"> </span><span class="kw">ggplot</span>(scores, <span class="kw">aes</span>(<span class="dt">y=</span>ecm.rlogsum, <span class="dt">x=</span>patient_id, <span class="dt">fill=</span>visit)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">&quot;identity&quot;</span>, <span class="dt">position=</span><span class="kw">position_dodge</span>(<span class="fl">0.7</span>)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">theme_minimal</span>() <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">y=</span><span class="st">&quot;Extracellular matrix score&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_fill_manual</span>(<span class="dt">values=</span><span class="kw">c</span>(<span class="st">&quot;#E69F00&quot;</span>, <span class="st">&quot;#999999&quot;</span>)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme</span>(<span class="dt">axis.title.x=</span><span class="kw">element_blank</span>(), 
+        <span class="dt">axis.title.y=</span><span class="kw">element_text</span>(<span class="dt">size=</span><span class="dv">9</span>),
+        <span class="dt">axis.text.x=</span><span class="kw">element_text</span>(<span class="dt">angle=</span><span class="dv">90</span>, <span class="dt">vjust=</span><span class="fl">0.5</span>, <span class="dt">hjust=</span><span class="dv">1</span>, <span class="dt">size=</span><span class="dv">8</span>),
+        <span class="dt">legend.justification=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="dt">legend.position=</span><span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>),
+        <span class="dt">legend.key.size =</span> <span class="kw">unit</span>(<span class="fl">0.8</span>, <span class="st">&quot;line&quot;</span>))
+gg_ecm</code></pre></div>
+<p><img src="gitbook_files/figure-html/ecm_barplot-1.png" width="672" /></p>
+</div>
+<div id="immuse-responseinflammatory-score" class="section level3">
+<h3><span class="header-section-number">4.3.3</span> Immuse response/Inflammatory score</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tmp &lt;-<span class="st"> </span>scores <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">filter</span>(visit<span class="op">==</span><span class="st">&quot;initial&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">arrange</span>(inflamm.rlogsum)
+patient_id &lt;-<span class="st"> </span><span class="kw">as.character</span>(tmp<span class="op">$</span>patient_id)
+scores<span class="op">$</span>patient_id &lt;-<span class="st"> </span><span class="kw">factor</span>(scores<span class="op">$</span>patient_id, <span class="dt">levels=</span>patient_id)
+gg_inflam &lt;-<span class="st"> </span><span class="kw">ggplot</span>(scores, <span class="kw">aes</span>(<span class="dt">y=</span>inflamm.rlogsum, <span class="dt">x=</span>patient_id, <span class="dt">fill=</span>visit)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">&quot;identity&quot;</span>, <span class="dt">position=</span><span class="kw">position_dodge</span>(<span class="fl">0.7</span>)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">theme_minimal</span>() <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">y=</span><span class="st">&quot;Inflammatory response score&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_fill_manual</span>(<span class="dt">values=</span><span class="kw">c</span>(<span class="st">&quot;#E69F00&quot;</span>, <span class="st">&quot;#999999&quot;</span>)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme</span>(<span class="dt">axis.title.x=</span><span class="kw">element_blank</span>(), 
+        <span class="dt">axis.title.y=</span><span class="kw">element_text</span>(<span class="dt">size=</span><span class="dv">9</span>),
+        <span class="dt">axis.text.x=</span><span class="kw">element_text</span>(<span class="dt">angle=</span><span class="dv">90</span>, <span class="dt">vjust=</span><span class="fl">0.5</span>, <span class="dt">hjust=</span><span class="dv">1</span>, <span class="dt">size=</span><span class="dv">8</span>),
+        <span class="dt">legend.justification=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="dt">legend.position=</span><span class="st">&quot;none&quot;</span>,
+        <span class="dt">legend.key.size =</span> <span class="kw">unit</span>(<span class="fl">0.8</span>, <span class="st">&quot;line&quot;</span>))
+gg_inflam</code></pre></div>
+<p><img src="gitbook_files/figure-html/inflamm_barplot-1.png" width="672" /></p>
+</div>
+<div id="immunoglobulin-score" class="section level3">
+<h3><span class="header-section-number">4.3.4</span> Immunoglobulin score</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tmp &lt;-<span class="st"> </span>scores <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">filter</span>(visit<span class="op">==</span><span class="st">&quot;initial&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">arrange</span>(img.rlogsum)
+patient_id &lt;-<span class="st"> </span><span class="kw">as.character</span>(tmp<span class="op">$</span>patient_id)
+scores<span class="op">$</span>patient_id &lt;-<span class="st"> </span><span class="kw">factor</span>(scores<span class="op">$</span>patient_id, <span class="dt">levels=</span>patient_id)
+gg_img &lt;-<span class="st"> </span><span class="kw">ggplot</span>(scores, <span class="kw">aes</span>(<span class="dt">y=</span>img.rlogsum, <span class="dt">x=</span>patient_id, <span class="dt">fill=</span>visit)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">&quot;identity&quot;</span>, <span class="dt">position=</span><span class="kw">position_dodge</span>(<span class="fl">0.7</span>)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">theme_minimal</span>() <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">y=</span><span class="st">&quot;Immunoglobulins score&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_fill_manual</span>(<span class="dt">values=</span><span class="kw">c</span>(<span class="st">&quot;#E69F00&quot;</span>, <span class="st">&quot;#999999&quot;</span>)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme</span>(<span class="dt">axis.title.x=</span><span class="kw">element_blank</span>(), 
+        <span class="dt">axis.title.y=</span><span class="kw">element_text</span>(<span class="dt">size=</span><span class="dv">9</span>),
+        <span class="dt">axis.text.x=</span><span class="kw">element_text</span>(<span class="dt">angle=</span><span class="dv">90</span>, <span class="dt">vjust=</span><span class="fl">0.5</span>, <span class="dt">hjust=</span><span class="dv">1</span>, <span class="dt">size=</span><span class="dv">8</span>),
+        <span class="dt">legend.justification=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="dt">legend.position=</span><span class="st">&quot;none&quot;</span>,
+        <span class="dt">legend.key.size =</span> <span class="kw">unit</span>(<span class="fl">0.8</span>, <span class="st">&quot;line&quot;</span>))</code></pre></div>
+</div>
+<div id="cell-cycle-score" class="section level3">
+<h3><span class="header-section-number">4.3.5</span> Cell cycle score</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tmp &lt;-<span class="st"> </span>scores <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">filter</span>(visit<span class="op">==</span><span class="st">&quot;initial&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">arrange</span>(cellcycle.rlogsum)
+patient_id &lt;-<span class="st"> </span><span class="kw">as.character</span>(tmp<span class="op">$</span>patient_id)
+scores<span class="op">$</span>patient_id &lt;-<span class="st"> </span><span class="kw">factor</span>(scores<span class="op">$</span>patient_id, <span class="dt">levels=</span>patient_id)
+gg_cycle &lt;-<span class="st"> </span><span class="kw">ggplot</span>(scores, <span class="kw">aes</span>(<span class="dt">y=</span>cellcycle.rlogsum, <span class="dt">x=</span>patient_id, <span class="dt">fill=</span>visit)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">&quot;identity&quot;</span>, <span class="dt">position=</span><span class="kw">position_dodge</span>(<span class="fl">0.7</span>)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">theme_minimal</span>() <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">y=</span><span class="st">&quot;Cell cycle score&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_fill_manual</span>(<span class="dt">values=</span><span class="kw">c</span>(<span class="st">&quot;#E69F00&quot;</span>, <span class="st">&quot;#999999&quot;</span>)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme</span>(<span class="dt">axis.title.x=</span><span class="kw">element_blank</span>(), 
+        <span class="dt">axis.title.y=</span><span class="kw">element_text</span>(<span class="dt">size=</span><span class="dv">9</span>),
+        <span class="dt">axis.text.x=</span><span class="kw">element_text</span>(<span class="dt">angle=</span><span class="dv">90</span>, <span class="dt">vjust=</span><span class="fl">0.5</span>, <span class="dt">hjust=</span><span class="dv">1</span>, <span class="dt">size=</span><span class="dv">8</span>),
+        <span class="dt">legend.justification=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="dt">legend.position=</span><span class="st">&quot;none&quot;</span>,
+        <span class="dt">legend.key.size =</span> <span class="kw">unit</span>(<span class="fl">0.8</span>, <span class="st">&quot;line&quot;</span>))
+gg_cycle</code></pre></div>
+<p><img src="gitbook_files/figure-html/cell_cycle_barplot-1.png" width="672" /></p>
+</div>
+</div>
+<div id="pathology-and-dux4-scores-changes" class="section level2">
+<h2><span class="header-section-number">4.4</span> Pathology and DUX4 scores changes</h2>
+<p>The direction of change for DUX4 and over pathology scores were mostly in the same direction, with a few (15%) exception. Chunk and figure below show the pathology (grey) and DUX4 scores (darker) changes over the initial and follow-up visits for each individual. Y-axis represents the values of the follow-up visit minus the initial visit.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">year1_scores &lt;-<span class="st"> </span>scores <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">filter</span>(visit <span class="op">==</span><span class="st"> &quot;initial&quot;</span>)
+year2_scores &lt;-<span class="st"> </span>scores <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">filter</span>(visit <span class="op">==</span><span class="st"> &quot;follow-up&quot;</span>)
+delta_scores &lt;-<span class="st"> </span><span class="kw">inner_join</span>(year1_scores, year2_scores, <span class="dt">by=</span><span class="st">&quot;patient_id&quot;</span>,
+                  <span class="dt">suffix=</span><span class="kw">c</span>(<span class="st">&quot;.I&quot;</span>, <span class="st">&quot;.II&quot;</span>)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">patient_id =</span> <span class="kw">as.character</span>(patient_id), 
+         <span class="dt">dux4 =</span> dux4.rlogsum.II <span class="op">-</span><span class="st"> </span>dux4.rlogsum.I,
+         <span class="dt">ecm =</span> ecm.rlogsum.II <span class="op">-</span><span class="st"> </span>ecm.rlogsum.I,
+         <span class="dt">inflamm =</span> inflamm.rlogsum.II <span class="op">-</span><span class="st"> </span>inflamm.rlogsum.I,
+         <span class="dt">img =</span> img.rlogsum.II <span class="op">-</span><span class="st"> </span>img.rlogsum.I,
+         <span class="dt">cycle =</span> cellcycle.rlogsum.II <span class="op">-</span><span class="st"> </span>cellcycle.rlogsum.I) <span class="op">%&gt;%</span>
+<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">select</span>(patient_id, dux4, ecm, inflamm, img, cycle)
+
+
+delta_clinic &lt;-<span class="st"> </span><span class="kw">left_join</span>(mri_pathology<span class="op">$</span>time_<span class="dv">1</span>, mri_pathology<span class="op">$</span>time_<span class="dv">2</span>, <span class="dt">by=</span><span class="st">&quot;patient_id&quot;</span>,
+                       <span class="dt">suffix=</span><span class="kw">c</span>(<span class="st">&quot;.I&quot;</span>, <span class="st">&quot;.II&quot;</span>)) <span class="op">%&gt;%</span>
+<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(paired.I)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">pathology =</span> Pathology.Score.II <span class="op">-</span><span class="st"> </span>Pathology.Score.I) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">STIR =</span> STIR_rating.II <span class="op">-</span><span class="st"> </span>STIR_rating.II,
+         <span class="dt">T1 =</span> T1_rating.II <span class="op">-</span><span class="st"> </span>T1_rating.I)    <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">select</span>(patient_id, pathology, STIR, T1) 
+
+comb_delta &lt;-<span class="st"> </span><span class="kw">full_join</span>(delta_scores, delta_clinic, <span class="dt">by=</span><span class="st">&quot;patient_id&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(pathology)) <span class="op">%&gt;%</span>
+<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(dux4)) <span class="op">%&gt;%</span>
+<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">select</span>(patient_id, dux4, pathology) <span class="op">%&gt;%</span>
+<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">rename</span>(<span class="dt">DUX4.Score=</span>dux4) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">arrange</span>(DUX4.Score) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">patient_id =</span> <span class="kw">as.character</span>(patient_id)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">patient_id =</span> <span class="kw">factor</span>(patient_id, <span class="dt">levels=</span><span class="kw">as.character</span>(patient_id)))
+
+melt_scores &lt;-<span class="st"> </span><span class="kw">gather</span>(comb_delta, <span class="st">&quot;features&quot;</span>, <span class="st">&quot;delta_scores&quot;</span>, <span class="op">-</span>patient_id)
+gg &lt;-<span class="st"> </span><span class="kw">ggplot</span>(melt_scores, <span class="kw">aes</span>(<span class="dt">y=</span>delta_scores, <span class="dt">x=</span>patient_id, <span class="dt">fill=</span>features,
+                              <span class="dt">group=</span>features)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">&quot;identity&quot;</span>, <span class="dt">position=</span><span class="kw">position_dodge</span>(), <span class="dt">width=</span><span class="fl">0.7</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme_minimal</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">y=</span><span class="kw">expression</span>(<span class="kw">paste</span>(Delta, <span class="st">&quot;score: follow-up - initial&quot;</span>)) , 
+       <span class="dt">title=</span><span class="st">&quot;Difference between two visits: pathology and DUX4 scores&quot;</span> ) <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme</span>(<span class="dt">axis.title.x=</span><span class="kw">element_blank</span>(), <span class="dt">plot.title=</span><span class="kw">element_text</span>(<span class="dt">hjust=</span><span class="fl">0.5</span>, <span class="dt">size=</span><span class="dv">11</span>),
+        <span class="dt">axis.text.x=</span><span class="kw">element_text</span>(<span class="dt">angle=</span><span class="dv">90</span>, <span class="dt">vjust=</span><span class="fl">0.5</span>, <span class="dt">hjust=</span><span class="dv">1</span>),
+        <span class="dt">legend.key.size =</span> <span class="kw">unit</span>(<span class="fl">0.8</span>, <span class="st">&quot;line&quot;</span>),
+        <span class="dt">legend.justification=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="dt">legend.position=</span><span class="st">&quot;bottom&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_fill_manual</span>(<span class="dt">values=</span><span class="kw">c</span>(<span class="st">&quot;grey30&quot;</span>, <span class="st">&quot;grey80&quot;</span>))
+gg</code></pre></div>
+<p><img src="gitbook_files/figure-html/delta_path_dux4-1.png" width="672" /></p>
+</div>
+<div id="markers-by-visits-and-stir-ratings" class="section level2">
+<h2><span class="header-section-number">4.5</span> Markers by visits and STIR ratings</h2>
+<p>Although with-in indivudual variation are observed, the expression of DUX4 markers (and other markers) is stable on the population level. Showing below is the DUX4 score comparison between two visits and between all FSHD or T2-STIR-positive FSHD compared to controls. The DUX4 score exhibited elevated DUX4-target expression in all FSHD and T2-STIR-positive FSHD compared to controls in both visits.</p>
+<div id="dux4-scores-and-stir-ratings" class="section level3">
+<h3><span class="header-section-number">4.5.1</span> DUX4 scores and STIR ratings</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">load</span>(<span class="kw">file.path</span>(pkg_dir, <span class="st">&quot;public_data&quot;</span>, <span class="st">&quot;marker_path_scores.rda&quot;</span>))
+.mutate_row &lt;-<span class="st"> </span><span class="cf">function</span>(self) {
+  stir &lt;-<span class="st"> </span>self <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">filter</span>(STIR_status <span class="op">==</span><span class="st"> &quot;STIR+&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">status =</span> <span class="st">&quot;STIR+&quot;</span>)
+  <span class="kw">bind_rows</span>(self, stir)  
+}
+
+tmp &lt;-<span class="st"> </span>marker_path_scores <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">status=</span><span class="kw">ifelse</span>(pheno_type<span class="op">==</span><span class="st">&quot;Control&quot;</span>, <span class="st">&quot;Control&quot;</span>, <span class="st">&quot;Total&quot;</span>)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">group_by</span>(visit) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">.mutate_row</span>(.) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">ungroup</span>(.) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">group=</span><span class="kw">paste0</span>(visit, <span class="st">&quot;_&quot;</span>, status)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">group=</span><span class="kw">factor</span>(group, <span class="dt">levels=</span><span class="kw">c</span>(<span class="st">&quot;initial_Control&quot;</span>, <span class="st">&quot;initial_Total&quot;</span>, <span class="st">&quot;initial_STIR+&quot;</span>,
+                                      <span class="st">&quot;follow-up_Total&quot;</span>, <span class="st">&quot;follow-up_STIR+&quot;</span>))) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">visit =</span> <span class="kw">factor</span>(visit, <span class="dt">levels=</span><span class="kw">c</span>(<span class="st">&quot;initial&quot;</span>, <span class="st">&quot;follow-up&quot;</span>)))                                      
+
+gg &lt;-<span class="st"> </span><span class="kw">ggplot</span>(tmp, <span class="kw">aes</span>(<span class="dt">x=</span>group, <span class="dt">y=</span>dux4.rlogsum, <span class="dt">group=</span>group)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_boxplot</span>(<span class="kw">aes</span>(<span class="dt">color=</span>visit), <span class="dt">width=</span><span class="fl">0.5</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_fill_manual</span>(<span class="dt">values=</span><span class="kw">c</span>(<span class="st">&quot;#E69F00&quot;</span>, <span class="st">&quot;#999999&quot;</span>)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_color_manual</span>(<span class="dt">values=</span><span class="kw">c</span>(<span class="st">&quot;#E69F00&quot;</span>, <span class="st">&quot;#999999&quot;</span>)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme_minimal</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept=</span><span class="fl">3.5</span>, <span class="dt">linetype=</span><span class="st">&quot;dashed&quot;</span>, <span class="dt">color =</span> <span class="st">&quot;grey&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme</span>(<span class="co">#legend.position=c(0.01,0.99),</span>
+        <span class="dt">legend.position=</span><span class="st">&quot;right&quot;</span>,
+        <span class="dt">legend.justification=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), 
+        <span class="co">#legend.key.size = unit(0.7, &quot;line&quot;),</span>
+        <span class="dt">plot.title =</span> <span class="kw">element_text</span>(<span class="dt">hjust =</span> <span class="fl">0.5</span>, <span class="dt">size=</span><span class="dv">10</span>),
+        <span class="dt">axis.title.x=</span><span class="kw">element_blank</span>(),
+        <span class="dt">axis.text.x =</span> <span class="kw">element_text</span>(<span class="dt">size=</span><span class="dv">8</span>),
+        <span class="dt">axis.title.y=</span><span class="kw">element_text</span>(<span class="dt">size=</span><span class="dv">10</span>)) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">y=</span><span class="st">&quot;Marker score&quot;</span>, <span class="dt">title=</span><span class="st">&quot;DUX4&quot;</span>) <span class="op">+</span><span class="st">      </span>
+<span class="st">  </span><span class="kw">scale_x_discrete</span>(<span class="dt">labels=</span><span class="kw">c</span>(<span class="st">&quot;Control&quot;</span>, <span class="st">&quot;All</span><span class="ch">\n</span><span class="st">FSHD&quot;</span>, <span class="st">&quot;STIR+</span><span class="ch">\n</span><span class="st">FSHD&quot;</span>, <span class="st">&quot;All</span><span class="ch">\n</span><span class="st">FSHD&quot;</span>, <span class="st">&quot;STIR+</span><span class="ch">\n</span><span class="st">FSHD&quot;</span>)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">coord_cartesian</span>(<span class="dt">ylim=</span><span class="kw">c</span>(<span class="op">-</span><span class="fl">0.05</span>, <span class="dv">23</span>))
+gg</code></pre></div>
+<p><img src="gitbook_files/figure-html/dux4-by-stir-rating-1.png" width="672" /></p>
+</div>
+<div id="other-markers" class="section level3">
+<h3><span class="header-section-number">4.5.2</span> Other markers</h3>
+<p>Similar to DUX4 marker score, extracellular matrix, inflammatory/immune response, immunoglobulin and cell cycle scores are eleveated in the first and follow-up visit samples, comparing all FSHD samples or all T2-STIR-positive FSHD samples to controls.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tmp2 &lt;-<span class="st"> </span>tmp <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">select</span>(sample_name, ecm.rlogsum, inflamm.rlogsum, img.rlogsum, 
+         cellcycle.rlogsum, group, visit) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">gather</span>(markers, scores, <span class="op">-</span>sample_name, <span class="op">-</span>group, <span class="op">-</span>visit) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">markers =</span> <span class="kw">factor</span>(markers, 
+                          <span class="dt">levels=</span><span class="kw">c</span>(<span class="st">&quot;ecm.rlogsum&quot;</span>, <span class="st">&quot;inflamm.rlogsum&quot;</span>,
+                                   <span class="st">&quot;img.rlogsum&quot;</span>, <span class="st">&quot;cellcycle.rlogsum&quot;</span>)))
+
+labels &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dt">ecm.rlogsum=</span><span class="st">&quot;Extracellular matrix&quot;</span>, 
+            <span class="dt">inflamm.rlogsum=</span><span class="st">&quot;Inflamm response&quot;</span>, 
+            <span class="dt">img.rlogsum=</span><span class="st">&quot;Immunoglobulin&quot;</span>,
+            <span class="dt">cellcycle.rlogsum=</span><span class="st">&quot;Cell cycle&quot;</span>)
+
+gg &lt;-<span class="st"> </span><span class="kw">ggplot</span>(tmp2, <span class="kw">aes</span>(<span class="dt">x=</span>group, <span class="dt">y=</span>scores, <span class="dt">group=</span>group)) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">geom_boxplot</span>(<span class="kw">aes</span>(<span class="dt">color=</span>visit), <span class="dt">width=</span><span class="fl">0.5</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_fill_manual</span>(<span class="dt">values=</span><span class="kw">c</span>(<span class="st">&quot;#E69F00&quot;</span>, <span class="st">&quot;#999999&quot;</span>)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_color_manual</span>(<span class="dt">values=</span><span class="kw">c</span>(<span class="st">&quot;#E69F00&quot;</span>, <span class="st">&quot;#999999&quot;</span>)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme_minimal</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">y=</span><span class="st">&quot;Marker score&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept=</span><span class="fl">3.5</span>, <span class="dt">linetype=</span><span class="st">&quot;dashed&quot;</span>, <span class="dt">color =</span> <span class="st">&quot;grey&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">facet_wrap</span>( <span class="op">~</span><span class="st"> </span>markers, <span class="dt">nrow=</span><span class="dv">2</span>, <span class="dt">scale=</span><span class="st">&quot;free&quot;</span>, <span class="dt">labeller=</span><span class="kw">labeller</span>(<span class="dt">markers=</span>labels)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">&quot;none&quot;</span>,
+        <span class="dt">axis.title.x=</span><span class="kw">element_blank</span>(),
+        <span class="dt">axis.title.y=</span><span class="kw">element_text</span>(<span class="dt">size=</span><span class="dv">10</span>),
+        <span class="dt">axis.text.x =</span> <span class="kw">element_text</span>(<span class="dt">size=</span><span class="dv">8</span>)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">scale_x_discrete</span>(<span class="dt">labels=</span><span class="kw">c</span>(<span class="st">&quot;Control&quot;</span>, <span class="st">&quot;All</span><span class="ch">\n</span><span class="st">FSHD&quot;</span>, <span class="st">&quot;STIR+</span><span class="ch">\n</span><span class="st">FSHD&quot;</span>, <span class="st">&quot;All</span><span class="ch">\n</span><span class="st">FSHD&quot;</span>, <span class="st">&quot;STIR+</span><span class="ch">\n</span><span class="st">FSHD&quot;</span>))  
+gg</code></pre></div>
+<p><img src="gitbook_files/figure-html/markers-by-stir-visits-1.png" width="672" /></p>
+
+</div>
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-yao2014">
+<p>Yao, Zizhen, and et al. 2014. “DUX4-Induced Gene Expression Is the Major Molecular Signature in Fshd Skeletal Muscle.” <em>Human Molecular Genetics</em>. doi:<a href="https://doi.org/10.1093/hmg/ddu251">10.1093/hmg/ddu251</a>.</p>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="follow-up-visit.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="rnaseq-classes.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"download": ["gitbook.pdf", "gitbook.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

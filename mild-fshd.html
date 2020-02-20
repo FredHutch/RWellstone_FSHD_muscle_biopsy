@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 6 Markers discriminate Mild FSHD from the control samples | Longitudinal measures of RNA-seq expression and disease activity in FSHD muscle biopsies</title>
+  <meta name="description" content="Bioinformatics and statistics analysis for the logitudinal study of RNA-seq expression and disear acitivity in FSHD muscle bipsies" />
+  <meta name="generator" content="bookdown 0.14 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 6 Markers discriminate Mild FSHD from the control samples | Longitudinal measures of RNA-seq expression and disease activity in FSHD muscle biopsies" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Bioinformatics and statistics analysis for the logitudinal study of RNA-seq expression and disear acitivity in FSHD muscle bipsies" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 6 Markers discriminate Mild FSHD from the control samples | Longitudinal measures of RNA-seq expression and disease activity in FSHD muscle biopsies" />
+  
+  <meta name="twitter:description" content="Bioinformatics and statistics analysis for the logitudinal study of RNA-seq expression and disear acitivity in FSHD muscle bipsies" />
+  
+
+<meta name="author" content="Chao-Jen Wong, Tapscott Lab, Fred Hutch" />
+
+
+<meta name="date" content="2020-02-19" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="rnaseq-classes.html"/>
+<link rel="next" href="pax7.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">RNA-seq data analysis</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#package-structure-on-the-master-branch"><i class="fa fa-check"></i><b>1.1</b> Package structure on the master branch</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#gene-expression-omnibus-series"><i class="fa fa-check"></i><b>1.2</b> Gene Expression Omnibus series</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#system-requirment"><i class="fa fa-check"></i><b>1.3</b> System requirment</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="preprocessing.html"><a href="preprocessing.html"><i class="fa fa-check"></i><b>2</b> Preprocessing and gene counts</a><ul>
+<li class="chapter" data-level="2.1" data-path="preprocessing.html"><a href="preprocessing.html#shell-script-for-pre-processing"><i class="fa fa-check"></i><b>2.1</b> Shell script for pre-processing</a></li>
+<li class="chapter" data-level="2.2" data-path="preprocessing.html"><a href="preprocessing.html#annotation-txdb-package"><i class="fa fa-check"></i><b>2.2</b> Annotation TxDb package</a></li>
+<li class="chapter" data-level="2.3" data-path="preprocessing.html"><a href="preprocessing.html#r-script-for-gene-counts"><i class="fa fa-check"></i><b>2.3</b> R Script for gene counts</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="follow-up-visit.html"><a href="follow-up-visit.html"><i class="fa fa-check"></i><b>3</b> Follow-up visit</a><ul>
+<li class="chapter" data-level="3.1" data-path="follow-up-visit.html"><a href="follow-up-visit.html#loading-datasets"><i class="fa fa-check"></i><b>3.1</b> Loading datasets</a></li>
+<li class="chapter" data-level="3.2" data-path="follow-up-visit.html"><a href="follow-up-visit.html#the-follow-up-visit-rna-seq-dataset"><i class="fa fa-check"></i><b>3.2</b> The follow-up visit RNA-seq dataset</a></li>
+<li class="chapter" data-level="3.3" data-path="follow-up-visit.html"><a href="follow-up-visit.html#dux4-and-other-marker-scores"><i class="fa fa-check"></i><b>3.3</b> DUX4 and other marker scores</a><ul>
+<li class="chapter" data-level="3.3.1" data-path="follow-up-visit.html"><a href="follow-up-visit.html#group-samples-by-dux4-score"><i class="fa fa-check"></i><b>3.3.1</b> Group samples by DUX4 score</a></li>
+<li class="chapter" data-level="3.3.2" data-path="follow-up-visit.html"><a href="follow-up-visit.html#heatmap-of-the-discriminative-genes"><i class="fa fa-check"></i><b>3.3.2</b> Heatmap of the discriminative genes</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="follow-up-visit.html"><a href="follow-up-visit.html#dux4-candidate-biomarkers-are-eleveated-in-fshd"><i class="fa fa-check"></i><b>3.4</b> DUX4 candidate biomarkers are eleveated in FSHD</a></li>
+<li class="chapter" data-level="3.5" data-path="follow-up-visit.html"><a href="follow-up-visit.html#correlation-of-dux4-score-to-mri-and-histopathology"><i class="fa fa-check"></i><b>3.5</b> Correlation of DUX4 score to MRI and histopathology</a><ul>
+<li class="chapter" data-level="3.5.1" data-path="follow-up-visit.html"><a href="follow-up-visit.html#dux4-and-pathology-score"><i class="fa fa-check"></i><b>3.5.1</b> DUX4 and pathology score</a></li>
+<li class="chapter" data-level="3.5.2" data-path="follow-up-visit.html"><a href="follow-up-visit.html#dux4-and-stir-signal"><i class="fa fa-check"></i><b>3.5.2</b> DUX4 and STIR signal</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="follow-up-visit.html"><a href="follow-up-visit.html#dux4-score-and-t1-fat-fraction"><i class="fa fa-check"></i><b>3.6</b> DUX4 score and T1 fat fraction</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="longitudinal-changes.html"><a href="longitudinal-changes.html"><i class="fa fa-check"></i><b>4</b> Longitudinal changes over two visits</a><ul>
+<li class="chapter" data-level="4.1" data-path="longitudinal-changes.html"><a href="longitudinal-changes.html#loading-datasets-1"><i class="fa fa-check"></i><b>4.1</b> Loading datasets</a></li>
+<li class="chapter" data-level="4.2" data-path="longitudinal-changes.html"><a href="longitudinal-changes.html#pathology-scores"><i class="fa fa-check"></i><b>4.2</b> Pathology scores</a></li>
+<li class="chapter" data-level="4.3" data-path="longitudinal-changes.html"><a href="longitudinal-changes.html#change-of-marker-scores-over-two-visits"><i class="fa fa-check"></i><b>4.3</b> Change of marker scores over two visits</a><ul>
+<li class="chapter" data-level="4.3.1" data-path="longitudinal-changes.html"><a href="longitudinal-changes.html#dux4-marker-scores"><i class="fa fa-check"></i><b>4.3.1</b> DUX4 marker scores</a></li>
+<li class="chapter" data-level="4.3.2" data-path="longitudinal-changes.html"><a href="longitudinal-changes.html#extracellular-matrix-structure-scores"><i class="fa fa-check"></i><b>4.3.2</b> Extracellular matrix structure scores</a></li>
+<li class="chapter" data-level="4.3.3" data-path="longitudinal-changes.html"><a href="longitudinal-changes.html#immuse-responseinflammatory-score"><i class="fa fa-check"></i><b>4.3.3</b> Immuse response/Inflammatory score</a></li>
+<li class="chapter" data-level="4.3.4" data-path="longitudinal-changes.html"><a href="longitudinal-changes.html#immunoglobulin-score"><i class="fa fa-check"></i><b>4.3.4</b> Immunoglobulin score</a></li>
+<li class="chapter" data-level="4.3.5" data-path="longitudinal-changes.html"><a href="longitudinal-changes.html#cell-cycle-score"><i class="fa fa-check"></i><b>4.3.5</b> Cell cycle score</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="longitudinal-changes.html"><a href="longitudinal-changes.html#pathology-and-dux4-scores-changes"><i class="fa fa-check"></i><b>4.4</b> Pathology and DUX4 scores changes</a></li>
+<li class="chapter" data-level="4.5" data-path="longitudinal-changes.html"><a href="longitudinal-changes.html#markers-by-visits-and-stir-ratings"><i class="fa fa-check"></i><b>4.5</b> Markers by visits and STIR ratings</a><ul>
+<li class="chapter" data-level="4.5.1" data-path="longitudinal-changes.html"><a href="longitudinal-changes.html#dux4-scores-and-stir-ratings"><i class="fa fa-check"></i><b>4.5.1</b> DUX4 scores and STIR ratings</a></li>
+<li class="chapter" data-level="4.5.2" data-path="longitudinal-changes.html"><a href="longitudinal-changes.html#other-markers"><i class="fa fa-check"></i><b>4.5.2</b> Other markers</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="rnaseq-classes.html"><a href="rnaseq-classes.html"><i class="fa fa-check"></i><b>5</b> Classes of RNA-seq biopsy sampels</a><ul>
+<li class="chapter" data-level="5.1" data-path="rnaseq-classes.html"><a href="rnaseq-classes.html#fshd-classes"><i class="fa fa-check"></i><b>5.1</b> FSHD classes</a><ul>
+<li class="chapter" data-level="5.1.1" data-path="rnaseq-classes.html"><a href="rnaseq-classes.html#load-datasets-and-libraries"><i class="fa fa-check"></i><b>5.1.1</b> Load datasets and libraries</a></li>
+<li class="chapter" data-level="5.1.2" data-path="rnaseq-classes.html"><a href="rnaseq-classes.html#feature-selection"><i class="fa fa-check"></i><b>5.1.2</b> Feature selection</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="rnaseq-classes.html"><a href="rnaseq-classes.html#sample-space-and-k-means-clustering"><i class="fa fa-check"></i><b>5.2</b> Sample space and k-means clustering</a></li>
+<li class="chapter" data-level="5.3" data-path="rnaseq-classes.html"><a href="rnaseq-classes.html#visualize-the-fshd-classes"><i class="fa fa-check"></i><b>5.3</b> Visualize the FSHD classes</a></li>
+<li class="chapter" data-level="5.4" data-path="rnaseq-classes.html"><a href="rnaseq-classes.html#view-by-selected-marker-genes"><i class="fa fa-check"></i><b>5.4</b> View by selected marker genes</a></li>
+<li class="chapter" data-level="5.5" data-path="rnaseq-classes.html"><a href="rnaseq-classes.html#mri-characterisitcs-and-pathology-scores-by-fshd-classes"><i class="fa fa-check"></i><b>5.5</b> MRI characterisitcs and pathology scores by FSHD classes</a></li>
+<li class="chapter" data-level="5.6" data-path="rnaseq-classes.html"><a href="rnaseq-classes.html#average-expression-of-five-biological-process-by-fshd-classes"><i class="fa fa-check"></i><b>5.6</b> Average expression of five biological process by FSHD classes</a></li>
+<li class="chapter" data-level="5.7" data-path="rnaseq-classes.html"><a href="rnaseq-classes.html#enriched-go-terms"><i class="fa fa-check"></i><b>5.7</b> Enriched GO terms</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="mild-fshd.html"><a href="mild-fshd.html"><i class="fa fa-check"></i><b>6</b> Markers discriminate Mild FSHD from the control samples</a><ul>
+<li class="chapter" data-level="6.0.1" data-path="mild-fshd.html"><a href="mild-fshd.html#load-libaray-and-datasets"><i class="fa fa-check"></i><b>6.0.1</b> Load libaray and datasets</a></li>
+<li class="chapter" data-level="6.1" data-path="mild-fshd.html"><a href="mild-fshd.html#differentially-up-regulated-genes-in-mild-fshd-samples"><i class="fa fa-check"></i><b>6.1</b> Differentially up-regulated genes in Mild FSHD samples</a></li>
+<li class="chapter" data-level="6.2" data-path="mild-fshd.html"><a href="mild-fshd.html#select-fshd-relavent-candidates"><i class="fa fa-check"></i><b>6.2</b> Select FSHD relavent candidates</a></li>
+<li class="chapter" data-level="6.3" data-path="mild-fshd.html"><a href="mild-fshd.html#go-analysis"><i class="fa fa-check"></i><b>6.3</b> GO analysis</a></li>
+<li class="chapter" data-level="6.4" data-path="mild-fshd.html"><a href="mild-fshd.html#cross-validation-by-random-forests"><i class="fa fa-check"></i><b>6.4</b> Cross validation by random forests</a></li>
+<li class="chapter" data-level="6.5" data-path="mild-fshd.html"><a href="mild-fshd.html#discriminative-power-per-candidates"><i class="fa fa-check"></i><b>6.5</b> Discriminative power per candidates</a></li>
+<li class="chapter" data-level="6.6" data-path="mild-fshd.html"><a href="mild-fshd.html#heatmap-of-some-best-candidates"><i class="fa fa-check"></i><b>6.6</b> Heatmap of some best candidates</a></li>
+<li class="chapter" data-level="6.7" data-path="mild-fshd.html"><a href="mild-fshd.html#some-strong-candidates"><i class="fa fa-check"></i><b>6.7</b> Some strong candidates</a><ul>
+<li class="chapter" data-level="6.7.1" data-path="mild-fshd.html"><a href="mild-fshd.html#ckdn1a"><i class="fa fa-check"></i><b>6.7.1</b> CKDN1A</a></li>
+<li class="chapter" data-level="6.7.2" data-path="mild-fshd.html"><a href="mild-fshd.html#ccna1"><i class="fa fa-check"></i><b>6.7.2</b> CCNA1</a></li>
+<li class="chapter" data-level="6.7.3" data-path="mild-fshd.html"><a href="mild-fshd.html#and-few-more-examples"><i class="fa fa-check"></i><b>6.7.3</b> And few more examples</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="pax7.html"><a href="pax7.html"><i class="fa fa-check"></i><b>7</b> PAX7 target mis-regulation in FSHD biopsy RNA-seq samples</a><ul>
+<li class="chapter" data-level="7.1" data-path="pax7.html"><a href="pax7.html#pa7-scores-and-disease-activity"><i class="fa fa-check"></i><b>7.1</b> PA7 scores and disease activity</a></li>
+<li class="chapter" data-level="7.2" data-path="pax7.html"><a href="pax7.html#mis-regulation-of-pax7-targeted-gene"><i class="fa fa-check"></i><b>7.2</b> Mis-regulation of PAX7-targeted gene</a><ul>
+<li class="chapter" data-level="7.2.1" data-path="pax7.html"><a href="pax7.html#heatmap-showing-mis-regulation"><i class="fa fa-check"></i><b>7.2.1</b> Heatmap showing mis-regulation</a></li>
+<li class="chapter" data-level="7.2.2" data-path="pax7.html"><a href="pax7.html#violin-plot-of-pax7-targets-expression"><i class="fa fa-check"></i><b>7.2.2</b> Violin plot of PAX7 targets expression</a></li>
+<li class="chapter" data-level="7.2.3" data-path="pax7.html"><a href="pax7.html#observation-of-the-95-ci-of-the-mean-estimates"><i class="fa fa-check"></i><b>7.2.3</b> Observation of the 95% CI of the mean estimates</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="pax7.html"><a href="pax7.html#compare-to-dux4-targeted-biomarkers"><i class="fa fa-check"></i><b>7.3</b> Compare to DUX4-targeted biomarkers</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="immune-infiltrate.html"><a href="immune-infiltrate.html"><i class="fa fa-check"></i><b>8</b> Immune Cell Infiltration</a><ul>
+<li class="chapter" data-level="8.1" data-path="immune-infiltrate.html"><a href="immune-infiltrate.html#immune-cell-markers"><i class="fa fa-check"></i><b>8.1</b> Immune cell markers</a></li>
+<li class="chapter" data-level="8.2" data-path="immune-infiltrate.html"><a href="immune-infiltrate.html#immune-cell-type-scores-by-tpm-per-samples"><i class="fa fa-check"></i><b>8.2</b> Immune cell type scores by TPM per Samples</a></li>
+<li class="chapter" data-level="8.3" data-path="immune-infiltrate.html"><a href="immune-infiltrate.html#immune-cell-marker-scores-by-logfc-per-fshd-classes"><i class="fa fa-check"></i><b>8.3</b> Immune cell marker scores by logFC per FSHD classes</a></li>
+<li class="chapter" data-level="8.4" data-path="immune-infiltrate.html"><a href="immune-infiltrate.html#frequency-of-significance"><i class="fa fa-check"></i><b>8.4</b> Frequency of significance</a></li>
+<li class="chapter" data-level="8.5" data-path="immune-infiltrate.html"><a href="immune-infiltrate.html#average-rlog-per-sample"><i class="fa fa-check"></i><b>8.5</b> Average rlog per sample</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="biopsy-qc.html"><a href="biopsy-qc.html"><i class="fa fa-check"></i><b>9</b> Biopsy Quality Control</a><ul>
+<li class="chapter" data-level="9.1" data-path="biopsy-qc.html"><a href="biopsy-qc.html#blood-fat-and-muscle-cell-markers"><i class="fa fa-check"></i><b>9.1</b> Blood, fat and muscle cell markers</a></li>
+<li class="chapter" data-level="9.2" data-path="biopsy-qc.html"><a href="biopsy-qc.html#define-score"><i class="fa fa-check"></i><b>9.2</b> Define score</a></li>
+<li class="chapter" data-level="9.3" data-path="biopsy-qc.html"><a href="biopsy-qc.html#visualization"><i class="fa fa-check"></i><b>9.3</b> Visualization</a></li>
+<li class="chapter" data-level="9.4" data-path="biopsy-qc.html"><a href="biopsy-qc.html#determine-outliers"><i class="fa fa-check"></i><b>9.4</b> Determine “outliers”</a></li>
+<li class="chapter" data-level="9.5" data-path="biopsy-qc.html"><a href="biopsy-qc.html#determine-bad-biopsies"><i class="fa fa-check"></i><b>9.5</b> Determine “bad” biopsies?</a></li>
+<li class="chapter" data-level="9.6" data-path="biopsy-qc.html"><a href="biopsy-qc.html#sample-01-0037"><i class="fa fa-check"></i><b>9.6</b> Sample 01-0037</a></li>
+<li class="chapter" data-level="9.7" data-path="biopsy-qc.html"><a href="biopsy-qc.html#tables"><i class="fa fa-check"></i><b>9.7</b> Tables</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Longitudinal measures of RNA-seq expression and disease activity in FSHD muscle biopsies</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="mild_fshd" class="section level1">
+<h1><span class="header-section-number">Chapter 6</span> Markers discriminate Mild FSHD from the control samples</h1>
+<p>The samples categorized as Mild FSHDs are characterized by low-to-absent DUX4-targeted gene expression, relatively low gene expression in all six relevant biological functions as well as lower pathological scores in average. We aim to find markers discriminating the Mild FSHD from the control samples, and these markers could be the early responsers to muscle changes and DUX4 regulation.</p>
+<p>We first identify the differentially expressed (DE) genes in the Mild FSHDs relative to the controls, then keep the DE genes that are relevant to FSHD as candidate classifiers, or predictors. To assess the power of discrimination and perform cross-validation of the set, we apply Receiver Operator Characteristics (ROC) and random forests, respectively.</p>
+<div id="load-libaray-and-datasets" class="section level3">
+<h3><span class="header-section-number">6.0.1</span> Load libaray and datasets</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">suppressPackageStartupMessages</span>(<span class="kw">library</span>(DESeq2))
+<span class="kw">suppressPackageStartupMessages</span>(<span class="kw">library</span>(tidyverse))
+<span class="kw">suppressPackageStartupMessages</span>(<span class="kw">library</span>(pheatmap))
+<span class="kw">suppressPackageStartupMessages</span>(<span class="kw">library</span>(ggplot2))
+<span class="kw">suppressPackageStartupMessages</span>(<span class="kw">library</span>(BiocParallel))
+multi_param &lt;-<span class="st"> </span><span class="kw">MulticoreParam</span>(<span class="dt">worker=</span><span class="dv">2</span>)
+<span class="kw">register</span>(multi_param, <span class="dt">default=</span><span class="ot">TRUE</span>)
+
+pkg_dir &lt;-<span class="st"> &quot;/fh/fast/tapscott_s/CompBio/RNA-Seq/hg38.FSHD.biopsy.all&quot;</span>
+
+<span class="kw">source</span>(<span class="kw">file.path</span>(pkg_dir, <span class="st">&quot;scripts&quot;</span>, <span class="st">&quot;manuscript_tools.R&quot;</span>))
+<span class="kw">load</span>(<span class="kw">file.path</span>(pkg_dir, <span class="st">&quot;public_data&quot;</span>, <span class="st">&quot;cluster_df.rda&quot;</span>))
+<span class="kw">load</span>(<span class="kw">file.path</span>(pkg_dir, <span class="st">&quot;public_data&quot;</span>, <span class="st">&quot;sanitized.dds.rda&quot;</span>))
+<span class="kw">load</span>(<span class="kw">file.path</span>(pkg_dir, <span class="st">&quot;public_data&quot;</span>, <span class="st">&quot;sanitized.rlg.rda&quot;</span>))
+
+sanitized.dds<span class="op">$</span>RNA_cluster_<span class="dv">5</span> &lt;-<span class="st"> </span>sanitized.rlg<span class="op">$</span>RNA_cluster_<span class="dv">5</span> &lt;-<span class="st"> </span>cluster_df<span class="op">$</span>RNA_cluster
+sanitized.dds<span class="op">$</span>new_cluster_name &lt;-<span class="st"> </span>sanitized.rlg<span class="op">$</span>new_cluster_name &lt;-<span class="st"> </span>cluster_df<span class="op">$</span>new_cluster_name
+
+<span class="co">#&#39; DUX4-reguated 53 FSHD biomarkers</span>
+mk &lt;-<span class="st"> </span><span class="kw">get</span>(<span class="kw">load</span>(<span class="kw">file.path</span>(pkg_dir, <span class="st">&quot;data&quot;</span>, <span class="st">&quot;FSHD_markers.rda&quot;</span>)))<span class="op">$</span>gene_name
+mk &lt;-<span class="st"> </span>mk[mk <span class="op">%in%</span><span class="st"> </span><span class="kw">rowData</span>(sanitized.dds)<span class="op">$</span>gene_name]</code></pre></div>
+</div>
+<div id="differentially-up-regulated-genes-in-mild-fshd-samples" class="section level2">
+<h2><span class="header-section-number">6.1</span> Differentially up-regulated genes in Mild FSHD samples</h2>
+<p>The criteria for differentially up-related gene in Mild FSHDs: adjusted <span class="math inline">\(p\)</span>-value &lt; 0.05 corresponding to <span class="math inline">\(H_0: |lfc| = 0\)</span>. Note that the difference in gene expression between the Mild FSHDs and controls is subtle, therefore a loosen criteria for the log fold change is applied.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#&#39; tools</span>
+.tidy_results &lt;-<span class="st"> </span><span class="cf">function</span>(res, dds, <span class="dt">padj_thres=</span><span class="fl">0.05</span>) {
+  de &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(res) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">rownames_to_column</span>(<span class="dt">var=</span><span class="st">&quot;gencode_id&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">    </span>dplyr<span class="op">::</span><span class="kw">filter</span>(padj <span class="op">&lt;</span><span class="st"> </span>padj_thres) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">gene_name =</span> <span class="kw">rowData</span>(dds[gencode_id])<span class="op">$</span>gene_name) <span class="op">%&gt;%</span>
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">gene_id =</span>
+             <span class="kw">sapply</span>(<span class="kw">strsplit</span>(gencode_id, <span class="st">&quot;.&quot;</span>, <span class="dt">fixed=</span><span class="ot">TRUE</span>), <span class="st">&quot;[[&quot;</span>, <span class="dv">1</span>))
+}
+
+<span class="co">#&#39; DESeq2</span>
+<span class="co">#&#39; class A vs A_control</span>
+new.dds &lt;-<span class="st"> </span>sanitized.dds
+<span class="kw">design</span>(new.dds) &lt;-<span class="st"> </span><span class="er">~</span><span class="st"> </span>RNA_cluster_<span class="dv">5</span>
+new.dds &lt;-<span class="st"> </span><span class="kw">DESeq</span>(new.dds)
+classA.res &lt;-<span class="st"> </span><span class="kw">results</span>(new.dds, <span class="dt">alpha =</span> <span class="fl">0.05</span>,
+                      <span class="dt">name =</span> <span class="st">&quot;RNA_cluster_5_A_vs_A_Cntr&quot;</span>)
+de_A &lt;-<span class="st"> </span><span class="kw">.tidy_results</span>(classA.res, <span class="dt">dds=</span>new.dds, <span class="dt">padj=</span><span class="fl">0.05</span>)                      
+de_A_up &lt;-<span class="st"> </span>de_A <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">filter</span>(log2FoldChange <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">DUX4_marker=</span>gene_name <span class="op">%in%</span><span class="st"> </span>mk)
+de_A_down &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(classA.res) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">rownames_to_column</span>(<span class="dt">var=</span><span class="st">&quot;gene_id&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">filter</span>(padj <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.05</span>, log2FoldChange <span class="op">&lt;</span><span class="st"> </span><span class="dv">0</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">gene_name=</span><span class="kw">rowData</span>(sanitized.dds[gene_id])<span class="op">$</span>gene_name)
+<span class="co">#&#39; </span>
+<span class="co">#&#39; class D vs A_control</span>
+<span class="co">#&#39;</span>
+classD.res &lt;-<span class="st"> </span><span class="kw">results</span>(new.dds, <span class="dt">alpha =</span> <span class="fl">0.05</span>, <span class="dt">lfcThreshold=</span><span class="dv">2</span>,
+                      <span class="dt">name=</span><span class="st">&quot;RNA_cluster_5_D_vs_A_Cntr&quot;</span>)          
+de_D_up &lt;-<span class="st"> </span><span class="kw">.tidy_results</span>(classD.res, <span class="dt">dds=</span>new.dds, <span class="dt">padj=</span><span class="fl">0.05</span>) <span class="op">%&gt;%</span>
+<span class="st">   </span>dplyr<span class="op">::</span><span class="kw">filter</span>(log2FoldChange <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">DUX4_marker=</span>gene_name <span class="op">%in%</span><span class="st"> </span>mk)</code></pre></div>
+</div>
+<div id="select-fshd-relavent-candidates" class="section level2">
+<h2><span class="header-section-number">6.2</span> Select FSHD relavent candidates</h2>
+<p>We keep the up-regulated genes in the Mild FSHDs that are also robustly up-regulated in the High (cluster D) samples: adjusted <span class="math inline">\(p\)</span>-value &lt; 0.05 corresponding to <span class="math inline">\(H_0: |lfc| &lt; 2\)</span>. This way we obtain the up-regulated genes in Mild FSHDs that are disease relevant. As a result, we obtain 164 candidates. Showing below is the row z-score of 164 candidates’ log expression in all samples.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#&#39; </span>
+<span class="co">#&#39; (1) select de_up that are robust in cluster D (High, lfc &gt; 2 with padj &lt; 0.05)</span>
+<span class="co">#&#39; (2) define key predictors: limited to DE genes in High (class D)</span>
+<span class="co">#&#39; (3) plot heatmap to see the progression of expression in other FSHD classes</span>
+<span class="co">#&#39;</span>
+keys &lt;-<span class="st"> </span>de_A_up <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">filter</span>(gencode_id <span class="op">%in%</span><span class="st"> </span>de_D_up<span class="op">$</span>gencode_id) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">arrange</span>(padj)
+  
+keep &lt;-<span class="st"> </span>sanitized.rlg<span class="op">$</span>RNA_cluster_<span class="dv">5</span> <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;A_Cntr&quot;</span>, <span class="st">&quot;A&quot;</span>)
+
+data &lt;-<span class="st"> </span><span class="kw">assay</span>(sanitized.rlg[keys<span class="op">$</span>gencode_id, ])
+<span class="kw">rownames</span>(data) &lt;-<span class="st"> </span>keys<span class="op">$</span>gene_name  
+ann_col &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">pheno_type=</span>sanitized.rlg<span class="op">$</span>pheno_type,
+                      <span class="dt">class =</span> sanitized.rlg<span class="op">$</span>RNA_cluster_<span class="dv">5</span>)
+<span class="kw">rownames</span>(ann_col) &lt;-<span class="st"> </span><span class="kw">colnames</span>(data)
+zscore_data &lt;-<span class="st"> </span>(data <span class="op">-</span><span class="st"> </span><span class="kw">rowMeans</span>(data)) <span class="op">/</span><span class="st"> </span><span class="kw">rowSds</span>(data)
+<span class="kw">pheatmap</span>(zscore_data, <span class="dt">annotation_col=</span>ann_col,
+         <span class="co">#fontsize_row=6.5, </span>
+         <span class="co">#fontsize_col=6,</span>
+         <span class="dt">scale=</span><span class="st">&quot;row&quot;</span>, 
+         <span class="dt">show_rownames=</span><span class="ot">FALSE</span>)</code></pre></div>
+<div class="figure"><span id="fig:fshd-relavant"></span>
+<img src="gitbook_files/figure-html/fshd-relavant-1.png" alt="Heatmap of row z-score of 164 candidate log expression." width="672" />
+<p class="caption">
+Figure 6.1: Heatmap of row z-score of 164 candidate log expression.
+</p>
+</div>
+</div>
+<div id="go-analysis" class="section level2">
+<h2><span class="header-section-number">6.3</span> GO analysis</h2>
+<p>The top 10 enriched GO terms corresponding to the 164 early responser candidates are:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">universal &lt;-<span class="st"> </span><span class="kw">sapply</span>(<span class="kw">strsplit</span>(<span class="kw">rownames</span>(classA.res), <span class="st">&quot;.&quot;</span>, <span class="dt">fixed=</span><span class="ot">TRUE</span>),
+                    <span class="st">&quot;[[&quot;</span>, <span class="dv">1</span>)
+enriched &lt;-<span class="st"> </span><span class="kw">.do_goseq</span>(<span class="dt">universal =</span> universal, 
+                      <span class="dt">selected_genes =</span> keys<span class="op">$</span>gene_id,
+                      <span class="dt">return.DEInCat=</span><span class="ot">FALSE</span>, <span class="dt">dds=</span>sanitized.dds)</code></pre></div>
+<pre><code>## Warning in pcls(G): initial point very close to some inequality constraints</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">knitr<span class="op">::</span><span class="kw">kable</span>(enriched[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, <span class="kw">c</span>(<span class="st">&quot;category&quot;</span>, <span class="st">&quot;term&quot;</span>, <span class="st">&quot;padj&quot;</span>)], 
+             <span class="dt">caption =</span> <span class="st">&quot;Top 10 enriched GO terms correspoding to 163 candidates.&quot;</span>)</code></pre></div>
+<table>
+<caption><span id="tab:goseq-163mild">Table 6.1: </span>Top 10 enriched GO terms correspoding to 163 candidates.</caption>
+<thead>
+<tr class="header">
+<th align="left">category</th>
+<th align="left">term</th>
+<th align="right">padj</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><a href="GO:0006952" class="uri">GO:0006952</a></td>
+<td align="left">defense response</td>
+<td align="right">0e+00</td>
+</tr>
+<tr class="even">
+<td align="left"><a href="GO:0009605" class="uri">GO:0009605</a></td>
+<td align="left">response to external stimulus</td>
+<td align="right">0e+00</td>
+</tr>
+<tr class="odd">
+<td align="left"><a href="GO:0006954" class="uri">GO:0006954</a></td>
+<td align="left">inflammatory response</td>
+<td align="right">0e+00</td>
+</tr>
+<tr class="even">
+<td align="left"><a href="GO:0002684" class="uri">GO:0002684</a></td>
+<td align="left">positive regulation of immune system process</td>
+<td align="right">0e+00</td>
+</tr>
+<tr class="odd">
+<td align="left"><a href="GO:0050776" class="uri">GO:0050776</a></td>
+<td align="left">regulation of immune response</td>
+<td align="right">0e+00</td>
+</tr>
+<tr class="even">
+<td align="left"><a href="GO:0050778" class="uri">GO:0050778</a></td>
+<td align="left">positive regulation of immune response</td>
+<td align="right">0e+00</td>
+</tr>
+<tr class="odd">
+<td align="left"><a href="GO:0006955" class="uri">GO:0006955</a></td>
+<td align="left">immune response</td>
+<td align="right">0e+00</td>
+</tr>
+<tr class="even">
+<td align="left"><a href="GO:0002253" class="uri">GO:0002253</a></td>
+<td align="left">activation of immune response</td>
+<td align="right">0e+00</td>
+</tr>
+<tr class="odd">
+<td align="left"><a href="GO:0002682" class="uri">GO:0002682</a></td>
+<td align="left">regulation of immune system process</td>
+<td align="right">1e-07</td>
+</tr>
+<tr class="even">
+<td align="left"><a href="GO:0008283" class="uri">GO:0008283</a></td>
+<td align="left">cell proliferation</td>
+<td align="right">1e-07</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="cross-validation-by-random-forests" class="section level2">
+<h2><span class="header-section-number">6.4</span> Cross validation by random forests</h2>
+<p>We use a random forest to determine the top 25 potentially the strongest candidates.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># make expset and load ML library</span>
+<span class="kw">suppressPackageStartupMessages</span>(<span class="kw">library</span>(randomForest))
+<span class="kw">suppressPackageStartupMessages</span>(<span class="kw">library</span>(MLInterfaces))</code></pre></div>
+<pre><code>## Warning: replacing previous import &#39;BiocGenerics::var&#39; by &#39;stats::var&#39; when
+## loading &#39;MLInterfaces&#39;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">suppressPackageStartupMessages</span>(<span class="kw">library</span>(ROC))
+<span class="kw">suppressPackageStartupMessages</span>(<span class="kw">library</span>(genefilter))
+<span class="kw">set.seed</span>(<span class="dv">123</span>)
+
+keep &lt;-<span class="st"> </span>sanitized.rlg<span class="op">$</span>RNA_cluster_<span class="dv">5</span> <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;A_Cntr&quot;</span>, <span class="st">&quot;A&quot;</span>)
+tmp.dds &lt;-<span class="st"> </span>sanitized.dds[keys<span class="op">$</span>gencode_id, keep]
+data &lt;-<span class="st"> </span><span class="kw">.get_local_rlg</span>(keys<span class="op">$</span>gencode_id, tmp.dds)
+<span class="kw">rownames</span>(data) &lt;-<span class="st"> </span><span class="kw">rowData</span>(tmp.dds[<span class="kw">rownames</span>(data)])<span class="op">$</span>gene_name
+<span class="co">#rownames(data) &lt;- keys$gene_name</span>
+exp_set &lt;-<span class="st"> </span><span class="kw">ExpressionSet</span>(data,
+                         <span class="dt">phenoData   =</span> <span class="kw">AnnotatedDataFrame</span>(<span class="kw">as.data.frame</span>(<span class="kw">colData</span>(tmp.dds))))
+<span class="co"># testing on one random forest in which the 32-xxxx samples are the testing set)</span>
+<span class="co"># obtaining potential best candidates accessed by random forests</span>
+train_ind &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">11</span>, <span class="dv">14</span><span class="op">:</span><span class="dv">19</span>)
+rf1 &lt;-<span class="st"> </span><span class="kw">MLearn</span>(pheno_type <span class="op">~</span>., <span class="dt">data=</span>exp_set,
+              randomForestI, train_ind, <span class="dt">ntree=</span><span class="dv">1000</span>, <span class="dt">mtry=</span><span class="dv">10</span>, <span class="dt">importance=</span><span class="ot">TRUE</span>) 
+imp &lt;-<span class="st"> </span><span class="kw">getVarImp</span>(rf1) <span class="co"># rownames are messed up by MLearn</span>
+<span class="kw">rownames</span>(imp) &lt;-<span class="st"> </span><span class="kw">featureNames</span>(exp_set)
+
+tmp_data &lt;-<span class="st"> </span><span class="kw">report</span>(imp, <span class="dt">n=</span><span class="dv">25</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">arrange</span>(MnDecrAcc) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">names=</span><span class="kw">as.character</span>(names)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">names=</span><span class="kw">factor</span>(names, <span class="dt">levels=</span>names))
+
+gg_imp &lt;-<span class="st"> </span><span class="kw">ggplot</span>(tmp_data, <span class="kw">aes</span>(<span class="dt">x=</span>names, <span class="dt">y=</span>MnDecrAcc)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">&quot;identity&quot;</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">coord_flip</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme_bw</span>()
+
+imp_data &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(imp<span class="op">@</span>.Data) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">rownames_to_column</span>(<span class="dt">var=</span><span class="st">&quot;gene_name&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="co">#left_join(keys, by=&quot;gene_name&quot;) %&gt;%</span>
+<span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(MeanDecreaseAccuracy)) </code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gg_imp</code></pre></div>
+<div class="figure"><span id="fig:plot-gg-imp"></span>
+<img src="gitbook_files/figure-html/plot-gg-imp-1.png" alt="top 25 best candidates determined by a random forest." width="672" />
+<p class="caption">
+Figure 6.2: top 25 best candidates determined by a random forest.
+</p>
+</div>
+<p>Leave-one-out cross-validation by random forest yields 0.08 prediction error rate.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#&#39; leave-one-out cross-validation</span>
+error_test &lt;-<span class="st"> </span><span class="kw">lapply</span>(<span class="dv">1</span><span class="op">:</span><span class="kw">ncol</span>(exp_set), <span class="cf">function</span>(i) {
+  train_ind &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">25</span>)[<span class="op">-</span>i]
+  rf &lt;-<span class="st"> </span><span class="kw">MLearn</span>(pheno_type <span class="op">~</span>., <span class="dt">data=</span>exp_set,
+              randomForestI, train_ind, <span class="dt">ntree=</span><span class="dv">1000</span>, <span class="dt">mtry=</span><span class="dv">10</span>, <span class="dt">importance=</span><span class="ot">TRUE</span>) 
+  cfm &lt;-<span class="st"> </span><span class="kw">confuMat</span>(rf, <span class="st">&quot;test&quot;</span>)
+  error_sample &lt;-<span class="st"> </span><span class="kw">ifelse</span>(<span class="kw">is.table</span>(cfm), <span class="dv">1</span>, <span class="dv">0</span>)
+})
+error_rate &lt;-<span class="st"> </span><span class="kw">sum</span>(<span class="kw">unlist</span>(error_test)) <span class="op">/</span><span class="st"> </span><span class="kw">ncol</span>(exp_set)
+error_rate</code></pre></div>
+<pre><code>## Samples 
+##    0.08</code></pre>
+</div>
+<div id="discriminative-power-per-candidates" class="section level2">
+<h2><span class="header-section-number">6.5</span> Discriminative power per candidates</h2>
+<p>Estimate discriminative power for individual genes using ROC.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rocs &lt;-<span class="st"> </span><span class="kw">rowpAUCs</span>(exp_set, <span class="st">&quot;pheno_type&quot;</span>, <span class="dt">p=</span><span class="fl">0.2</span>)
+rocs_data &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">pAUC =</span> <span class="kw">area</span>(rocs), <span class="dt">AUC =</span> rocs<span class="op">@</span>AUC) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">rownames_to_column</span>(<span class="dt">var=</span><span class="st">&quot;gene_name&quot;</span>)    
+<span class="co"># combine ROC and random forests results</span>
+comb_data &lt;-<span class="st"> </span><span class="kw">left_join</span>(imp_data, rocs_data, <span class="dt">by=</span><span class="st">&quot;gene_name&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="co">#dplyr::filter(pAUC &gt; 0.1) %&gt;%</span>
+<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">select</span>(<span class="op">-</span>Control, <span class="op">-</span>FSHD, <span class="op">-</span>MeanDecreaseGini) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">left_join</span>(keys <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">select</span>(<span class="op">-</span><span class="kw">c</span>(gencode_id, gene_id)), <span class="dt">by=</span><span class="st">&quot;gene_name&quot;</span>)</code></pre></div>
+</div>
+<div id="heatmap-of-some-best-candidates" class="section level2">
+<h2><span class="header-section-number">6.6</span> Heatmap of some best candidates</h2>
+<p>Here we select 52 candidates (out of 164) with <span class="math inline">\(AUC &gt; 0.9\)</span>) as our discovery set as early responser to muscle changes are best in discriminating mildly affect FSHDs from the controls.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">predictors &lt;-<span class="st"> </span>comb_data <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">filter</span>(AUC <span class="op">&gt;=</span><span class="st"> </span><span class="fl">0.9</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">gencode_id =</span> <span class="kw">get_ensembl</span>(gene_name, sanitized.dds)) <span class="op">%&gt;%</span>
+<span class="st"> </span><span class="kw">pull</span>(gencode_id) <span class="co">#52</span>
+
+keep &lt;-<span class="st"> </span>sanitized.rlg<span class="op">$</span>RNA_cluster_<span class="dv">5</span> <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;A_Cntr&quot;</span>, <span class="st">&quot;A&quot;</span>)
+tmp.dds &lt;-<span class="st"> </span>sanitized.dds[predictors, keep]
+<span class="co">#data &lt;- assay(tmp.rlg)</span>
+data &lt;-<span class="st"> </span><span class="kw">.get_local_rlg</span>(predictors, tmp.dds)
+<span class="kw">rownames</span>(data) &lt;-<span class="st"> </span><span class="kw">rowData</span>(tmp.dds)<span class="op">$</span>gene_name
+ann_col &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">pheno_type=</span>tmp.dds<span class="op">$</span>pheno_type,
+                      <span class="dt">class =</span> tmp.dds<span class="op">$</span>RNA_cluster_<span class="dv">5</span>)
+<span class="kw">rownames</span>(ann_col) &lt;-<span class="st"> </span><span class="kw">colnames</span>(data)
+zscore_data &lt;-<span class="st"> </span>(data <span class="op">-</span><span class="st"> </span><span class="kw">rowMeans</span>(data)) <span class="op">/</span><span class="st"> </span><span class="kw">rowSds</span>(data)
+<span class="kw">pheatmap</span>(zscore_data, <span class="dt">annotation_col=</span>ann_col,
+         <span class="dt">fontsize_row=</span><span class="fl">6.5</span>, 
+         <span class="co">#fontsize_col=6,</span>
+         <span class="dt">scale=</span><span class="st">&quot;row&quot;</span>, 
+         <span class="dt">show_rownames=</span><span class="ot">TRUE</span>,
+         <span class="dt">cellheight=</span><span class="dv">8</span>)</code></pre></div>
+<div class="figure"><span id="fig:key-auc-09"></span>
+<img src="gitbook_files/figure-html/key-auc-09-1.png" alt="52 early muscle change candidates with AUC &gt; 0.9." width="672" />
+<p class="caption">
+Figure 6.3: 52 early muscle change candidates with AUC &gt; 0.9.
+</p>
+</div>
+</div>
+<div id="some-strong-candidates" class="section level2">
+<h2><span class="header-section-number">6.7</span> Some strong candidates</h2>
+<div id="ckdn1a" class="section level3">
+<h3><span class="header-section-number">6.7.1</span> CKDN1A</h3>
+<p>CDKN1A is one of the best candidates in terms of AUC and pAUC (p=0.2). Shown below are its <span class="math inline">\(\log_{10}(TPM)\)</span> expression and ROC statistics and AUC plot.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sel &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;CDKN1A&quot;</span>, <span class="st">&quot;C1QA&quot;</span>, <span class="st">&quot;CD4&quot;</span>, <span class="st">&quot;TNC&quot;</span>, <span class="st">&quot;RUNX1&quot;</span>, <span class="st">&quot;LILRB5&quot;</span>, <span class="st">&quot;FGF18&quot;</span>, <span class="st">&quot;CCL18&quot;</span>)
+factor &lt;-<span class="st"> </span><span class="kw">as.character</span>(cluster_df<span class="op">$</span>new_cluster_name)
+factor[cluster_df<span class="op">$</span>RNA_cluster<span class="op">==</span><span class="st">&quot;A_Cntr&quot;</span>] &lt;-<span class="st"> &quot;Control&quot;</span>
+factor &lt;-<span class="st"> </span><span class="kw">factor</span>(factor, <span class="dt">levels=</span><span class="kw">c</span>(<span class="st">&quot;Control&quot;</span>, <span class="st">&quot;Mild&quot;</span>, <span class="st">&quot;Moderate&quot;</span>, <span class="st">&quot;IG-High&quot;</span>, <span class="st">&quot;High&quot;</span>, <span class="st">&quot;Muscle-Low&quot;</span>))
+<span class="kw">names</span>(factor) &lt;-<span class="st"> </span><span class="kw">as.character</span>(cluster_df<span class="op">$</span>sample_name)
+
+set_exp &lt;-<span class="st"> </span><span class="kw">.getExpFromDDS_by_cluster</span>(sel, <span class="dt">dds=</span>sanitized.dds, <span class="dt">factor=</span>factor, <span class="dt">type=</span><span class="st">&quot;TPM&quot;</span>)</code></pre></div>
+<pre><code>## Warning: `as.tibble()` is deprecated, use `as_tibble()` (but mind the new semantics).
+## This warning is displayed once per session.</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">data &lt;-<span class="st"> </span>set_exp <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">log.value=</span><span class="kw">log10</span>(value<span class="op">+</span><span class="dv">1</span>))
+
+gg_CDKN1A &lt;-<span class="st"> </span><span class="kw">ggplot</span>(data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(gene_name<span class="op">==</span><span class="st">&quot;CDKN1A&quot;</span>), 
+                    <span class="kw">aes</span>(<span class="dt">x=</span>group, <span class="dt">y=</span>log.value, <span class="dt">group=</span>group)) <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_boxplot</span>(<span class="dt">outlier.shape =</span> <span class="ot">NA</span>, <span class="dt">width=</span><span class="fl">0.7</span>) <span class="op">+</span>
+<span class="st">    </span><span class="co">#geom_violin() +</span>
+<span class="st">    </span><span class="kw">geom_jitter</span>(<span class="dt">width=</span><span class="fl">0.2</span>, <span class="dt">size=</span><span class="fl">0.8</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">labs</span>(<span class="dt">y=</span><span class="kw">bquote</span>(log[<span class="dv">10</span>]<span class="op">~</span><span class="st">&quot;(TPM+1)&quot;</span>), <span class="dt">title=</span><span class="st">&quot;CDKN1A&quot;</span>) <span class="op">+</span>
+<span class="st">    </span><span class="kw">theme_bw</span>() <span class="op">+</span>
+<span class="st">    </span><span class="kw">theme</span>(<span class="dt">axis.text.x=</span><span class="kw">element_text</span>(<span class="dt">angle=</span><span class="dv">90</span>, <span class="dt">vjust=</span><span class="fl">0.5</span>, <span class="dt">hjust=</span><span class="dv">1</span>),
+          <span class="dt">axis.title.x =</span> <span class="kw">element_blank</span>(),
+          <span class="dt">plot.title =</span> <span class="kw">element_text</span>(<span class="dt">hjust=</span><span class="fl">0.5</span>, <span class="dt">size=</span><span class="dv">10</span>),
+          <span class="dt">axis.title.y =</span> <span class="kw">element_text</span>(<span class="dt">size=</span><span class="dv">9</span>),
+          <span class="dt">legend.justification=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="dt">legend.position=</span><span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>)) 
+gg_CDKN1A</code></pre></div>
+<p><img src="gitbook_files/figure-html/cdkn1A_boxplot-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(rocs[<span class="st">&quot;CDKN1A&quot;</span>], <span class="dt">main=</span><span class="st">&quot;CDKN1A&quot;</span>)</code></pre></div>
+<p><img src="gitbook_files/figure-html/cdkn1A_roc-1.png" width="672" /></p>
+</div>
+<div id="ccna1" class="section level3">
+<h3><span class="header-section-number">6.7.2</span> CCNA1</h3>
+<p>CCNA1 is a DUX4-regulated genes and a great candidate for discriminating Mild FSHDs from the controls. Below is its <span class="math inline">\(\log_{10}(TPM)\)</span> expression by FSHD classes.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ccna1_exp &lt;-<span class="st"> </span><span class="kw">.getExpFromDDS_by_cluster</span>(<span class="st">&quot;CCNA1&quot;</span>, <span class="dt">dds=</span>sanitized.dds, <span class="dt">factor=</span>factor, <span class="dt">type=</span><span class="st">&quot;TPM&quot;</span>)
+data &lt;-<span class="st"> </span>ccna1_exp <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">log.value=</span><span class="kw">log10</span>(value<span class="op">+</span><span class="dv">1</span>))
+gg_CCNA1 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(gene_name<span class="op">==</span><span class="st">&quot;CCNA1&quot;</span>), 
+                   <span class="kw">aes</span>(<span class="dt">x=</span>group, <span class="dt">y=</span>log.value, <span class="dt">group=</span>group)) <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_boxplot</span>(<span class="dt">outlier.shape =</span> <span class="ot">NA</span>, <span class="dt">width=</span><span class="fl">0.7</span>) <span class="op">+</span>
+<span class="st">    </span><span class="co">#geom_violin() +</span>
+<span class="st">    </span><span class="kw">geom_jitter</span>(<span class="dt">width=</span><span class="fl">0.2</span>, <span class="dt">size=</span><span class="fl">0.8</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">labs</span>(<span class="dt">y=</span><span class="kw">bquote</span>(log[<span class="dv">10</span>]<span class="op">~</span><span class="st">&quot;(TPM+1)&quot;</span>), <span class="dt">title=</span><span class="st">&quot;CCNA1&quot;</span>) <span class="op">+</span>
+<span class="st">    </span><span class="kw">theme_bw</span>() <span class="op">+</span>
+<span class="st">    </span><span class="kw">theme</span>(<span class="dt">axis.text.x=</span><span class="kw">element_text</span>(<span class="dt">angle=</span><span class="dv">90</span>, <span class="dt">vjust=</span><span class="fl">0.5</span>, <span class="dt">hjust=</span><span class="dv">1</span>),
+          <span class="dt">axis.title.x =</span> <span class="kw">element_blank</span>(),
+          <span class="dt">plot.title =</span> <span class="kw">element_text</span>(<span class="dt">hjust=</span><span class="fl">0.5</span>, <span class="dt">size=</span><span class="dv">10</span>),
+          <span class="dt">axis.title.y =</span> <span class="kw">element_text</span>(<span class="dt">size=</span><span class="dv">9</span>),
+          <span class="dt">legend.justification=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="dt">legend.position=</span><span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>))  
+gg_CCNA1</code></pre></div>
+<p><img src="gitbook_files/figure-html/ccna1_boxplot-1.png" width="672" /></p>
+<p>CCNA1’s ROC plot and results.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(rocs[<span class="st">&quot;CCNA1&quot;</span>], <span class="dt">main=</span><span class="st">&quot;CCNA1&quot;</span>)</code></pre></div>
+<p><img src="gitbook_files/figure-html/ccna1_roc-1.png" width="672" /></p>
+</div>
+<div id="and-few-more-examples" class="section level3">
+<h3><span class="header-section-number">6.7.3</span> And few more examples</h3>
+<p>Some strong candidates’ <span class="math inline">\(\log_{10}TPM\)</span> expression by FSHD classes.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">data &lt;-<span class="st"> </span>set_exp <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">log.value=</span><span class="kw">log10</span>(value<span class="op">+</span><span class="dv">1</span>))
+<span class="kw">ggplot</span>(data, <span class="kw">aes</span>(<span class="dt">x=</span>group, <span class="dt">y=</span>log.value, <span class="dt">group=</span>group)) <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_boxplot</span>(<span class="dt">outlier.shape =</span> <span class="ot">NA</span>) <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_jitter</span>(<span class="dt">width=</span><span class="fl">0.2</span>, <span class="dt">size=</span><span class="fl">0.7</span>) <span class="op">+</span>
+<span class="st">    </span><span class="kw">facet_wrap</span>( <span class="op">~</span><span class="st"> </span>gene_name, <span class="dt">nrow=</span><span class="dv">2</span>, <span class="dt">scale=</span><span class="st">&quot;free&quot;</span>) <span class="op">+</span>
+<span class="st">    </span><span class="kw">theme_bw</span>() <span class="op">+</span>
+<span class="st">    </span><span class="kw">labs</span>(<span class="dt">y=</span><span class="kw">bquote</span>(log[<span class="dv">10</span>]<span class="op">~</span><span class="st">&quot;(TPM+1)&quot;</span>)) <span class="op">+</span>
+<span class="st">    </span><span class="kw">theme</span>(<span class="dt">axis.text.x=</span><span class="kw">element_text</span>(<span class="dt">angle=</span><span class="dv">90</span>, <span class="dt">vjust=</span><span class="fl">0.5</span>, <span class="dt">hjust=</span><span class="dv">1</span>),
+          <span class="dt">axis.title.x =</span> <span class="kw">element_blank</span>(),
+          <span class="dt">legend.justification=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="dt">legend.position=</span><span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>)) </code></pre></div>
+<p><img src="gitbook_files/figure-html/boxplot_some_candidates-1.png" width="672" /></p>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="rnaseq-classes.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="pax7.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"download": ["gitbook.pdf", "gitbook.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Longitudinal measures of RNA-seq expression and disease activity in FSHD muscle biopsies</title>
+  <title>Chapter 7 PAX7 target mis-regulation in FSHD biopsy RNA-seq samples | Longitudinal measures of RNA-seq expression and disease activity in FSHD muscle biopsies</title>
   <meta name="description" content="Bioinformatics and statistics analysis for the logitudinal study of RNA-seq expression and disear acitivity in FSHD muscle bipsies" />
   <meta name="generator" content="bookdown 0.14 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Longitudinal measures of RNA-seq expression and disease activity in FSHD muscle biopsies" />
+  <meta property="og:title" content="Chapter 7 PAX7 target mis-regulation in FSHD biopsy RNA-seq samples | Longitudinal measures of RNA-seq expression and disease activity in FSHD muscle biopsies" />
   <meta property="og:type" content="book" />
   
   
@@ -16,23 +16,23 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Longitudinal measures of RNA-seq expression and disease activity in FSHD muscle biopsies" />
+  <meta name="twitter:title" content="Chapter 7 PAX7 target mis-regulation in FSHD biopsy RNA-seq samples | Longitudinal measures of RNA-seq expression and disease activity in FSHD muscle biopsies" />
   
   <meta name="twitter:description" content="Bioinformatics and statistics analysis for the logitudinal study of RNA-seq expression and disear acitivity in FSHD muscle bipsies" />
   
 
-<meta name="author" content="Chao-Jen Wong, Tapscott Lab, Fred Hutch" />
+<meta name="author" content="Chao-Jen Wong" />
 
 
-<meta name="date" content="2020-02-19" />
+<meta name="date" content="2020-02-13" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-
-<link rel="next" href="preprocessing.html"/>
+<link rel="prev" href="mild-fshd.html"/>
+<link rel="next" href="immune-infiltrate.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -52,6 +52,43 @@
 
 
 
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -70,8 +107,10 @@
 
 <li class="divider"></li>
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
-<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#package-structure-on-the-master-branch"><i class="fa fa-check"></i><b>1.1</b> Package structure on the master branch</a></li>
-<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#gene-expression-omnibus-series"><i class="fa fa-check"></i><b>1.2</b> Gene Expression Omnibus series</a></li>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#package-structure"><i class="fa fa-check"></i><b>1.1</b> Package structure</a><ul>
+<li class="chapter" data-level="1.1.1" data-path="index.html"><a href="index.html#datasets"><i class="fa fa-check"></i><b>1.1.1</b> Datasets</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#geo"><i class="fa fa-check"></i><b>1.2</b> GEO</a></li>
 <li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#system-requirment"><i class="fa fa-check"></i><b>1.3</b> System requirment</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="preprocessing.html"><a href="preprocessing.html"><i class="fa fa-check"></i><b>2</b> Preprocessing and gene counts</a><ul>
@@ -181,65 +220,95 @@
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="header">
-<h1 class="title">Longitudinal measures of RNA-seq expression and disease activity in FSHD muscle biopsies</h1>
-<p class="author"><em>Chao-Jen Wong, Tapscott Lab, Fred Hutch</em></p>
-<p class="date"><em>2020-02-19</em></p>
+<div id="pax7" class="section level1">
+<h1><span class="header-section-number">Chapter 7</span> PAX7 target mis-regulation in FSHD biopsy RNA-seq samples</h1>
+<p>Zammit et al. (Banerji and Zammit 2019; Christopher R.S. Banerji 2017) derived PAX7-induced and suppressed genes and demonstrated the repression of PAX7 target genes as a biomarker of FSHD. Following their fashion of defining PAX7 score as the t-statistics comparing the set of PAX7-induced to suppressed genes in a given sample (Christopher R.S. Banerji 2017), the PAX7 score decreased progressively throughout the Mild, Moderate, IG-High, High and Muscle-low FSHD samples. This trend was explained as a global repression of PAX7 target genes in FSHD by Banerji’s studies. The landscape of the PAX7-target gene expression, however, suggested a more complex mis-regulation in FSHD samples: majority of PAX7-induced (68%) and suppressed (74%) genes showed mild-to-moderate up-regulation in more affected FSHD biopsies (IG-High and High), whereas a smaller portion of PAX7-induced (32%) and suppressed (26%) showed mild down-regulation.</p>
+<p>Note: the code in this chapter are long and tidious and therefore was hidden. Ther original .Rmd contails all the code for analysis and can be found in our master github branch <a href="http://github.com/frehutch/RWellstone_FSHD_muscle_biopsy/gitbook">here</a>.</p>
+<div id="pa7-scores-and-disease-activity" class="section level2">
+<h2><span class="header-section-number">7.1</span> PA7 scores and disease activity</h2>
+<p>A single sample of PAX7 socre is constructed as t-statistics comparing the log expression of PAX7-induced and suppressed genes within a sample ( Christopher R.S. Banerji 2017). The code chunk below loaded the existing PAX7 targeted genes, calculated the PAX7-score (per sample) and tidied the related data for further analysis.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">load</span>(<span class="kw">file.path</span>(pkg_dir, <span class="st">&quot;public_data&quot;</span>, <span class="st">&quot;pax7_targets.rda&quot;</span>))
+<span class="co">#&#39; tidy the PAX7-targeted genes info</span>
+pax7_score &lt;-<span class="st"> </span><span class="kw">sapply</span>(<span class="kw">colnames</span>(sanitized.dds), <span class="cf">function</span>(sample_name) {
+  data &lt;-<span class="st"> </span>dplyr<span class="op">::</span><span class="kw">select</span>(pax7_targets, attribute, sample_name)
+  tt &lt;-<span class="st"> </span><span class="kw">t.test</span>(<span class="dt">x =</span> data[data<span class="op">$</span>attribute<span class="op">==</span><span class="st">&quot;induced&quot;</span>, sample_name],
+               <span class="dt">y =</span> data[data<span class="op">$</span>attribute<span class="op">==</span><span class="st">&quot;suppressed&quot;</span>, sample_name])
+  <span class="kw">c</span>(<span class="dt">t_stats=</span><span class="kw">unname</span>(tt<span class="op">$</span>statistic), <span class="dt">induced_mean=</span><span class="kw">unname</span>(tt<span class="op">$</span>estimate[<span class="dv">1</span>]),
+    <span class="dt">suppressed_mean=</span><span class="kw">unname</span>(tt<span class="op">$</span>estimate[<span class="dv">2</span>]))             
+})
+<span class="co"># pax 7 rlog</span>
+pax7_score &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">t</span>(pax7_score)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">rownames_to_column</span>(<span class="dt">var=</span><span class="st">&quot;sample_name&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">pheno_type =</span> sanitized.dds[, sample_name]<span class="op">$</span>pheno_type) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">left_join</span>(cluster_df <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">select</span>(sample_name, new_cluster_name, RNA_cluster),
+            <span class="dt">by=</span><span class="st">&quot;sample_name&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">cluster_name =</span> <span class="kw">ifelse</span>(RNA_cluster <span class="op">==</span><span class="st"> &quot;A_Cntr&quot;</span>, <span class="st">&quot;Control&quot;</span>, 
+                               <span class="kw">as.character</span>(new_cluster_name))) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">cluster_name =</span> <span class="kw">factor</span>(cluster_name, <span class="dt">levels=</span><span class="kw">c</span>(<span class="st">&quot;Control&quot;</span>, <span class="st">&quot;Mild&quot;</span>, <span class="st">&quot;Moderate&quot;</span>, <span class="st">&quot;IG-High&quot;</span>,
+                               <span class="st">&quot;High&quot;</span>, <span class="st">&quot;Muscle-Low&quot;</span>)))</code></pre></div>
+<p>Shown below is boxplots of PAX7-score (t-statisitcs) by classes of FSHDs. The score decreased progressively from the Mild, Moderate, IG-High, High to Muscle-Low groups. This suggests that PAX7 targeted genes are associated with the disease activity. The question now is that what does the trend of decreasing PAX7-score reflect? Is it a global repression on PAX7-regualted genes w.r.t. the controls or else?</p>
+<div class="figure"><span id="fig:boxplot-pax7-socre"></span>
+<img src="gitbook_files/figure-html/boxplot-pax7-socre-1.png" alt="Boxplot of PAX7 scores by different FSHD classes." width="480" />
+<p class="caption">
+Figure 7.1: Boxplot of PAX7 scores by different FSHD classes.
+</p>
 </div>
-<div id="introduction" class="section level1">
-<h1><span class="header-section-number">Chapter 1</span> Introduction</h1>
-<p>This gitbook includes narratives of data analysis and reproducible R codes supporting the manuscript “Logitidinal measures of RNA-seq expression and disease activity in FSHD muscle”, a follow-up study of <a href="https://www.ncbi.nlm.nih.gov/pubmed/30312408">MRI-informed muscle biopsies correlated MRI with pathology and DUX4 target gene expression in FSHD</a>.</p>
-<p>This book has nine parts:</p>
-<ol style="list-style-type: decimal">
-<li>Introduction<br />
-</li>
-<li>Pre-processing and gene counts<br />
-</li>
-<li>The one-year follow-up visit<br />
-</li>
-<li>Changes over two visits<br />
-</li>
-<li>Classes of RNA-seq biopsy sampels<br />
-</li>
-<li>Markers discriminate mildly affected FSHDs from the controls</li>
-<li>PAX7 score and disease avtivity<br />
-</li>
-<li>Immune cell infiltration</li>
-<li>Biopsy quality control</li>
-</ol>
-<p>The analysis is performed by using R (&gt;= 3.5.1) and Bioconductor (&gt;=3.7) packages. Some unessential codes are tedious and long, so I make them invisible from the book but they are all included in the original <em>Rmd</em> files that can be found <a href="https://github.com/fredhutch/RWellstone_FSHD_muscle_biopsy/inst/gitbook">here</a> in our github master branch.</p>
-<div id="package-structure-on-the-master-branch" class="section level2">
-<h2><span class="header-section-number">1.1</span> Package structure on the master branch</h2>
-<p>The <a href="https://github.com/fredhutch/RWellstone_FSHD_muscle_biopsy">master branch</a> includes the preprocessed datasets (R/Bioconductor format), original scripts, supplemental tables, and Rmd files that make this gitbook.</p>
-<pre><code>-data (*.rda)
-  |- sanitized.dds: a DESeqDataSet instance of RNA-seq gene expression matrix
-  |- cluster_df: a data.frame instance of k-means clustering results 
-  |- FSHD_markers: a DataFrame instance of 53 DUX4-targeted FSHD robust biomarkers  
-  |- marker_path_scores: sample marker scores (DUX4/inflamm/extracellular matrix/cell cycle) 
-                         based on gene expression alog with MRI characteristics and 
-                         histology scores
-  |- mri_pathology: a data.frame instance of MRI characteristics and histopathology scores
-  |- pax7_targets: a data.frame instance of PAX7-targeted gene expression matrix
-  |- year2.dds: a DESeqDataSet instance of the follow-up visit gene expression 
-                matrix
-  
-- inst
-  |- gitbook: Rmd files that make this gitbook
-  |- extdata: supplemental tables
-  |- scripts: shell and original R scripts</code></pre>
 </div>
-<div id="gene-expression-omnibus-series" class="section level2">
-<h2><span class="header-section-number">1.2</span> Gene Expression Omnibus series</h2>
-<p>The GEO RNA-seq data series are<br />
-- initial visit: <strong>GSE115650</strong><br />
-- one-year follow-up visit: <strong>GSE140261</strong></p>
+<div id="mis-regulation-of-pax7-targeted-gene" class="section level2">
+<h2><span class="header-section-number">7.2</span> Mis-regulation of PAX7-targeted gene</h2>
+<p>The heatmap below presents the row z-score of PAX7-induced and suppressed gene expression, columns gapped by FSHD categories and rows gapped by induced and suppressed genes. It suggests a complicated mis-regulation of PAX7-targeted genes in FSHDs relative to the controls. Majority of the PAX7 targeted (induced 68% and supressed 74%) gene expression were elevated in STIR+, DUX4+ samples (High class). A smaller portion of PAX7-induced (32%) and PAX7-supressed (24%) exhibited mild down-regulation in STIR+/DUX4+ FSHDs relative to controls (32% and 26% in -induced and -supressed, respectively). The progressive up-reguation in the PAX7-suppressed genes in Mild to High groups could be the driving force of the decreasing PAX7-score. Moreover, the violin plot below displays the expression distribution and shows the mean estimiates of the PAX7-suppressed expression are increasing from Mild, Moderate, IG-High, High to Muscle-Low groups whereas that of PAX7-induced expression remain almost invariable.</p>
+<pre><code>## # A tibble: 2 x 3
+##   attribute  up_regulated down_reguated
+##   &lt;chr&gt;             &lt;dbl&gt;         &lt;dbl&gt;
+## 1 induced           0.681         0.319
+## 2 suppressed        0.744         0.256</code></pre>
+<div id="heatmap-showing-mis-regulation" class="section level3">
+<h3><span class="header-section-number">7.2.1</span> Heatmap showing mis-regulation</h3>
+<div class="figure"><span id="fig:pax7-heatmap"></span>
+<img src="gitbook_files/figure-html/pax7-heatmap-1.png" alt="Heatmap of PAX7 targeted gene expression." width="960" />
+<p class="caption">
+Figure 7.2: Heatmap of PAX7 targeted gene expression.
+</p>
 </div>
-<div id="system-requirment" class="section level2">
-<h2><span class="header-section-number">1.3</span> System requirment</h2>
-<ul>
-<li>R 3.5.1 or above: <em>ggplot2</em>, <em>pheatmap</em>, and etc.</li>
-<li>Bioconductor (v3.7 or above) packages: <em>DESeq2</em>, <em>GenomicAlignments</em>, <em>goseq</em>, and etc.</li>
-</ul>
+</div>
+<div id="violin-plot-of-pax7-targets-expression" class="section level3">
+<h3><span class="header-section-number">7.2.2</span> Violin plot of PAX7 targets expression</h3>
+<p>The violin plot below shows the distributions of PAX7-induced and suppressed genes by FSHD classes, illustrating the increasing means of PAX7-suppressed gene expression in more affected FSHD biopsies. The orange and blue dashed lines represent the mean values of PAX7-induced and suppressed genes in the controls, respectively. The orange and blue dots are the mean values of the PAX7-induced and suppression expression in different FSHD classes. The 95% confident intervals of means of PAX7-induced and suppressed gene expression display that the means difference of PAX7-induced gene expression between the controls and different FSHD groups are not significantly different.</p>
+<pre><code>## Warning in grid.Call.graphics(C_polygon, x$x, x$y, index): semi-
+## transparency is not supported on this device: reported only once per page</code></pre>
+<div class="figure"><span id="fig:pax7-violin"></span>
+<img src="gitbook_files/figure-html/pax7-violin-1.png" alt="Density of average PAX7 target gene expression by categories. Dashed lines represent the mean values of the controls." width="576" />
+<p class="caption">
+Figure 7.3: Density of average PAX7 target gene expression by categories. Dashed lines represent the mean values of the controls.
+</p>
+</div>
+</div>
+<div id="observation-of-the-95-ci-of-the-mean-estimates" class="section level3">
+<h3><span class="header-section-number">7.2.3</span> Observation of the 95% CI of the mean estimates</h3>
+<p>The mean estimates and their 95% confidence intervals (showing below) of PAX7-induced and suppressed gene expression illustrate that the mean differences of PAX7-induced gene expression between the controls and the FSHD groups are not significantly different. In contrast, the mean differences of PAX7-suppressed gene expression between the controls and more affected FSHD groups (IG-High, High and Muscle-Low) are more statisitcally significant. Thus the trend of decreasing PAX7 t-statistics score in FSHD groups does not reflect a globel repression but a mis-regulation of the PAX7 network genes.</p>
+<div class="figure"><span id="fig:pax7-95CI"></span>
+<img src="gitbook_files/figure-html/pax7-95CI-1.png" alt="95% confidence interval of means of PAX7-induced and suppressed gene expression. Dots represent mean estimates and lines 95% confidence interval" width="672" />
+<p class="caption">
+Figure 7.4: 95% confidence interval of means of PAX7-induced and suppressed gene expression. Dots represent mean estimates and lines 95% confidence interval
+</p>
+</div>
+</div>
+</div>
+<div id="compare-to-dux4-targeted-biomarkers" class="section level2">
+<h2><span class="header-section-number">7.3</span> Compare to DUX4-targeted biomarkers</h2>
+<p>Next we use scatter plot (@ref{fig:pax7-scatter_control-vs-FSHD}) alon with linear regression to exam the association of the PAX7 targeted genes with the disease. The x-axis represents the average expression of PAX7 targeted genes in each FSHD category and y-axis the controls. The <span class="math inline">\(p\)</span>-value was computed by two-sample Wilcox-test. The grey line represents a 1-to-1 relationship (x=y), and the blue line the linear regression of X and Y-axis. The linear regression lines do not deviate from <span class="math inline">\(x=y\)</span>. On the other hand, in the next scatter plot, a stronger, robust association between the DUX4 targeted genes (53 genes from Yao et al. 2014) and the disease activity is suggested by the linear regression and corresponding <span class="math inline">\(p\)</span>-values.</p>
+<div class="figure"><span id="fig:pax7-scatter-control-vs-FSHD"></span>
+<img src="gitbook_files/figure-html/pax7-scatter-control-vs-FSHD-1.png" alt="Scatter plot of average PAX7 targeted gene expression in the controls and each FSHD category." width="768" />
+<p class="caption">
+Figure 7.5: Scatter plot of average PAX7 targeted gene expression in the controls and each FSHD category.
+</p>
+</div>
+<div class="figure"><span id="fig:dux4-scatter-control-vs-others"></span>
+<img src="gitbook_files/figure-html/dux4-scatter-control-vs-others-1.png" alt="Scatter plot of average DUX4 targeted gene expression in the controls and each FSHD category." width="768" />
+<p class="caption">
+Figure 7.6: Scatter plot of average DUX4 targeted gene expression in the controls and each FSHD category.
+</p>
+</div>
 
 </div>
 </div>
@@ -248,8 +317,8 @@
           </div>
         </div>
       </div>
-
-<a href="preprocessing.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="mild-fshd.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="immune-infiltrate.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -296,6 +365,20 @@ gitbook.start({
 });
 </script>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 </body>
 
 </html>

@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Longitudinal measures of RNA-seq expression and disease activity in FSHD muscle biopsies</title>
+  <title>Chapter 2 Preprocessing and gene counts | Longitudinal measures of RNA-seq expression and disease activity in FSHD muscle biopsies</title>
   <meta name="description" content="Bioinformatics and statistics analysis for the logitudinal study of RNA-seq expression and disear acitivity in FSHD muscle bipsies" />
   <meta name="generator" content="bookdown 0.14 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Longitudinal measures of RNA-seq expression and disease activity in FSHD muscle biopsies" />
+  <meta property="og:title" content="Chapter 2 Preprocessing and gene counts | Longitudinal measures of RNA-seq expression and disease activity in FSHD muscle biopsies" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Longitudinal measures of RNA-seq expression and disease activity in FSHD muscle biopsies" />
+  <meta name="twitter:title" content="Chapter 2 Preprocessing and gene counts | Longitudinal measures of RNA-seq expression and disease activity in FSHD muscle biopsies" />
   
   <meta name="twitter:description" content="Bioinformatics and statistics analysis for the logitudinal study of RNA-seq expression and disear acitivity in FSHD muscle bipsies" />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-
-<link rel="next" href="preprocessing.html"/>
+<link rel="prev" href="index.html"/>
+<link rel="next" href="follow-up-visit.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -52,6 +52,43 @@
 
 
 
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -181,66 +218,163 @@
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="header">
-<h1 class="title">Longitudinal measures of RNA-seq expression and disease activity in FSHD muscle biopsies</h1>
-<p class="author"><em>Chao-Jen Wong, Tapscott Lab, Fred Hutch</em></p>
-<p class="date"><em>2020-02-19</em></p>
-</div>
-<div id="introduction" class="section level1">
-<h1><span class="header-section-number">Chapter 1</span> Introduction</h1>
-<p>This gitbook includes narratives of data analysis and reproducible R codes supporting the manuscript “Logitidinal measures of RNA-seq expression and disease activity in FSHD muscle”, a follow-up study of <a href="https://www.ncbi.nlm.nih.gov/pubmed/30312408">MRI-informed muscle biopsies correlated MRI with pathology and DUX4 target gene expression in FSHD</a>.</p>
-<p>This book has nine parts:</p>
+<div id="preprocessing" class="section level1">
+<h1><span class="header-section-number">Chapter 2</span> Preprocessing and gene counts</h1>
+<p>The preprocessing pipeline for RNA-seq samples is as the following, <strong>Wang 2019</strong><span class="citation">(Wang and al. <a href="#ref-wang2019">2019</a>)</span>:</p>
 <ol style="list-style-type: decimal">
-<li>Introduction<br />
+<li>filter unqualified reads<br />
 </li>
-<li>Pre-processing and gene counts<br />
+<li>trim Illumina universal adapter by Trimmomatic-0.32<br />
 </li>
-<li>The one-year follow-up visit<br />
+<li>align read to genome build hg38 using Tophat-2.1/Bowtie2-2.2.6<br />
 </li>
-<li>Changes over two visits<br />
-</li>
-<li>Classes of RNA-seq biopsy sampels<br />
-</li>
-<li>Markers discriminate mildly affected FSHDs from the controls</li>
-<li>PAX7 score and disease avtivity<br />
-</li>
-<li>Immune cell infiltration</li>
-<li>Biopsy quality control</li>
+<li>profile gene expression by counting aligned reads to features annotated by Gencode v24 (R/Bioconductor)</li>
 </ol>
-<p>The analysis is performed by using R (&gt;= 3.5.1) and Bioconductor (&gt;=3.7) packages. Some unessential codes are tedious and long, so I make them invisible from the book but they are all included in the original <em>Rmd</em> files that can be found <a href="https://github.com/fredhutch/RWellstone_FSHD_muscle_biopsy/inst/gitbook">here</a> in our github master branch.</p>
-<div id="package-structure-on-the-master-branch" class="section level2">
-<h2><span class="header-section-number">1.1</span> Package structure on the master branch</h2>
-<p>The <a href="https://github.com/fredhutch/RWellstone_FSHD_muscle_biopsy">master branch</a> includes the preprocessed datasets (R/Bioconductor format), original scripts, supplemental tables, and Rmd files that make this gitbook.</p>
-<pre><code>-data (*.rda)
-  |- sanitized.dds: a DESeqDataSet instance of RNA-seq gene expression matrix
-  |- cluster_df: a data.frame instance of k-means clustering results 
-  |- FSHD_markers: a DataFrame instance of 53 DUX4-targeted FSHD robust biomarkers  
-  |- marker_path_scores: sample marker scores (DUX4/inflamm/extracellular matrix/cell cycle) 
-                         based on gene expression alog with MRI characteristics and 
-                         histology scores
-  |- mri_pathology: a data.frame instance of MRI characteristics and histopathology scores
-  |- pax7_targets: a data.frame instance of PAX7-targeted gene expression matrix
-  |- year2.dds: a DESeqDataSet instance of the follow-up visit gene expression 
-                matrix
-  
-- inst
-  |- gitbook: Rmd files that make this gitbook
-  |- extdata: supplemental tables
-  |- scripts: shell and original R scripts</code></pre>
-</div>
-<div id="gene-expression-omnibus-series" class="section level2">
-<h2><span class="header-section-number">1.2</span> Gene Expression Omnibus series</h2>
-<p>The GEO RNA-seq data series are<br />
-- initial visit: <strong>GSE115650</strong><br />
-- one-year follow-up visit: <strong>GSE140261</strong></p>
-</div>
-<div id="system-requirment" class="section level2">
-<h2><span class="header-section-number">1.3</span> System requirment</h2>
-<ul>
-<li>R 3.5.1 or above: <em>ggplot2</em>, <em>pheatmap</em>, and etc.</li>
-<li>Bioconductor (v3.7 or above) packages: <em>DESeq2</em>, <em>GenomicAlignments</em>, <em>goseq</em>, and etc.</li>
-</ul>
+<p>For step 4, we convert Gencode v24 annotation to a Bioconductor <em>TxDb</em> package. To perform feature counts, we use Bioconductor function <code>GenomicAlignments::summarizeOverlap()</code>, a counterpart to a python package <code>htseq-count</code>. The count mode is set to <code>IntersectionStrict</code> in which restricts read count to those that fall completely within the range of exons. Ambiguous reads straddling multiple features are not counted. See below for the shell (step 1-3) and R scripts (step 4). The processed dataset (gene exrepssion matrix) is formated as a <code>SummarizedExperiment</code> and <code>DESeqDataSet</code> instances and saved in the <code>data</code> directory. The scripts and codes are available in the <code>inst/scripts</code> directories on the master branch. Below are code chunks showing the parameter setting for pre-processing and gene counts.</p>
+<div id="shell-script-for-pre-processing" class="section level2">
+<h2><span class="header-section-number">2.1</span> Shell script for pre-processing</h2>
+<p>The shell script for filering, trimming, fastqc, and alignment (step 1 to 3).</p>
+<pre><code>#!/bin/bash
+#./do_tophat.sh
+#SBATCH -n6 -t 1-0 -p campus --mail-type=ALL --mail-user=cwon2@fhcrc.org -A tapscott_s
 
+sampleDir=$1
+sampleName=$2
+pkgDir=$3
+tophatOutDir=$pkgDir/tophat
+trimmedDir=$pkgDir/trimmed
+fastqcDir=$pkgDir/fastqc
+filteredDir=$pkgDir/filtered
+
+echo $sampleName
+
+bowtieVersion=/home/solexa/apps/bowtie/bowtie2-2.2.6
+tophatVersion=/home/solexa/apps/tophat/tophat-2.1.0.Linux_x86_64
+gtfFile=/shared/biodata/ngs/Reference/iGenomes/Homo_sapiens/UCSC/hg38/Annotation/Archives/archive-2015-08-14-08-18-15/Genes/genes.gtf
+genomeBuild=/shared/biodata/ngs/Reference/iGenomes/Homo_sapiens/UCSC/hg38/Sequence/Bowtie2Index/genome
+maxIntronLength=500000
+innerDist=80
+segmentLength=25
+libraryType=fr-unstranded
+
+#umask 0002
+export PATH=/usr/kerberos/bin:/usr/local/bin:/bin:/usr/bin:/usr/X11R6/bin:/opt/moab/bin:$bowtieVersion:$tophatVersion:/home/solexa/apps/samtools/samtools-0.1.19:/home/solexa/apps/FastQC:/home/solexa/apps/trim_galore:/app/cutadapt/1.1/bin
+
+#remove /app/bin from the PATH, as it will default to running bowtie 0.12.8
+export PATH=${PATH/\/app\/bin:}
+
+#define some directories
+mkdir -p $filteredDir
+filterPerSample=$filteredDir/$sampleName
+mkdir $filterPerSample
+mkdir -p $fastqcDir
+mkdir -p $trimmedDir
+mkdir -p $tophatOutDir
+bamDir=$tophatOutDir/bam
+mkdir -p $bamDir
+tmpDir=$tophatOutDir/$sampleName
+mkdir -p $tmpDir
+
+# (1) by pass filter
+cd $sampleDir
+for i in *fastq.gz
+    do
+        i2=${i//.gz/}
+        zgrep -A 3 &#39;^@.*[^:]*:N:[^:]*:&#39; $i | zgrep -v &#39;^\-\-$&#39; &gt; $filterPerSample/#$i2
+done
+gzip -r $filterPerSample
+
+# (2) zcat all the fastq.gz 
+cd $filterPerSample
+fqFile=$trimmedDir/$sampleName.filterd.fastq
+zcat $(ls *.fastq.gz) &gt; $fqFile
+
+# (3) trim adapter and tail (TruSeq3-SE.fa is saved at $trimmedDir)
+cd $trimmedDir
+trimFq=$trimmedDir/$sampleName.trim.fastq
+java -jar /home/solexa/apps/trimmomatic/Trimmomatic-0.32/trimmomatic-0.32.jar SE -threads 6 $fqFile $trimFq ILLUMINACLIP:TruSeq3-SE.fa:2:30:10 TRAILING:3 MINLEN:36 
+rm $fqFile
+
+# (5) fastqc again
+fastqc -t 6 $trimFq -o $fastqcDir --casava
+touch $fastqcDir/$sampleName\_fastqcDone.txt
+
+# (6) tophat alignment
+tophat --mate-inner-dist $innerDist --num-threads 4 -G $gtfFile --library-type $libraryType -I $maxIntronLength --segment-length $segmentLength --no-coverage-search -o $tmpDir $genomeBuild $trimFq
+
+mv $tmpDir/accepted_hits.bam $bamDir/$sampleName.bam
+
+# sort bam
+cd $bamDir
+samtools sort -@ 4 $sampleName.bam $sampleName.bam.sorted
+mv $sampleName.bam.sorted.bam $sampleName.bam
+samtools index $sampleName.bam
+touch $sampleName.tophatDone.txt
+exit 0</code></pre>
+</div>
+<div id="annotation-txdb-package" class="section level2">
+<h2><span class="header-section-number">2.2</span> Annotation TxDb package</h2>
+<p>The <em>TxDb</em> class is a container for storing transcript annotation in Bioconductor. It is handy to bulid a <em>TxDb</em> package for the smoothness for profiling gene expression and the downstream analysis. There are several ways to make the package. Here we show a couple ways of retriving the GTF file and convert it to <em>TxDb</em> package.</p>
+<ol style="list-style-type: decimal">
+<li>Download GTF file from Gencode website directly. Supppose <code>gtf_fie</code> is the downloaded GENCODE v24 annotation GTF file, we can (1) use <code>GenomicFeatures::makeTxDbFromGFF()</code> to convert the GTF file to a <em>TxDb</em> instance and then (2) <code>GenomicFeatures::makeTxDbPackage()</code> to build a <em>TxDb</em> package. Code chunk is an example:</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(GenomicFeatures)
+txdb &lt;-<span class="st"> </span><span class="kw">makeTxDbFromGFF</span>(<span class="dt">file=</span>gtf_file,
+                        <span class="dt">format=</span><span class="st">&quot;gtf&quot;</span>,
+                        <span class="dt">dataSource=</span><span class="st">&quot;ftp://ftp.sanger.ac.uk/pub/gencode/Gencode_human&quot;</span>,
+                        <span class="dt">organism=</span><span class="st">&quot;Homo sapiens&quot;</span>)
+<span class="kw">genome</span>(txdb) &lt;-<span class="st"> &quot;hg38&quot;</span>
+pkgName &lt;-<span class="st"> &quot;hg38.HomoSapiens.Gencode.v24&quot;</span>
+<span class="kw">makeTxDbPackage</span>(txdb, <span class="dt">version=</span><span class="st">&quot;1.0.0&quot;</span>, <span class="dt">author=</span><span class="st">&quot;Chao-Jen Wong&quot;</span>,
+                <span class="dt">pkgname=</span>pkgName,
+                <span class="dt">maintainer=</span><span class="st">&quot;Chao-Jen Wong &lt;cwon2@fredhutch.org&gt;&quot;</span>)</code></pre></div>
+<ol start="2" style="list-style-type: decimal">
+<li>Code chuck below is an example of how to use the <strong>AnnotationHub</strong> <span class="citation">(Morgan <a href="#ref-annotationhub">2018</a>)</span> package to download GTF files (Gencode or Ensembl) as a <em>GRanges</em> instance, convert to a <em>TxDb</em> instance and build then a <em>TxDb</em> package.</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(AnnotationHub)
+ah &lt;-<span class="st"> </span><span class="kw">AnnotationHub</span>()
+<span class="co">#&#39; GENCODE v23</span>
+<span class="kw">query</span>(ah, <span class="kw">c</span>(<span class="st">&quot;GENCODE&quot;</span>, <span class="st">&quot;v23&quot;</span>)) 
+<span class="co"># query(ah, c(&quot;GRCh38&quot;, &quot;ensembl&quot;, &quot;92&quot;)) # or search for ensembl v92</span>
+gr &lt;-<span class="st"> </span>ah[[<span class="st">&quot;AH49555&quot;</span>]] <span class="co"># download GTF GENCODE v23 as an GRanges instance</span>
+meta_data &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">name=</span><span class="kw">c</span>(<span class="st">&quot;organism&quot;</span>, <span class="st">&quot;source&quot;</span>, <span class="st">&quot;genome&quot;</span>), 
+                        <span class="dt">value=</span><span class="kw">c</span>(<span class="st">&quot;Homo sapiens&quot;</span>, <span class="st">&quot;Genocode v23&quot;</span>, <span class="st">&quot;hg38&quot;</span>))
+txdb &lt;-<span class="st"> </span><span class="kw">makeTxDbFromGRanges</span>(<span class="dt">gr=</span>gr, <span class="dt">metadata=</span>meta_data)
+pkgName &lt;-<span class="st"> &quot;hg38.HomoSapiens.Gencode.v23&quot;</span>
+<span class="kw">makeTxDbPackage</span>(txdb, <span class="dt">version=</span><span class="st">&quot;1.0.0&quot;</span>, <span class="dt">author=</span><span class="st">&quot;Chao-Jen Wong&quot;</span>,
+                <span class="dt">pkgname=</span>pkgName,
+                <span class="dt">maintainer=</span><span class="st">&quot;Chao-Jen Wong &lt;cwon2@fredhutch.org&gt;&quot;</span>)</code></pre></div>
+</div>
+<div id="r-script-for-gene-counts" class="section level2">
+<h2><span class="header-section-number">2.3</span> R Script for gene counts</h2>
+<p>Once the <em>TxDb</em> package is build, we use <code>GenomicAlignments::summarizeOverlaps()</code> to count reads that overlap with features annotated by a TxDb package. Suppose <code>file_bam</code> is our bam files and <code>hg38.HomoSapiens.Gencode.v24</code> is out customized <em>TxDb</em> package, we can build a <code>summarizedExperiment</code> instance containing gene counts as well as the feature annotation:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(hg38.HomoSapiens.Gencode.v24)
+<span class="kw">library</span>(org.Hs.eg.db)
+<span class="kw">library</span>(BiocParallel)
+<span class="kw">library</span>(GenomicAlignments)
+mparam &lt;-<span class="st"> </span><span class="kw">MulticoreParam</span>(<span class="dt">workers =</span> <span class="dv">2</span>, <span class="dt">type =</span> <span class="st">&quot;SOCK&quot;</span>)
+features &lt;-<span class="st"> </span>GenomicFeatures<span class="op">::</span><span class="kw">exonsBy</span>(hg38.HomoSapiens.Gencode.v24, <span class="dt">by=</span><span class="st">&quot;gene&quot;</span>)
+<span class="co"># only keep standard chromosomes</span>
+features &lt;-<span class="st"> </span><span class="kw">keepStandardChromosomes</span>(features,
+                                    <span class="dt">species =</span> <span class="st">&quot;Homo_sapiens&quot;</span>,
+                                    <span class="dt">pruning.mode=</span><span class="st">&quot;fine&quot;</span>)
+se &lt;-<span class="st"> </span>GenomicAlignments<span class="op">::</span><span class="kw">summarizeOverlaps</span>(<span class="dt">features=</span>features,
+                                           <span class="dt">reads=</span>file_bam,
+                                           <span class="dt">mode=</span><span class="st">&quot;IntersectionStrict&quot;</span>,
+                                           <span class="dt">inter.feature=</span><span class="ot">TRUE</span>,
+                                           <span class="dt">singleEnd=</span><span class="ot">TRUE</span>,
+                                           <span class="dt">ignore.strand=</span><span class="ot">TRUE</span>,
+                                           <span class="dt">BPPARAM=</span>mparam)</code></pre></div>
+
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-annotationhub">
+<p>Morgan, Martin. 2018. <em>AnnotationHub: Client to Access Annotationhub Resources</em>.</p>
+</div>
+<div id="ref-wang2019">
+<p>Wang, Leo H., and et al. 2019. “MRI-Informed Muscle Biopsies Correlate Mri with Pathology and Dux4 Target Gene Expression in Fshd.” <em>Human Molecular Genetics</em>. doi:<a href="https://doi.org/10.1093/hmg/dd7364">10.1093/hmg/dd7364</a>.</p>
 </div>
 </div>
             </section>
@@ -248,8 +382,8 @@
           </div>
         </div>
       </div>
-
-<a href="preprocessing.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="follow-up-visit.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

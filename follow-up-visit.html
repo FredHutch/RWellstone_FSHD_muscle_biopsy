@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 3 Follow-up visit | Longitudinal measures of RNA-seq expression and disease activity in FSHD muscle biopsies</title>
+  <meta name="description" content="Bioinformatics and statistics analysis for the logitudinal study of RNA-seq expression and disear acitivity in FSHD muscle bipsies" />
+  <meta name="generator" content="bookdown 0.14 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 3 Follow-up visit | Longitudinal measures of RNA-seq expression and disease activity in FSHD muscle biopsies" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Bioinformatics and statistics analysis for the logitudinal study of RNA-seq expression and disear acitivity in FSHD muscle bipsies" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 3 Follow-up visit | Longitudinal measures of RNA-seq expression and disease activity in FSHD muscle biopsies" />
+  
+  <meta name="twitter:description" content="Bioinformatics and statistics analysis for the logitudinal study of RNA-seq expression and disear acitivity in FSHD muscle bipsies" />
+  
+
+<meta name="author" content="Chao-Jen Wong, Tapscott Lab, Fred Hutch" />
+
+
+<meta name="date" content="2020-02-19" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="preprocessing.html"/>
+<link rel="next" href="longitudinal-changes.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">RNA-seq data analysis</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#package-structure-on-the-master-branch"><i class="fa fa-check"></i><b>1.1</b> Package structure on the master branch</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#gene-expression-omnibus-series"><i class="fa fa-check"></i><b>1.2</b> Gene Expression Omnibus series</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#system-requirment"><i class="fa fa-check"></i><b>1.3</b> System requirment</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="preprocessing.html"><a href="preprocessing.html"><i class="fa fa-check"></i><b>2</b> Preprocessing and gene counts</a><ul>
+<li class="chapter" data-level="2.1" data-path="preprocessing.html"><a href="preprocessing.html#shell-script-for-pre-processing"><i class="fa fa-check"></i><b>2.1</b> Shell script for pre-processing</a></li>
+<li class="chapter" data-level="2.2" data-path="preprocessing.html"><a href="preprocessing.html#annotation-txdb-package"><i class="fa fa-check"></i><b>2.2</b> Annotation TxDb package</a></li>
+<li class="chapter" data-level="2.3" data-path="preprocessing.html"><a href="preprocessing.html#r-script-for-gene-counts"><i class="fa fa-check"></i><b>2.3</b> R Script for gene counts</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="follow-up-visit.html"><a href="follow-up-visit.html"><i class="fa fa-check"></i><b>3</b> Follow-up visit</a><ul>
+<li class="chapter" data-level="3.1" data-path="follow-up-visit.html"><a href="follow-up-visit.html#loading-datasets"><i class="fa fa-check"></i><b>3.1</b> Loading datasets</a></li>
+<li class="chapter" data-level="3.2" data-path="follow-up-visit.html"><a href="follow-up-visit.html#the-follow-up-visit-rna-seq-dataset"><i class="fa fa-check"></i><b>3.2</b> The follow-up visit RNA-seq dataset</a></li>
+<li class="chapter" data-level="3.3" data-path="follow-up-visit.html"><a href="follow-up-visit.html#dux4-and-other-marker-scores"><i class="fa fa-check"></i><b>3.3</b> DUX4 and other marker scores</a><ul>
+<li class="chapter" data-level="3.3.1" data-path="follow-up-visit.html"><a href="follow-up-visit.html#group-samples-by-dux4-score"><i class="fa fa-check"></i><b>3.3.1</b> Group samples by DUX4 score</a></li>
+<li class="chapter" data-level="3.3.2" data-path="follow-up-visit.html"><a href="follow-up-visit.html#heatmap-of-the-discriminative-genes"><i class="fa fa-check"></i><b>3.3.2</b> Heatmap of the discriminative genes</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="follow-up-visit.html"><a href="follow-up-visit.html#dux4-candidate-biomarkers-are-eleveated-in-fshd"><i class="fa fa-check"></i><b>3.4</b> DUX4 candidate biomarkers are eleveated in FSHD</a></li>
+<li class="chapter" data-level="3.5" data-path="follow-up-visit.html"><a href="follow-up-visit.html#correlation-of-dux4-score-to-mri-and-histopathology"><i class="fa fa-check"></i><b>3.5</b> Correlation of DUX4 score to MRI and histopathology</a><ul>
+<li class="chapter" data-level="3.5.1" data-path="follow-up-visit.html"><a href="follow-up-visit.html#dux4-and-pathology-score"><i class="fa fa-check"></i><b>3.5.1</b> DUX4 and pathology score</a></li>
+<li class="chapter" data-level="3.5.2" data-path="follow-up-visit.html"><a href="follow-up-visit.html#dux4-and-stir-signal"><i class="fa fa-check"></i><b>3.5.2</b> DUX4 and STIR signal</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="follow-up-visit.html"><a href="follow-up-visit.html#dux4-score-and-t1-fat-fraction"><i class="fa fa-check"></i><b>3.6</b> DUX4 score and T1 fat fraction</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="longitudinal-changes.html"><a href="longitudinal-changes.html"><i class="fa fa-check"></i><b>4</b> Longitudinal changes over two visits</a><ul>
+<li class="chapter" data-level="4.1" data-path="longitudinal-changes.html"><a href="longitudinal-changes.html#loading-datasets-1"><i class="fa fa-check"></i><b>4.1</b> Loading datasets</a></li>
+<li class="chapter" data-level="4.2" data-path="longitudinal-changes.html"><a href="longitudinal-changes.html#pathology-scores"><i class="fa fa-check"></i><b>4.2</b> Pathology scores</a></li>
+<li class="chapter" data-level="4.3" data-path="longitudinal-changes.html"><a href="longitudinal-changes.html#change-of-marker-scores-over-two-visits"><i class="fa fa-check"></i><b>4.3</b> Change of marker scores over two visits</a><ul>
+<li class="chapter" data-level="4.3.1" data-path="longitudinal-changes.html"><a href="longitudinal-changes.html#dux4-marker-scores"><i class="fa fa-check"></i><b>4.3.1</b> DUX4 marker scores</a></li>
+<li class="chapter" data-level="4.3.2" data-path="longitudinal-changes.html"><a href="longitudinal-changes.html#extracellular-matrix-structure-scores"><i class="fa fa-check"></i><b>4.3.2</b> Extracellular matrix structure scores</a></li>
+<li class="chapter" data-level="4.3.3" data-path="longitudinal-changes.html"><a href="longitudinal-changes.html#immuse-responseinflammatory-score"><i class="fa fa-check"></i><b>4.3.3</b> Immuse response/Inflammatory score</a></li>
+<li class="chapter" data-level="4.3.4" data-path="longitudinal-changes.html"><a href="longitudinal-changes.html#immunoglobulin-score"><i class="fa fa-check"></i><b>4.3.4</b> Immunoglobulin score</a></li>
+<li class="chapter" data-level="4.3.5" data-path="longitudinal-changes.html"><a href="longitudinal-changes.html#cell-cycle-score"><i class="fa fa-check"></i><b>4.3.5</b> Cell cycle score</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="longitudinal-changes.html"><a href="longitudinal-changes.html#pathology-and-dux4-scores-changes"><i class="fa fa-check"></i><b>4.4</b> Pathology and DUX4 scores changes</a></li>
+<li class="chapter" data-level="4.5" data-path="longitudinal-changes.html"><a href="longitudinal-changes.html#markers-by-visits-and-stir-ratings"><i class="fa fa-check"></i><b>4.5</b> Markers by visits and STIR ratings</a><ul>
+<li class="chapter" data-level="4.5.1" data-path="longitudinal-changes.html"><a href="longitudinal-changes.html#dux4-scores-and-stir-ratings"><i class="fa fa-check"></i><b>4.5.1</b> DUX4 scores and STIR ratings</a></li>
+<li class="chapter" data-level="4.5.2" data-path="longitudinal-changes.html"><a href="longitudinal-changes.html#other-markers"><i class="fa fa-check"></i><b>4.5.2</b> Other markers</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="rnaseq-classes.html"><a href="rnaseq-classes.html"><i class="fa fa-check"></i><b>5</b> Classes of RNA-seq biopsy sampels</a><ul>
+<li class="chapter" data-level="5.1" data-path="rnaseq-classes.html"><a href="rnaseq-classes.html#fshd-classes"><i class="fa fa-check"></i><b>5.1</b> FSHD classes</a><ul>
+<li class="chapter" data-level="5.1.1" data-path="rnaseq-classes.html"><a href="rnaseq-classes.html#load-datasets-and-libraries"><i class="fa fa-check"></i><b>5.1.1</b> Load datasets and libraries</a></li>
+<li class="chapter" data-level="5.1.2" data-path="rnaseq-classes.html"><a href="rnaseq-classes.html#feature-selection"><i class="fa fa-check"></i><b>5.1.2</b> Feature selection</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="rnaseq-classes.html"><a href="rnaseq-classes.html#sample-space-and-k-means-clustering"><i class="fa fa-check"></i><b>5.2</b> Sample space and k-means clustering</a></li>
+<li class="chapter" data-level="5.3" data-path="rnaseq-classes.html"><a href="rnaseq-classes.html#visualize-the-fshd-classes"><i class="fa fa-check"></i><b>5.3</b> Visualize the FSHD classes</a></li>
+<li class="chapter" data-level="5.4" data-path="rnaseq-classes.html"><a href="rnaseq-classes.html#view-by-selected-marker-genes"><i class="fa fa-check"></i><b>5.4</b> View by selected marker genes</a></li>
+<li class="chapter" data-level="5.5" data-path="rnaseq-classes.html"><a href="rnaseq-classes.html#mri-characterisitcs-and-pathology-scores-by-fshd-classes"><i class="fa fa-check"></i><b>5.5</b> MRI characterisitcs and pathology scores by FSHD classes</a></li>
+<li class="chapter" data-level="5.6" data-path="rnaseq-classes.html"><a href="rnaseq-classes.html#average-expression-of-five-biological-process-by-fshd-classes"><i class="fa fa-check"></i><b>5.6</b> Average expression of five biological process by FSHD classes</a></li>
+<li class="chapter" data-level="5.7" data-path="rnaseq-classes.html"><a href="rnaseq-classes.html#enriched-go-terms"><i class="fa fa-check"></i><b>5.7</b> Enriched GO terms</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="mild-fshd.html"><a href="mild-fshd.html"><i class="fa fa-check"></i><b>6</b> Markers discriminate Mild FSHD from control samples</a><ul>
+<li class="chapter" data-level="6.0.1" data-path="mild-fshd.html"><a href="mild-fshd.html#load-libaray-and-datasets"><i class="fa fa-check"></i><b>6.0.1</b> Load libaray and datasets</a></li>
+<li class="chapter" data-level="6.1" data-path="mild-fshd.html"><a href="mild-fshd.html#differentially-up-regulated-genes-in-mild-fshd-samples"><i class="fa fa-check"></i><b>6.1</b> Differentially up-regulated genes in Mild FSHD samples</a></li>
+<li class="chapter" data-level="6.2" data-path="mild-fshd.html"><a href="mild-fshd.html#select-fshd-relavent-candidates"><i class="fa fa-check"></i><b>6.2</b> Select FSHD relavent candidates</a></li>
+<li class="chapter" data-level="6.3" data-path="mild-fshd.html"><a href="mild-fshd.html#go-analysis"><i class="fa fa-check"></i><b>6.3</b> GO analysis</a></li>
+<li class="chapter" data-level="6.4" data-path="mild-fshd.html"><a href="mild-fshd.html#cross-validation-by-random-forests"><i class="fa fa-check"></i><b>6.4</b> Cross validation by random forests</a></li>
+<li class="chapter" data-level="6.5" data-path="mild-fshd.html"><a href="mild-fshd.html#discriminative-power-per-candidates"><i class="fa fa-check"></i><b>6.5</b> Discriminative power per candidates</a></li>
+<li class="chapter" data-level="6.6" data-path="mild-fshd.html"><a href="mild-fshd.html#heatmap-of-some-best-candidates"><i class="fa fa-check"></i><b>6.6</b> Heatmap of some best candidates</a></li>
+<li class="chapter" data-level="6.7" data-path="mild-fshd.html"><a href="mild-fshd.html#some-strong-candidates"><i class="fa fa-check"></i><b>6.7</b> Some strong candidates</a><ul>
+<li class="chapter" data-level="6.7.1" data-path="mild-fshd.html"><a href="mild-fshd.html#ckdn1a"><i class="fa fa-check"></i><b>6.7.1</b> CKDN1A</a></li>
+<li class="chapter" data-level="6.7.2" data-path="mild-fshd.html"><a href="mild-fshd.html#ccna1"><i class="fa fa-check"></i><b>6.7.2</b> CCNA1</a></li>
+<li class="chapter" data-level="6.7.3" data-path="mild-fshd.html"><a href="mild-fshd.html#and-few-more-examples"><i class="fa fa-check"></i><b>6.7.3</b> And few more examples</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="pax7.html"><a href="pax7.html"><i class="fa fa-check"></i><b>7</b> PAX7 target mis-regulation in FSHD biopsy RNA-seq samples</a><ul>
+<li class="chapter" data-level="7.1" data-path="pax7.html"><a href="pax7.html#pa7-scores-and-disease-activity"><i class="fa fa-check"></i><b>7.1</b> PA7 scores and disease activity</a></li>
+<li class="chapter" data-level="7.2" data-path="pax7.html"><a href="pax7.html#mis-regulation-of-pax7-targeted-gene"><i class="fa fa-check"></i><b>7.2</b> Mis-regulation of PAX7-targeted gene</a><ul>
+<li class="chapter" data-level="7.2.1" data-path="pax7.html"><a href="pax7.html#heatmap-showing-mis-regulation"><i class="fa fa-check"></i><b>7.2.1</b> Heatmap showing mis-regulation</a></li>
+<li class="chapter" data-level="7.2.2" data-path="pax7.html"><a href="pax7.html#violin-plot-of-pax7-targets-expression"><i class="fa fa-check"></i><b>7.2.2</b> Violin plot of PAX7 targets expression</a></li>
+<li class="chapter" data-level="7.2.3" data-path="pax7.html"><a href="pax7.html#observation-of-the-95-ci-of-the-mean-estimates"><i class="fa fa-check"></i><b>7.2.3</b> Observation of the 95% CI of the mean estimates</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="pax7.html"><a href="pax7.html#compare-to-dux4-targeted-biomarkers"><i class="fa fa-check"></i><b>7.3</b> Compare to DUX4-targeted biomarkers</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="immune-infiltrate.html"><a href="immune-infiltrate.html"><i class="fa fa-check"></i><b>8</b> Immune Cell Infiltration</a><ul>
+<li class="chapter" data-level="8.1" data-path="immune-infiltrate.html"><a href="immune-infiltrate.html#immune-cell-markers"><i class="fa fa-check"></i><b>8.1</b> Immune cell markers</a></li>
+<li class="chapter" data-level="8.2" data-path="immune-infiltrate.html"><a href="immune-infiltrate.html#immune-cell-type-scores-by-tpm-per-samples"><i class="fa fa-check"></i><b>8.2</b> Immune cell type scores by TPM per Samples</a></li>
+<li class="chapter" data-level="8.3" data-path="immune-infiltrate.html"><a href="immune-infiltrate.html#immune-cell-marker-scores-by-logfc-per-fshd-classes"><i class="fa fa-check"></i><b>8.3</b> Immune cell marker scores by logFC per FSHD classes</a></li>
+<li class="chapter" data-level="8.4" data-path="immune-infiltrate.html"><a href="immune-infiltrate.html#frequency-of-significance"><i class="fa fa-check"></i><b>8.4</b> Frequency of significance</a></li>
+<li class="chapter" data-level="8.5" data-path="immune-infiltrate.html"><a href="immune-infiltrate.html#average-rlog-per-sample"><i class="fa fa-check"></i><b>8.5</b> Average rlog per sample</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="biopsy-qc.html"><a href="biopsy-qc.html"><i class="fa fa-check"></i><b>9</b> Biopsy Quality Control</a><ul>
+<li class="chapter" data-level="9.1" data-path="biopsy-qc.html"><a href="biopsy-qc.html#blood-fat-and-muscle-cell-markers"><i class="fa fa-check"></i><b>9.1</b> Blood, fat and muscle cell markers</a></li>
+<li class="chapter" data-level="9.2" data-path="biopsy-qc.html"><a href="biopsy-qc.html#define-score"><i class="fa fa-check"></i><b>9.2</b> Define score</a></li>
+<li class="chapter" data-level="9.3" data-path="biopsy-qc.html"><a href="biopsy-qc.html#visualization"><i class="fa fa-check"></i><b>9.3</b> Visualization</a></li>
+<li class="chapter" data-level="9.4" data-path="biopsy-qc.html"><a href="biopsy-qc.html#determine-outliers"><i class="fa fa-check"></i><b>9.4</b> Determine “outliers”</a></li>
+<li class="chapter" data-level="9.5" data-path="biopsy-qc.html"><a href="biopsy-qc.html#determine-bad-biopsies"><i class="fa fa-check"></i><b>9.5</b> Determine “bad” biopsies?</a></li>
+<li class="chapter" data-level="9.6" data-path="biopsy-qc.html"><a href="biopsy-qc.html#sample-01-0037"><i class="fa fa-check"></i><b>9.6</b> Sample 01-0037</a></li>
+<li class="chapter" data-level="9.7" data-path="biopsy-qc.html"><a href="biopsy-qc.html#tables"><i class="fa fa-check"></i><b>9.7</b> Tables</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Longitudinal measures of RNA-seq expression and disease activity in FSHD muscle biopsies</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="follow-up-visit" class="section level1">
+<h1><span class="header-section-number">Chapter 3</span> Follow-up visit</h1>
+<p>This chapter is dedicated to the one-year follow-up visit RNA-seq analysis and correlation to MRI characteristics and histopathology scores.</p>
+<div id="loading-datasets" class="section level2">
+<h2><span class="header-section-number">3.1</span> Loading datasets</h2>
+<p>First of all, we load the libraries and <code>sanitized.dds</code>, <code>year2.dds</code>, and <code>mri_pathology</code> datasets.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">suppressPackageStartupMessages</span>(<span class="kw">library</span>(DESeq2))
+<span class="kw">suppressPackageStartupMessages</span>(<span class="kw">library</span>(xlsx))
+<span class="kw">suppressPackageStartupMessages</span>(<span class="kw">library</span>(ggplot2))
+<span class="kw">suppressPackageStartupMessages</span>(<span class="kw">library</span>(tidyverse))
+<span class="kw">suppressPackageStartupMessages</span>(<span class="kw">library</span>(BiocParallel))
+multi_param &lt;-<span class="st"> </span><span class="kw">MulticoreParam</span>(<span class="dt">worker=</span><span class="dv">2</span>)
+<span class="kw">register</span>(multi_param, <span class="dt">default=</span><span class="ot">TRUE</span>)
+
+pkg_dir &lt;-<span class="st"> &quot;/fh/fast/tapscott_s/CompBio/RNA-Seq/hg38.FSHD.biopsy.all&quot;</span>
+
+<span class="kw">source</span>(<span class="kw">file.path</span>(pkg_dir, <span class="st">&quot;scripts&quot;</span>, <span class="st">&quot;manuscript_tools.R&quot;</span>))
+<span class="kw">load</span>(<span class="kw">file.path</span>(pkg_dir, <span class="st">&quot;public_data&quot;</span>, <span class="st">&quot;sanitized.dds.rda&quot;</span>))
+<span class="kw">load</span>(<span class="kw">file.path</span>(pkg_dir, <span class="st">&quot;public_data&quot;</span>, <span class="st">&quot;mri_pathology.rda&quot;</span>))
+<span class="kw">load</span>(<span class="kw">file.path</span>(pkg_dir, <span class="st">&quot;public_data&quot;</span>, <span class="st">&quot;year2.dds.rda&quot;</span>))</code></pre></div>
+</div>
+<div id="the-follow-up-visit-rna-seq-dataset" class="section level2">
+<h2><span class="header-section-number">3.2</span> The follow-up visit RNA-seq dataset</h2>
+<p>The follow-up visit RNA-seq dataset, <code>year2.dds</code>, consists with 8 controls and 27 FSHD follow-up visit samples. It is a subset of <code>sanitized.dds</code> and the normalization excludes the initial visit. Chuck below shows the process of subsetting <code>sanitized.dds</code> and getting the normalization factor of the <code>year2.dds</code> instance.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">keep_column_<span class="dv">2</span> &lt;-<span class="st"> </span>(sanitized.dds<span class="op">$</span>visit <span class="op">==</span><span class="st"> &quot;II&quot;</span> <span class="op">|</span><span class="st"> </span>sanitized.dds<span class="op">$</span>pheno_type <span class="op">==</span><span class="st"> &quot;Control&quot;</span>) 
+year2.dds &lt;-<span class="st"> </span>sanitized.dds[, keep_column_<span class="dv">2</span>]
+year2.dds<span class="op">$</span>batch &lt;-<span class="st"> </span><span class="kw">factor</span>(year2.dds<span class="op">$</span>batch)
+
+<span class="co">#&#39; re-normalized again, get the size factors and dispersion estimations</span>
+year2.dds &lt;-<span class="st"> </span><span class="kw">estimateSizeFactors</span>(year2.dds)
+year2.dds &lt;-<span class="st"> </span><span class="kw">estimateDispersions</span>(year2.dds)
+<span class="kw">design</span>(year2.dds) &lt;-<span class="st"> </span><span class="er">~</span><span class="st"> </span>pheno_type 
+<span class="co">#year2.rlg &lt;- rlog(year2.dds, blind = TRUE) #normalized with respect to year2 library size</span></code></pre></div>
+</div>
+<div id="dux4-and-other-marker-scores" class="section level2">
+<h2><span class="header-section-number">3.3</span> DUX4 and other marker scores</h2>
+<p>The DUX4 score of RNA-seq biopsy samples is based on four FSHD/DUX4-positive biomarkers that were previously found in <strong>Yao 2014</strong><span class="citation">(Yao and al. <a href="#ref-yao2014">2014</a>)</span>. Additional marker scores from other function category (extracellular matrix, immune/inflamm, cell cycle and immunoglobulin) are based on selected discriminative genes that shape the cluster pattern of the samples captured by Principal Components Analysis (top PC1/PC2 loading variables). The marker score is calculated as the sum of the these for biomarkers’ local regularized log <strong>Love 2014</strong><span class="citation">(Love, Huber, and Anders <a href="#ref-love2014">2014</a>)</span> scaling difference from the control average. The code chunk below defines the markers for five different biological functions: <span class="math inline">\(score=\sum_i^n g_i - \sum_i^n g_{i, control}\)</span>, where <span class="math inline">\(g_i\)</span> is the <span class="math inline">\(i\)</span>th gene rlog expression in the function category and similary $g_{i, control} $ is the <span class="math inline">\(i\)</span>th average gene expression in the function category from the controls.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#&#39; define the determinative genes and calculate the marker scores</span>
+markers_list &lt;-<span class="st"> </span>
+<span class="st">  </span><span class="kw">list</span>(<span class="dt">dux4 =</span> <span class="kw">c</span>(<span class="st">&quot;LEUTX&quot;</span>, <span class="st">&quot;KHDC1L&quot;</span>, <span class="st">&quot;PRAMEF2&quot;</span>, <span class="st">&quot;TRIM43&quot;</span>),
+       <span class="dt">extracellular_matrix =</span> <span class="kw">c</span>(<span class="st">&quot;PLA2G2A&quot;</span>, <span class="st">&quot;COL19A1&quot;</span>, <span class="st">&quot;COMP&quot;</span>, <span class="st">&quot;COL1A1&quot;</span>), 
+       <span class="dt">inflamm =</span> <span class="kw">c</span>(<span class="st">&quot;CCL18&quot;</span>, <span class="st">&quot;CCL13&quot;</span> ,<span class="st">&quot;C6&quot;</span>, <span class="st">&quot;C7&quot;</span>), 
+       <span class="dt">cell_cycle =</span> <span class="kw">c</span>(<span class="st">&quot;CCNA1&quot;</span>, <span class="st">&quot;CDKN1A&quot;</span>, <span class="st">&quot;CDKN2A&quot;</span>), 
+       <span class="dt">immunoglobulin =</span> <span class="kw">c</span>(<span class="st">&quot;IGHA1&quot;</span>, <span class="st">&quot;IGHG4&quot;</span>, <span class="st">&quot;IGHGP&quot;</span>)) 
+<span class="co">#&#39; get local rlog                            </span>
+markers_id_list &lt;-<span class="st"> </span><span class="kw">lapply</span>(markers_list, get_ensembl, <span class="dt">rse=</span>year2.dds)
+relative_rlg &lt;-<span class="st"> </span><span class="kw">lapply</span>(markers_id_list, .get_sum_relative_local_rlg,
+                       <span class="dt">dds =</span> year2.dds)  </code></pre></div>
+<table>
+<caption><span id="tab:display-markers">Table 3.1: </span>Selected Genes used to calculate the marker scores.</caption>
+<thead>
+<tr class="header">
+<th></th>
+<th align="left">biomarkers/genes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>dux4</td>
+<td align="left">LEUTX, KHDC1L, PRAMEF2, TRIM43</td>
+</tr>
+<tr class="even">
+<td>extracellular_matrix</td>
+<td align="left">PLA2G2A, COL19A1, COMP, COL1A1</td>
+</tr>
+<tr class="odd">
+<td>inflamm</td>
+<td align="left">CCL18, CCL13, C6, C7</td>
+</tr>
+<tr class="even">
+<td>cell_cycle</td>
+<td align="left">CCNA1, CDKN1A, CDKN2A</td>
+</tr>
+<tr class="odd">
+<td>immunoglobulin</td>
+<td align="left">IGHA1, IGHG4, IGHGP</td>
+</tr>
+</tbody>
+</table>
+<p>Append the marker scores to <code>year2.dds</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#&#39; (1a) Append markers score to colData of year2.dds and year2.rlg</span>
+df &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">do.call</span>(cbind, relative_rlg)) <span class="op">%&gt;%</span>
+<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">rename</span>(<span class="dt">dux4.rlogsum=</span>dux4, <span class="dt">ecm.rlogsum=</span>extracellular_matrix, 
+                <span class="dt">inflamm.rlogsum=</span>inflamm, <span class="dt">cellcycle.rlogsum=</span>cell_cycle,
+                <span class="dt">img.rlogsum=</span>immunoglobulin)       
+
+<span class="cf">if</span> (<span class="op">!</span><span class="kw">any</span>(<span class="kw">names</span>(<span class="kw">colData</span>(year2.dds)) <span class="op">%in%</span><span class="st"> &quot;dux4.rlogsum&quot;</span>)) {
+  <span class="kw">colData</span>(year2.dds) &lt;-<span class="st"> </span><span class="kw">append</span>(<span class="kw">colData</span>(year2.dds), 
+                               <span class="kw">as</span>(df[<span class="kw">colnames</span>(year2.dds), ], <span class="st">&quot;DataFrame&quot;</span>))
+}   </code></pre></div>
+<div id="group-samples-by-dux4-score" class="section level3">
+<h3><span class="header-section-number">3.3.1</span> Group samples by DUX4 score</h3>
+<p>We divide the controls and the one-year follow-up FSHD samples into four sub-groups (G1-G4) based on their DUX4 scores and hierarchical clustering.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dux4_local_rlog &lt;-<span class="st"> </span><span class="kw">.get_local_rlg</span>(markers_id_list<span class="op">$</span>dux4, year2.dds)
+dux4_tree &lt;-<span class="st"> </span><span class="kw">.get_DUX4_clust_tree</span>(<span class="dt">dux4_rlog=</span>dux4_local_rlog)
+year2.dds<span class="op">$</span>dux4.group &lt;-<span class="st"> </span>dux4_tree[<span class="kw">colnames</span>(year2.dds)] </code></pre></div>
+</div>
+<div id="heatmap-of-the-discriminative-genes" class="section level3">
+<h3><span class="header-section-number">3.3.2</span> Heatmap of the discriminative genes</h3>
+<p>Heatmap below presents the z-score (by rows) of local rlog expression of the selected, discriminative genes from different function categories. The DUX4 target genes displayed in the heatmap are not the main biomarkers for DUX4 score calculation, but instead are the genes (ZSCAN4, MBD3L2 and PRAMEF25) that also shows equivalent discriminative power in cluster pattern recognition.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(pheatmap)
+<span class="kw">library</span>(reshape2)
+tmp &lt;-<span class="st"> </span>markers_id_list
+alt_dux4 &lt;-<span class="st"> </span><span class="kw">get_ensembl</span>(<span class="kw">c</span>(<span class="st">&quot;ZSCAN4&quot;</span>, <span class="st">&quot;MBD3L2&quot;</span>, <span class="st">&quot;PRAMEF25&quot;</span>), year2.dds)
+tmp<span class="op">$</span>dux4 &lt;-<span class="st"> </span>alt_dux4
+selected &lt;-<span class="st"> </span><span class="kw">melt</span>(tmp)
+data &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(<span class="kw">.get_local_rlg</span>(<span class="kw">as.character</span>(selected<span class="op">$</span>value), year2.dds))
+data &lt;-<span class="st"> </span>data[<span class="kw">as.character</span>(selected<span class="op">$</span>value), ]
+<span class="kw">rownames</span>(data) &lt;-<span class="st"> </span><span class="kw">rowData</span>(year2.dds[<span class="kw">rownames</span>(data)])<span class="op">$</span>gene_name
+zscore_data &lt;-<span class="st"> </span>(data <span class="op">-</span><span class="st"> </span><span class="kw">rowMeans</span>(data)) <span class="op">/</span><span class="st"> </span><span class="kw">rowSds</span>(data)
+
+annotation_col &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">pheno_type=</span>year2.dds<span class="op">$</span>pheno_type,
+                             <span class="dt">dux4_group=</span><span class="kw">factor</span>(year2.dds<span class="op">$</span>dux4.group))
+<span class="kw">rownames</span>(annotation_col) &lt;-<span class="st"> </span><span class="kw">colnames</span>(year2.dds)
+annotation_row &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">marker_type=</span>selected<span class="op">$</span>L1)
+<span class="kw">rownames</span>(annotation_row) &lt;-<span class="st"> </span><span class="kw">rownames</span>(data)
+row_gaps &lt;-<span class="st"> </span><span class="kw">cumsum</span>(<span class="kw">sapply</span>(tmp, length))
+
+<span class="kw">pheatmap</span>(zscore_data, <span class="dt">annotation_col=</span>annotation_col, <span class="dt">cellheight=</span><span class="dv">8</span>,
+         <span class="dt">fontsize_row =</span> <span class="dv">7</span>, <span class="dt">fontsize =</span> <span class="dv">7</span>,
+         <span class="dt">cluster_rows =</span> <span class="ot">FALSE</span>, <span class="dt">gaps_row =</span> row_gaps,
+         <span class="dt">annotation_row=</span>annotation_row, <span class="dt">scale=</span><span class="st">&quot;none&quot;</span>)</code></pre></div>
+<div class="figure"><span id="fig:heatmap-discriminative-genes"></span>
+<img src="gitbook_files/figure-html/heatmap-discriminative-genes-1.png" alt="Heatmap of distcriminative genes from five function categories." width="672" />
+<p class="caption">
+Figure 3.1: Heatmap of distcriminative genes from five function categories.
+</p>
+</div>
+</div>
+</div>
+<div id="dux4-candidate-biomarkers-are-eleveated-in-fshd" class="section level2">
+<h2><span class="header-section-number">3.4</span> DUX4 candidate biomarkers are eleveated in FSHD</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(gridExtra)
+file_name &lt;-<span class="st"> </span><span class="kw">file.path</span>(pkg_dir, <span class="st">&quot;figures&quot;</span>, <span class="st">&quot;Year2_Scatter_FourBiomarkers.pdf&quot;</span>)
+gobj &lt;-<span class="st"> </span>
+<span class="st">  </span><span class="kw">.makeFourBiomarkerScatterPlot</span>(<span class="dt">dds=</span>year2.dds, <span class="dt">plot.tile_top=</span><span class="ot">FALSE</span>,
+                                <span class="dt">group=</span>year2.dds<span class="op">$</span>dux4.group,
+                                <span class="dt">markers_id=</span>markers_id_list<span class="op">$</span>dux4,
+                                <span class="dt">call_threshold=</span><span class="dv">2</span>,
+                                <span class="dt">file_name=</span>file_name)</code></pre></div>
+<p>The scatter plot blow is Fig. 1 in the manuscript showing the relative expression of four candidate biomarkers in muscle biopsies from control and follow-up visit FSHD muscles. The sum of the relative expression of four DUX4-regulated genes (LEUTX, KHDC1L, TRIM43 and PRAMEF2) was plotted for each RNA-seq sample. The FSHD biopsies from follow-up visit are indicated by an asterisk (*), whereas control muscle biopsies do not have an asterisk. The size of the spot reflects the number of candidate biomarkers above a threshold level for considering elevated expression from the controls (log fold &gt; 2).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">grid.arrange</span>(gobj<span class="op">$</span>tilePlot, gobj<span class="op">$</span>scatterPlot, <span class="dt">nrow=</span><span class="dv">2</span>, <span class="dt">ncol=</span><span class="dv">1</span>, <span class="dt">heights=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">3</span>))</code></pre></div>
+<div class="figure"><span id="fig:plot-scatter-dux4-score"></span>
+<img src="gitbook_files/figure-html/plot-scatter-dux4-score-1.png" alt="Scatter plot of DUX4 marker score by samples and sample groups by DUX4 score." width="768" />
+<p class="caption">
+Figure 3.2: Scatter plot of DUX4 marker score by samples and sample groups by DUX4 score.
+</p>
+</div>
+</div>
+<div id="correlation-of-dux4-score-to-mri-and-histopathology" class="section level2">
+<h2><span class="header-section-number">3.5</span> Correlation of DUX4 score to MRI and histopathology</h2>
+<p>DUX4 score is represented as the sum of relative rlog expression of four DUX4 biomarkers. Code chunk prepares a <code>data.frame</code> appending DUX4 scores to the histopathology scores and MRI signals.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dux4_score &lt;-<span class="st"> </span><span class="kw">colData</span>(year2.dds)[, <span class="kw">c</span>(<span class="st">&quot;sample_name&quot;</span>, <span class="st">&quot;dux4.rlogsum&quot;</span>, <span class="st">&quot;dux4.group&quot;</span>)]
+time_<span class="dv">2</span> &lt;-<span class="st"> </span>mri_pathology[[<span class="st">&quot;time_2&quot;</span>]] <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">left_join</span>(<span class="kw">as.data.frame</span>(dux4_score), <span class="dt">by=</span><span class="st">&quot;sample_name&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(Pathology.Score)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">rename</span>(<span class="dt">DUX4.Score =</span> dux4.rlogsum)</code></pre></div>
+<div id="dux4-and-pathology-score" class="section level3">
+<h3><span class="header-section-number">3.5.1</span> DUX4 and pathology score</h3>
+<p>Similar to the first year, DUX4 score shows moderate correlation to pathology score (0.507).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cor &lt;-<span class="st"> </span><span class="kw">cor</span>(time_<span class="dv">2</span><span class="op">$</span>Pathology.Score, time_<span class="dv">2</span><span class="op">$</span>DUX4.Score,
+           <span class="dt">method=</span><span class="st">&quot;spearman&quot;</span>)
+<span class="kw">ggplot</span>(time_<span class="dv">2</span>, <span class="kw">aes</span>(<span class="dt">x=</span>Pathology.Score, <span class="dt">y=</span>DUX4.Score))<span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">size=</span><span class="dv">1</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> lm, <span class="dt">se=</span><span class="ot">FALSE</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">annotate</span>(<span class="st">&quot;text&quot;</span>, <span class="dt">x=</span><span class="fl">7.5</span>, <span class="dt">y=</span><span class="dv">15</span>, <span class="dt">vjust=</span><span class="fl">0.5</span>, 
+           <span class="dt">label=</span><span class="kw">paste0</span>(<span class="st">&quot;correlation=&quot;</span>, <span class="kw">format</span>(cor, <span class="dt">digits=</span><span class="dv">3</span>))) <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme_bw</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">y=</span><span class="st">&quot;DUX4 score </span><span class="ch">\n</span><span class="st"> (relative biomarker expression)&quot;</span>,
+       <span class="dt">x=</span><span class="st">&quot;Pathology score&quot;</span>) </code></pre></div>
+<div class="figure"><span id="fig:dux4-pathology"></span>
+<img src="gitbook_files/figure-html/dux4-pathology-1.png" alt="Scatter and linear regression of DUX4 and pathology score." width="672" />
+<p class="caption">
+Figure 3.3: Scatter and linear regression of DUX4 and pathology score.
+</p>
+</div>
+</div>
+<div id="dux4-and-stir-signal" class="section level3">
+<h3><span class="header-section-number">3.5.2</span> DUX4 and STIR signal</h3>
+<p>DUX4 score and qualitative T2-STIR rating of the follow-up biopsied FSHD muscles show moderate correlation (0.53).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cor &lt;-<span class="st"> </span><span class="kw">cor</span>(<span class="kw">as.numeric</span>(time_<span class="dv">2</span><span class="op">$</span>STIR_rating), time_<span class="dv">2</span><span class="op">$</span>DUX4.Score,
+           <span class="dt">method=</span><span class="st">&quot;spearman&quot;</span>)
+<span class="kw">ggplot</span>(time_<span class="dv">2</span>, <span class="kw">aes</span>(<span class="dt">x=</span><span class="kw">as.numeric</span>(STIR_rating), <span class="dt">y=</span>DUX4.Score))<span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">size=</span><span class="dv">1</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> lm, <span class="dt">se=</span><span class="ot">FALSE</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">annotate</span>(<span class="st">&quot;text&quot;</span>, <span class="dt">x=</span><span class="fl">2.5</span>, <span class="dt">y=</span><span class="fl">14.5</span>, <span class="dt">vjust=</span><span class="fl">0.5</span>, 
+           <span class="dt">label=</span><span class="kw">paste0</span>(<span class="st">&quot;correlation=&quot;</span>, <span class="kw">format</span>(cor, <span class="dt">digits=</span><span class="dv">3</span>))) <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme_bw</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">y=</span><span class="st">&quot;DUX4 score </span><span class="ch">\n</span><span class="st"> (relative biomarker expression)&quot;</span>,
+       <span class="dt">x=</span><span class="st">&quot;STIR rating&quot;</span>) </code></pre></div>
+<div class="figure"><span id="fig:dux4-stir-scatter"></span>
+<img src="gitbook_files/figure-html/dux4-stir-scatter-1.png" alt="Scatter and linear regression plot of DUX4 socre and STIR rating." width="672" />
+<p class="caption">
+Figure 3.4: Scatter and linear regression plot of DUX4 socre and STIR rating.
+</p>
+</div>
+<p>72% of STIR-positive muscle biopsies show elevated DUX4 target expression (DUX4 score &gt; 2.5).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">DUX4_threshold &lt;-<span class="st"> </span><span class="fl">2.5</span> <span class="co"># an arbitrary threshold</span>
+<span class="co">#&#39; adding new columns indicating DUX4 (+/-) </span>
+<span class="co">#&#39; if STIR = 0 but T1_rating &gt; 0, than STIR_status should be NA, not MRI normal</span>
+new_time_<span class="dv">2</span> &lt;-<span class="st"> </span>time_<span class="dv">2</span> <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">STIR_status =</span> <span class="kw">ifelse</span>(STIR_rating <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>, <span class="st">&quot;STIR+&quot;</span>, <span class="st">&quot;MRI normal&quot;</span>)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">DUX4_status =</span> <span class="kw">ifelse</span>(DUX4.Score <span class="op">&gt;</span><span class="st"> </span>DUX4_threshold, <span class="st">&quot;DUX4+&quot;</span>, <span class="st">&quot;DUX4-&quot;</span>)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">STIR_status =</span> <span class="kw">ifelse</span>((STIR_rating <span class="op">==</span><span class="st"> </span><span class="dv">0</span> <span class="op">&amp;</span><span class="st"> </span>T1_rating <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>), <span class="ot">NA</span>, STIR_status)) <span class="op">%&gt;%</span>
+<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(STIR_status))
+
+gg_stir &lt;-<span class="st"> </span><span class="kw">ggplot</span>(new_time_<span class="dv">2</span>, <span class="kw">aes</span>(<span class="dt">x=</span>STIR_status, <span class="dt">y=</span>DUX4.Score,
+                       <span class="dt">group=</span>STIR_status)) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_boxplot</span>(<span class="dt">outlier.shape =</span> <span class="ot">NA</span>, <span class="dt">width=</span><span class="fl">0.5</span> ) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_jitter</span>(<span class="dt">width=</span><span class="fl">0.2</span>, <span class="dt">size=</span><span class="dv">1</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> DUX4_threshold, <span class="dt">color=</span><span class="st">&quot;grey&quot;</span>, 
+             <span class="dt">linetype=</span><span class="st">&quot;dashed&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme_bw</span>() <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">title=</span><span class="st">&quot;MRI normal vs. STIR+&quot;</span>,
+       <span class="dt">y=</span><span class="st">&quot;DUX4 score&quot;</span>, <span class="dt">x=</span><span class="st">&quot;STIR status&quot;</span>)  <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme</span>(<span class="dt">plot.title =</span> <span class="kw">element_text</span>(<span class="dt">size=</span><span class="dv">9</span>, <span class="dt">hjust =</span> <span class="fl">0.5</span>))
+gg_stir</code></pre></div>
+<div class="figure"><span id="fig:dux4-stir-boxplot"></span>
+<img src="gitbook_files/figure-html/dux4-stir-boxplot-1.png" alt="Boxplot of DUX4 scores by MRI status (normal and STIR+). The grey deshed line is where DUX4 score=2.5." width="672" />
+<p class="caption">
+Figure 3.5: Boxplot of DUX4 scores by MRI status (normal and STIR+). The grey deshed line is where DUX4 score=2.5.
+</p>
+</div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#new_time_2 %&gt;% dplyr::filter(STIR_status == &quot;MRI Normal&quot;)</span>
+<span class="kw">message</span>(<span class="st">&quot;DUX4 score mean/sd by STIR status&quot;</span>)</code></pre></div>
+<pre><code>## DUX4 score mean/sd by STIR status</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">new_time_<span class="dv">2</span> <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(STIR_status) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarize</span>(<span class="dt">avg=</span><span class="kw">mean</span>(DUX4.Score), <span class="dt">sd=</span><span class="kw">sd</span>(DUX4.Score))</code></pre></div>
+<pre><code>## # A tibble: 2 x 3
+##   STIR_status   avg    sd
+##   &lt;chr&gt;       &lt;dbl&gt; &lt;dbl&gt;
+## 1 MRI normal   2.85  4.46
+## 2 STIR+        8.69  8.05</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">message</span>(<span class="st">&quot;Frequency of STIR+ with DUX4+ (DUX4 score &gt; 2.5)&quot;</span>)</code></pre></div>
+<pre><code>## Frequency of STIR+ with DUX4+ (DUX4 score &gt; 2.5)</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">new_time_<span class="dv">2</span> <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">filter</span>(STIR_status <span class="op">==</span><span class="st"> &quot;STIR+&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">summarize</span>(<span class="dt">freq =</span> <span class="kw">sum</span>(DUX4_status <span class="op">==</span><span class="st"> &quot;DUX4+&quot;</span>) <span class="op">/</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw">n</span>()) <span class="co">#18 </span></code></pre></div>
+<pre><code>##        freq
+## 1 0.7222222</code></pre>
+</div>
+</div>
+<div id="dux4-score-and-t1-fat-fraction" class="section level2">
+<h2><span class="header-section-number">3.6</span> DUX4 score and T1 fat fraction</h2>
+<p>DUX4 score and T1 fat fraction seem poorly correlated in terms of linear regression, however, the mid-range of T1 fat fraction (0.2 ~ 0.4) displays a more positive relationship with the DUX4 score.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cor &lt;-<span class="st"> </span><span class="kw">cor</span>(time_<span class="dv">2</span><span class="op">$</span>fat_fraction, time_<span class="dv">2</span><span class="op">$</span>DUX4.Score, <span class="dt">method=</span><span class="st">&quot;spearman&quot;</span>)
+<span class="kw">ggplot</span>(time_<span class="dv">2</span>, <span class="kw">aes</span>(<span class="dt">x=</span>fat_fraction, <span class="dt">y=</span>DUX4.Score))<span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">size=</span><span class="dv">1</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> lm, <span class="dt">se=</span><span class="ot">FALSE</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">annotate</span>(<span class="st">&quot;text&quot;</span>, <span class="dt">x=</span><span class="fl">0.5</span>, <span class="dt">y=</span><span class="dv">10</span>, <span class="dt">vjust=</span><span class="fl">0.5</span>, 
+           <span class="dt">label=</span><span class="kw">paste0</span>(<span class="st">&quot;correlation=&quot;</span>, <span class="kw">format</span>(cor, <span class="dt">digits=</span><span class="dv">3</span>))) <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme_bw</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">y=</span><span class="st">&quot;DUX4 score </span><span class="ch">\n</span><span class="st"> (relative biomarker expression)&quot;</span>,
+       <span class="dt">x=</span><span class="st">&quot;T1 fat fraction&quot;</span>)  </code></pre></div>
+<div class="figure"><span id="fig:dux4-ff-linear"></span>
+<img src="gitbook_files/figure-html/dux4-ff-linear-1.png" alt="Scatter and linear regressio plot of DUX4 score and T1 fat fraction." width="672" />
+<p class="caption">
+Figure 3.6: Scatter and linear regressio plot of DUX4 score and T1 fat fraction.
+</p>
+</div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(time_<span class="dv">2</span>, <span class="kw">aes</span>(<span class="dt">x=</span>fat_fraction, <span class="dt">y=</span>DUX4.Score))<span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">size=</span><span class="dv">1</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> loess, <span class="dt">se=</span><span class="ot">FALSE</span>) <span class="op">+</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="fl">0.2</span>, <span class="dt">linetype=</span><span class="st">&quot;dashed&quot;</span>, <span class="dt">color=</span><span class="st">&quot;gray&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="fl">0.4</span>, <span class="dt">linetype=</span><span class="st">&quot;dashed&quot;</span>, <span class="dt">color=</span><span class="st">&quot;gray&quot;</span>) <span class="op">+</span>
+<span class="st">  </span><span class="kw">theme_bw</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">y=</span><span class="st">&quot;DUX4 score </span><span class="ch">\n</span><span class="st"> (relative biomarker expression)&quot;</span>,
+       <span class="dt">x=</span><span class="st">&quot;T1 fat fraction&quot;</span>)     </code></pre></div>
+<div class="figure"><span id="fig:dux4-ff-nonliner"></span>
+<img src="gitbook_files/figure-html/dux4-ff-nonliner-1.png" alt="Nonlinear relationship between DUX4 score and T1 fat fraction illustrates a positive relationship within the mid-range of T1 (0.2, 0.4)" width="672" />
+<p class="caption">
+Figure 3.7: Nonlinear relationship between DUX4 score and T1 fat fraction illustrates a positive relationship within the mid-range of T1 (0.2, 0.4)
+</p>
+</div>
+
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-love2014">
+<p>Love, Michael I., Wolfgang Huber, and Simon Anders. 2014. “Moderated Estimation of Fold Change and Dispersion for Rna-Seq Data with Deseq2.” <em>Genome Biology</em> 15 (12): 550. doi:<a href="https://doi.org/10.1186/s13059-014-0550-8">10.1186/s13059-014-0550-8</a>.</p>
+</div>
+<div id="ref-yao2014">
+<p>Yao, Zizhen, and et al. 2014. “DUX4-Induced Gene Expression Is the Major Molecular Signature in Fshd Skeletal Muscle.” <em>Human Molecular Genetics</em>. doi:<a href="https://doi.org/10.1093/hmg/ddu251">10.1093/hmg/ddu251</a>.</p>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="preprocessing.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="longitudinal-changes.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"download": ["gitbook.pdf", "gitbook.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
