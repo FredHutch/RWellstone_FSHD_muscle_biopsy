@@ -1,1 +1,1 @@
-This is a minimal example of a book based on R Markdown and **bookdown** (https://github.com/rstudio/bookdown). Please see the page "Get Started" at https://bookdown.org/ for how to compile this example.
+This is a book based on R Markdown supporting the reproducibility and transparency of our recently published FSHD biopsy RNA-seq data analysis.
