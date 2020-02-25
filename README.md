@@ -7,8 +7,9 @@ As a standard R experimental data package, RWEllstone_FSHD_muscle_biopsy main br
 The major Bioinformatics analysis is performed by using Bioconductor _DESeq_ and _goseq_ packages, and visualization by the R _ggplot2_ packages.
 
 ## Package structure
-- data
-  |- sanitized.dds: a DESeqDataSet instance of RNA-seq gene expression matrix
+```
+- data     
+  |- sanitized.dds: a DESeqDataSet instance of RNA-seq gene expression matrix     
   |- cluster_df: a data.frame instance of k-means clustering results 
   |- FSHD_markers: a DataFrame instance of 53 DUX4-targeted FSHD robust biomarkers  
   |- marker_path_scores: sample marker scores (DUX4/inflamm/extracellular matrix/cell cycle) 
@@ -23,7 +24,7 @@ The major Bioinformatics analysis is performed by using Bioconductor _DESeq_ and
   |- gitbook: Rmd files that make this gitbook
   |- extdata: supplemental tables
   |- scripts: shell and original R scripts</code></pre>
-  
+```  
 ## gitbook
 The gitbook is hosted on the _gh-pages_ branch and can be accessed [here](https://fredhutch.github.io/RWellstone_FSHD_muscle_biopsy). This book consists with chapters explaining different parts of analysis for the manuscripts. Most of the major codes are listed here. The goad of this book is to support the transparency and reporducibily of the research involved in computational analysis. 
 
