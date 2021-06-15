@@ -1,8 +1,8 @@
 # RWellstone_FSHD_muscle_biopsy
 
-This repository was made to support the transparency and reproducibility of our computational analysis for the manuscript [Longitudinal measures of RNA expression and disease activity in FSHD muscle biopsies](https://doi.org/10.1093/hmg/ddaa031), published in Jan. 2020 by _Human Molecure Genetic_ (HMG).  It has two major branches: the master branch is a starndard R package containing RData (`../data/*.rda`) files, scripts (`../inst/scripts/*.R`) used for the manuscript, and R markdown files (`../inst/gitbook/*.Rmd`) that makes the gitbook, the narratives and codes that back up our discision on our the analysis; the _gh-pages_ branch hosts the [gitbook](https://fredhutch.github.io/RWellstone_FSHD_muscle_biopsy). 
+This repository was made to support the transparency and reproducibility of our computational analysis for the manuscript [Longitudinal measures of RNA expression and disease activity in FSHD muscle biopsies](https://doi.org/10.1093/hmg/ddaa031), published in Jan. 2020 by _Human Molecular Genetic_ (HMG).  It has two major branches: the master branch is a standard R package containing RData (`../data/*.rda`) files, scripts (`../inst/scripts/*.R`) used for the manuscript, and R markdown files (`../inst/gitbook/*.Rmd`) that makes the gitbook, the narratives and codes that back up our discussion on our the analysis; the _gh-pages_ branch hosts the [gitbook](https://fredhutch.github.io/RWellstone_FSHD_muscle_biopsy). 
 
-As a standard R experimental data package, __RWEllstone_FSHD_muscle_biopsy__ master branch consists with `/data`, and `/inst` folders and `DESCRIPTION` file. The `/data` folder contains many instances built upon the and _R_ and _Bioconductor_ platform, especially the DESeq2's RNA-seq count contaniner, `DESeqDataSet`, as listed below.  The histopathology scores and MRI signals are stored in `mri_pathology.rda`.
+As a standard R experimental data package, __RWEllstone_FSHD_muscle_biopsy__ master branch consists with `/data`, and `/inst` folders and `DESCRIPTION` file. The `/data` folder contains many instances built upon the and _R_ and _Bioconductor_ platform, especially the DESeq2's RNA-seq count container, `DESeqDataSet`, as listed below.  The histopathology scores and MRI signals are stored in `mri_pathology.rda`.
 
 The major Bioinformatics analysis is performed by using Bioconductor _DESeq_ and _goseq_ packages, and visualization by the R _ggplot2_ packages.
 
@@ -28,8 +28,8 @@ The major Bioinformatics analysis is performed by using Bioconductor _DESeq_ and
 ```  
 
 ## gitbook
-The gitbook is hosted on the _gh-pages_ branch and can be accessed [here](https://fredhutch.github.io/RWellstone_FSHD_muscle_biopsy). This book consists with chapters explaining different parts of analysis for the manuscripts. Most of the major codes are listed here. The goad of this book is to support the transparency and reporducibily of the research involved in computational analysis. 
+The gitbook is hosted on the _gh-pages_ branch and can be accessed [here](https://fredhutch.github.io/RWellstone_FSHD_muscle_biopsy). This book consists with chapters explaining different parts of analysis for the manuscripts. Most of the major codes are listed here. The goad of this book is to support the transparency and reproducibility of the research involved in computational analysis. 
 
 ## Software requirement
-- R-3.5.1 or above
+- R-3.5.1
 - Bioconductor 3.7. See the DESCRIPTION file for depend, import and suggest packages.
