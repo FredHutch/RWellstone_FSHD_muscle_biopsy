@@ -9,7 +9,7 @@ The major Bioinformatics analysis is performed by using Bioconductor _DESeq_ and
 ## Package structure
 ```
 - /data     
-  |- sanitized.dds: a DESeqDataSet instance of RNA-seq gene expression matrix and MRI characteristics and 
+  |- sanitized.dds: a DESeqDataSet instance of the biopsy RNA-seq gene expression matrix (containing first and the follow-up visits) and MRI characteristics and 
      histopathology socres.  
   |- cluster_df: a data.frame instance of k-means clustering results 
   |- FSHD_markers: a DataFrame instance of 53 DUX4-targeted FSHD robust biomarkers from Yao et al. (2014) paper
