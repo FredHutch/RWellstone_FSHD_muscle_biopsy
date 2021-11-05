@@ -9,14 +9,16 @@ The major Bioinformatics analysis is performed by using the R/Bioconductor packa
 ## Package structure
 ```
 - /data     
-  |- sanitized.dds: a `DESeqDataSet` instance of the RNA-seq gene count matrix and metatdata of the first and the follow-up visits along with 
-     the MRI characteristics and histopathology socres.  
+  |- sanitized.dds: a `DESeqDataSet` instance of the RNA-seq gene count matrix and metatdata of the first 
+     and the follow-up visits along with the MRI characteristics and histopathology socres.  
   |- cluster_df: a `data.frame` instance of k-means clustering results 
-  |- FSHD_markers: a Bioconductor's `DataFrame` instance of 53 DUX4-targeted FSHD robust biomarkers from Yao et al. (2014) paper
+  |- FSHD_markers: a Bioconductor's `DataFrame` instance of 53 DUX4-targeted FSHD robust biomarkers from 
+     Yao et al. (2014) paper
   |- marker_path_scores: sample marker scores (DUX4/inflamm/extracellular matrix/cell cycle) 
                          based on gene expression alog with MRI characteristics and 
                          histopathology scores
-  |- mask_discovery_se: a `RangedSummarizedExperiment` object containing the 2014 FSHD/COntrol muscle biopsy RNA-seq gene counts and metadata 
+  |- mask_discovery_se: a `RangedSummarizedExperiment` object containing the 2014 FSHD/COntrol muscle biopsy 
+     RNA-seq gene counts and metadata (Yao et al., 2014)
   |- mri_pathology: a `data.frame` instance of MRI characteristics and histopathology scores
   |- pax7_targets: a `data.frame` instance of PAX7-targeted gene expression matrix
   |- year2.dds: a `DESeqDataSet` instance of the follow-up visit gene expression matrix
