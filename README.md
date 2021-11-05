@@ -16,6 +16,7 @@ The major Bioinformatics analysis is performed by using the R/Bioconductor packa
   |- marker_path_scores: sample marker scores (DUX4/inflamm/extracellular matrix/cell cycle) 
                          based on gene expression alog with MRI characteristics and 
                          histopathology scores
+  |- mask_discovery_se: a _RangedSummarizedExperiment_ object containing the 2014 FSHD/COntrol muscle biopsy RNA-seq gene counts and metadata 
   |- mri_pathology: a data.frame instance of MRI characteristics and histopathology scores
   |- pax7_targets: a data.frame instance of PAX7-targeted gene expression matrix
   |- year2.dds: a DESeqDataSet instance of the follow-up visit gene expression 
